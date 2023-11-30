@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpParamTransfer", "CSharpParamTransfer.csproj", "{A16BBC34-120A-4464-A4B9-968252A1B1CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A16BBC34-120A-4464-A4B9-968252A1B1CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A16BBC34-120A-4464-A4B9-968252A1B1CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A16BBC34-120A-4464-A4B9-968252A1B1CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A16BBC34-120A-4464-A4B9-968252A1B1CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

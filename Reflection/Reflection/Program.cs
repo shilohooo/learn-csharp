@@ -22,6 +22,31 @@ public class Program
         {
             Console.WriteLine(customAttribute.ToString());
         }
+
+        var rectangle = new Rectangle(15, 30);
+        rectangle.Display();
+        // 使用反射获取 Rectangle 类中的元数据~
+        var typeOfRectangle = typeof(Rectangle);
+        // 遍历 Rectangle 类的属性
+        Console.WriteLine($"==== {typeOfRectangle.Name} 类上的特性====");
+        foreach (var customAttribute in typeOfRectangle.GetCustomAttributes(false))
+        {
+            // 获取 DebugInfo 特性
+            var debugInfo = (DebugInfo)customAttribute;
+            Console.WriteLine(debugInfo);
+        }
+
+        // 遍历函数属性
+        foreach (var methodInfo in typeOfRectangle.GetMethods())
+        {
+            Console.WriteLine($"====方法 {typeOfRectangle.Name}.{methodInfo.Name} 上的特性====");
+            foreach (var customAttribute in methodInfo.GetCustomAttributes(true))
+            {
+                // 获取 DebugInfo 特性
+                var debugInfo = (DebugInfo)customAttribute;
+                Console.WriteLine(debugInfo);
+            }
+        }
     }
 }
 

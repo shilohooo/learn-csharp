@@ -32,4 +32,9 @@ public class Student
     /// </remarks>
     /// </summary>
     public Grade Grade { get; set; }
+
+    public override string ToString()
+    {
+        return $"StudentId: {StudentId}, FirstName: {FirstName}, LastName: {LastName}, Grade: {Grade}";
+    }
 }

@@ -21,5 +21,10 @@ public class Grade
     /// <see cref="Student"/>
     /// </remarks>
     /// </summary>
-    public List<Student> Students { get; set; } = [];
+    public ICollection<Student> Students { get; set; } = [];
+
+    public override string ToString()
+    {
+        return $"GradeId: {GradeId}, GradeName: {GradeName}";
+    }
 }

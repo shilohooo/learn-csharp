@@ -23,7 +23,7 @@ public class SchoolContext : DbContext
     /// 数据库连接字符串
     /// </summary>
     private const string ConnectionString =
-        @"Server=(localdb)\ProjectModels;Database=SchoolDb;Trusted_Connection=True;";
+        @"Server=(localdb)\MSSQLLocalDB;Database=SchoolDb;Trusted_Connection=True;";
 
     /// <summary>
     /// 学生实体集

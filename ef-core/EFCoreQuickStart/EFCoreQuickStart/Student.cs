@@ -21,6 +21,26 @@ public class Student
     public string LastName { get; set; } = string.Empty;
 
     /// <summary>
+    /// 出生日期
+    /// </summary>
+    public DateTime DateOfBirth { get; set; }
+
+    /// <summary>
+    /// 个人照片
+    /// </summary>
+    public byte[] Photo { get; set; }
+
+    /// <summary>
+    /// 身高
+    /// </summary>
+    public decimal Height { get; set; }
+
+    /// <summary>
+    /// 体重
+    /// </summary>
+    public float Weight { get; set; }
+
+    /// <summary>
     /// 所属年级 ID
     /// </summary>
     public int GradeId { get; set; }

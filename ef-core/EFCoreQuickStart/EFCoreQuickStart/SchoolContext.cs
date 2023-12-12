@@ -49,12 +49,12 @@ public class SchoolContext : DbContext
     /// <summary>
     /// 应用配置信息
     /// </summary>
-    private IConfiguration _appConfig;
-
-    public SchoolContext(IConfiguration appConfig)
-    {
-        _appConfig = appConfig;
-    }
+    // private IConfiguration _appConfig;
+    //
+    // public SchoolContext(IConfiguration appConfig)
+    // {
+    //     _appConfig = appConfig;
+    // }
 
     /// <summary>
     /// 重写该方法，用于配置数据库连接

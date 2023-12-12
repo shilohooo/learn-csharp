@@ -21,7 +21,8 @@ class Program
         // var disconnectedEntity = new Student { FirstName = "三三", LastName = "张", Grade = grade };
         // 实例化数据库上下文对象，传入应用配置
         // 使用 using 关键字自动释放资源，类似 Java 中的 try-with-resources
-        using var context = new SchoolContext(GetAppConfig());
+        // using var context = new SchoolContext(GetAppConfig());
+        using var context = new SchoolContext();
         // 任何在数据上下文作用域之外创建或读取的实体，它们的状态都会被标记为 "Detached"，
         // 状态为 "Detached" 的实体通常称为 "Disconnected Entity"，数据上下文不会跟踪这些实体的变更。
         // Console.WriteLine(context.Entry(disconnectedEntity).State.ToString());
@@ -86,6 +87,7 @@ class Program
         // 从当前进程或者从当前用户或本地计算机的 Windows 操作系统注册表项检索环境变量的值。
         var connStr = Environment.GetEnvironmentVariable(envKey, EnvironmentVariableTarget.User);
         Console.WriteLine($"数据库连接字符串：{connStr}");
+        Console.WriteLine($"当前时间：{DateTime.Now}");
     }
 
     /// <summary>

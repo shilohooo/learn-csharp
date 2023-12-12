@@ -17,16 +17,16 @@ class Program
     /// <param name="args"></param>
     static void Main(string[] args)
     {
-        var grade = new Grade { GradeName = "一年级" };
-        var disconnectedEntity = new Student { FirstName = "三三", LastName = "张", Grade = grade };
+        // var grade = new Grade { GradeName = "一年级" };
+        // var disconnectedEntity = new Student { FirstName = "三三", LastName = "张", Grade = grade };
         // 实例化数据库上下文对象，传入应用配置
         // 使用 using 关键字自动释放资源，类似 Java 中的 try-with-resources
         using var context = new SchoolContext(GetAppConfig());
         // 任何在数据上下文作用域之外创建或读取的实体，它们的状态都会被标记为 "Detached"，
         // 状态为 "Detached" 的实体通常称为 "Disconnected Entity"，数据上下文不会跟踪这些实体的变更。
-        Console.WriteLine(context.Entry(disconnectedEntity).State.ToString());
+        // Console.WriteLine(context.Entry(disconnectedEntity).State.ToString());
         // 如果数据库不存在，则创建
-        context.Database.EnsureCreated();
+        // context.Database.EnsureCreated();
         //
         // // 创建实体对象
         // var grade = new Grade { GradeName = "一年级" };
@@ -43,11 +43,11 @@ class Program
         // // 保存数据到数据库表中
         // context.SaveChanges();
         //
-        // // 从数据库中查询所有学生信息
-        // foreach (var item in context.Students)
-        // {
-        //     Console.WriteLine(item);
-        // }
+        // 从数据库中查询所有学生信息
+        foreach (var item in context.Students)
+        {
+            Console.WriteLine(item);
+        }
         //
         // // 打印实体状态
         // // 目前没有对实体执行任何操作，所以查询出来的实体的状态应该是 "Unchanged"，
@@ -79,6 +79,13 @@ class Program
         // DisplayEntityState(context.ChangeTracker.Entries());
         // 保存变更
         // context.SaveChanges();
+        
+        // 从环境变量中获取数据库连接字符串
+        const string envKey = "MSSQLSERVER_CONNECTION_STING";
+        // 第一个参数为环境变量的名称，第二个参数指定：
+        // 从当前进程或者从当前用户或本地计算机的 Windows 操作系统注册表项检索环境变量的值。
+        var connStr = Environment.GetEnvironmentVariable(envKey, EnvironmentVariableTarget.User);
+        Console.WriteLine($"数据库连接字符串：{connStr}");
     }
 
     /// <summary>

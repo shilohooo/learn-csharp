@@ -63,7 +63,8 @@ public class SchoolContext : DbContext
     /// EF Core 有几种管理数据库连接字符串的方式：<br/>
     /// 1. 硬编码：Server=(localdb)\MSSQLLocalDB;Database=SchoolDb;Trusted_Connection=True;<br/>
     /// 2.使用 Microsoft.Extensions.Configuration 的 appsettings.json 文件配置数据库连接字符串，灵活性高，如果
-    /// 项目中没有 appsettings.json 文件，则需要通过 NuGet 安装 Microsoft.Extensions.Configuration 包
+    /// 项目中没有 appsettings.json 文件，则需要通过 NuGet 安装 Microsoft.Extensions.Configuration 包<br/>
+    /// 3.从环境变量中获取数据库连接字符串：Environment.GetEnvironmentVariable() 方法
     /// </remarks>
     /// </summary>
     /// <param name="optionsBuilder">选项构建对象</param>
@@ -74,7 +75,11 @@ public class SchoolContext : DbContext
         // optionsBuilder.UseSqlServer(ConnectionString);
         
         // 从应用配置信息中获取数据库连接字符串
-        var connectionString = _appConfig.GetConnectionString("SchoolDBLocalConnection");
+        // var connectionString = _appConfig.GetConnectionString("SchoolDBLocalConnection");
+        
+        // 从当前用户的环境变量中获取数据库连接字符串
+        const string envKey = "MSSQLSERVER_CONNECTION_STING";
+        var connectionString = Environment.GetEnvironmentVariable(envKey, EnvironmentVariableTarget.User);
         Console.WriteLine($"connectionString: {connectionString}");
         optionsBuilder.UseSqlServer(connectionString);
     }

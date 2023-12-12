@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.Extensions.Configuration;
 
 namespace EFCoreQuickStart;
 
@@ -18,13 +19,14 @@ class Program
     {
         var grade = new Grade { GradeName = "一年级" };
         var disconnectedEntity = new Student { FirstName = "三三", LastName = "张", Grade = grade };
-        // 实例化数据库上下文对象，使用 using 关键字自动释放资源，类似 Java 中的 try-with-resources
-        using var context = new SchoolContext();
+        // 实例化数据库上下文对象，传入应用配置
+        // 使用 using 关键字自动释放资源，类似 Java 中的 try-with-resources
+        using var context = new SchoolContext(GetAppConfig());
         // 任何在数据上下文作用域之外创建或读取的实体，它们的状态都会被标记为 "Detached"，
         // 状态为 "Detached" 的实体通常称为 "Disconnected Entity"，数据上下文不会跟踪这些实体的变更。
         Console.WriteLine(context.Entry(disconnectedEntity).State.ToString());
-        // // 如果数据库不存在，则创建
-        // context.Database.EnsureCreated();
+        // 如果数据库不存在，则创建
+        context.Database.EnsureCreated();
         //
         // // 创建实体对象
         // var grade = new Grade { GradeName = "一年级" };
@@ -77,6 +79,19 @@ class Program
         // DisplayEntityState(context.ChangeTracker.Entries());
         // 保存变更
         // context.SaveChanges();
+    }
+
+    /// <summary>
+    /// 获取应用配置
+    /// </summary>
+    /// <returns>应用配置实例</returns>
+    private static IConfiguration GetAppConfig()
+    {
+        Console.WriteLine($"BaseDirectory: {AppDomain.CurrentDomain.BaseDirectory}");
+        return new ConfigurationBuilder()
+            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+            .AddJsonFile("appsettings.json", true, true)
+            .Build();
     }
 
     /// <summary>

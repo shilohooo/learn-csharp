@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace EFCoreDataQuery;
+namespace EFCoreDSDataCUD;
 
 /// <summary>
 /// EF Core 数据上下文

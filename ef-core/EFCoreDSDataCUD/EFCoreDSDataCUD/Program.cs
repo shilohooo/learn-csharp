@@ -1,5 +1,4 @@
-﻿using EFCoreDataQuery;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace EFCoreDSDataCUD;

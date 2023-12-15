@@ -1,4 +1,4 @@
-﻿namespace EFCoreDataQuery;
+﻿namespace EFCoreDSDataCUD;
 
 /// <summary>
 /// 年级实体

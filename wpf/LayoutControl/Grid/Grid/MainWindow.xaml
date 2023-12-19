@@ -1,0 +1,95 @@
+﻿<Window x:Class="Grid.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <!-- ShowGridLines：显示网格线（虚线），效果不是很好，少用:( -->
+    <!-- Grid 布局的优点：自适应屏幕宽度，且会保存实际宽高，供后续计算使用 -->
+    <Grid Margin="25">
+        <!-- 左右排列 -->
+        <!-- 网格列定义 -->
+        <Grid.ColumnDefinitions>
+            <!-- 
+                没有手动指定列宽的情况下，每一列的宽度都为网格的 50%
+                可以使用 Width 属性指定列宽，单位：px
+                宽度值还可以设置 Auto，这将取实际控件所需要的最小值，每列的尺寸是刚好的，建议使用（行高同理）
+                最后还可以将宽度值设置为 *，这代表：按比例将空间分割到一组行和列中。这是对所有行和列的标准设置。
+                通常值为*或N*，实际作用就是取尽可能大的值，当某一列或行被定义为*则是尽可能大，
+                当出现多列或行被定义为*则是代表几者之间按比例方设置尺寸。（行高同理）
+             -->
+            <ColumnDefinition Width="*" />
+            <!-- 
+                第一列设置了宽度为 120，那么第二列的宽度就是网格的宽度减去第一列的宽度（120）
+                列中的按钮元素宽度也会自适应更改
+             -->
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <!-- 上下排列-->
+        <!-- 网格行定义 -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <!-- 通过 N* 指定权重：即第二行的高度是第一行的两倍 -->
+            <RowDefinition Height="2*" />
+        </Grid.RowDefinitions>
+
+        <!-- 
+            添加边框：
+            BorderBrush：指定边框的颜色
+            BorderThickness：指定边框的厚度，方向：左、上、右、下，单位：px
+         -->
+        <Border
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            BorderBrush="Gray"
+            BorderThickness="1 1 1 1" />
+        <Border
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            BorderBrush="Gray"
+            BorderThickness="0 0 0 1" />
+        <Border
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="0"
+            BorderBrush="Gray"
+            BorderThickness="0 0 1 0" />
+
+        <!-- 
+            Grid.Column 指定放到第几列，0 代表第一列，第一个子元素默认放到第一列
+            Grid.ColumnSpan 指定跨多少列
+         -->
+        <!-- Grid.Row 指定放到第几行，0 代表第一行，第一个子元素默认放到第一行 -->
+        <Button
+            Grid.Row="0"
+            Grid.Column="0"
+            Content="按钮1"
+            Margin="20"
+            Panel.ZIndex="1" />
+        <Button
+            Grid.Row="0"
+            Grid.Column="1"
+            Content="按钮2"
+            Margin="20"
+            Panel.ZIndex="0" />
+        <Button
+            Grid.Row="1"
+            Grid.Column="0"
+            Content="按钮3"
+            Margin="20"
+            Panel.ZIndex="1" />
+        <Button
+            Grid.Row="1"
+            Grid.Column="1"
+            Content="按钮4"
+            Margin="20"
+            Panel.ZIndex="0" />
+    </Grid>
+    
+    <!-- <UniformGrid FirstColumn="1"></UniformGrid> -->
+</Window>

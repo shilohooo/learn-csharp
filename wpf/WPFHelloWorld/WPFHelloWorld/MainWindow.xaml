@@ -1,0 +1,28 @@
+﻿<Window x:Class="WPFHelloWorld.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="HelloWPF:)" Height="450" Width="800">
+    <Grid>
+        <!-- 标签：文本块，内容、样式通过标签属性设置 -->
+        <TextBlock
+            Text="Hello World:)"
+            FontSize="48"
+            Margin="0 50 0 0" />
+        <!-- 在同一个窗体、页、用户控件中，Name标识是唯一的。设置了控件的名称后，我们就可以在后端代码直接以这个标识去引用控件 -->
+        <!-- Margin 值对应的方向：左、上、右、下 -->
+        <Button
+            x:Name="Button"
+            Visibility="Visible"
+            IsEnabled="True"
+            Margin="50 100 50 100"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            ToolTip="click me"
+            Opacity="1">
+            这是一个按钮哦
+        </Button>
+    </Grid>
+</Window>

@@ -1,0 +1,31 @@
+﻿<Window x:Class="Control.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <!-- 
+        Control类虽然可以实例化，但是在界面上是不会有任何显示的。只有那些继承了Control的子类（控件）才会在界面上显示，
+        而且所呈现的样子各不相同，为什么会是这样呢？
+        因为Control类提供了一个控件模板（ControlTemplate），而几乎所有的子类都对这个ControlTemplate进行了各自的实现，
+        所以在呈现子类时，才会看到Button拥有Button的样子，TextBox拥有TextBox的样子。
+        
+        
+     -->
+    <Control Margin="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+        <Control.Template>
+            <ControlTemplate TargetType="Control">
+                <Border Background="#1989FA">
+                    <TextBlock
+                        Text="内容控件~"
+                        FontSize="24"
+                        FontWeight="Bold"
+                        Foreground="White"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center" />
+                </Border>
+            </ControlTemplate>
+        </Control.Template>
+    </Control>
+</Window>

@@ -1,0 +1,21 @@
+﻿<Window x:Class="CheckBox.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="复选框示例" Height="450" Width="800">
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock Text="今晚想吃啥？" Margin="10" />
+        <CheckBox x:Name="BeefCheckBox" Content="牛肉" Margin="5" />
+        <CheckBox x:Name="PorkCheckBox" Content="猪肉" Margin="5" />
+        <CheckBox x:Name="SheepCheckBox" Content="羊肉" Margin="5" />
+        <CheckBox x:Name="ChickenCheckBox" Content="鸡肉" Margin="5" />
+        <Button
+            x:Name="Button"
+            Content="查看菜单"
+            Margin="5"
+            Click="ShowMenu"
+            />
+    </StackPanel>
+</Window>

@@ -1,0 +1,106 @@
+﻿<Window x:Class="LayoutDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <!-- 系统布局示例 -->
+    <Grid>
+        <!-- 界面主要布局 -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <!-- 顶部区域 -->
+        <DockPanel Grid.ColumnSpan="2" Background="#1989FA">
+            <Border
+                Margin="5"
+                Height="40"
+                Width="40"
+                CornerRadius="20"
+                Background="White">
+                <TextBlock
+                    Text="LOGO"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Foreground="#1989FA" />
+            </Border>
+            <!-- 系统名称 -->
+            <TextBlock
+                Text="这里显示的是系统名称"
+                FontSize="24"
+                FontWeight="Bold"
+                Foreground="White"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Margin="10" />
+            <!-- 用户信息 -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Border
+                    Margin="5"
+                    Height="40"
+                    Width="40"
+                    CornerRadius="20"
+                    Background="White">
+                    <TextBlock
+                        Text="头像"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="#1989FA" />
+                </Border>
+                <TextBlock
+                    Text="Username"
+                    FontSize="16"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    VerticalAlignment="Center"
+                    Margin="15 0" />
+            </StackPanel>
+        </DockPanel>
+
+        <!-- 侧边栏 -->
+        <Grid Grid.Row="1" Grid.Column="0" Width="220">
+            <Border Background="White">
+                <TextBlock
+                    Text="侧边栏"
+                    Foreground="#1989FA"
+                    FontSize="24"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center" />
+            </Border>
+        </Grid>
+
+        <!-- 主内容区域 -->
+        <Grid Grid.Row="1" Grid.Column="1" Background="#F1F4F5">
+            <Border
+                Margin="20"
+                Padding="20"
+                Background="White"
+                CornerRadius="8"
+                BorderBrush="White">
+                <TextBlock
+                    Text="主内容区域"
+                    Foreground="#1989FA"
+                    FontSize="24"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center" />
+            </Border>
+        </Grid>
+
+        <!-- 底部版权声明 -->
+        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Background="#1989FA">
+            <TextBlock
+                Text="版本号：v1.0.0 | 这里显示的版权声明信息 2023 ~ present | https://github.com/shilohooo"
+                Margin="10"
+                Foreground="White"
+                VerticalAlignment="Center" />
+        </Grid>
+    </Grid>
+</Window>

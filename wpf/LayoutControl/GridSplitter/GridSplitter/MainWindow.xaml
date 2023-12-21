@@ -1,0 +1,39 @@
+﻿<Window x:Class="GridSplitter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="GirdSplitter控件" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Border Background="#1989FA">
+            <TextBlock
+                Text="《海底两万里》（Vingt mille lieues sous les mers）是法国作家儒勒·凡尔纳创作的长篇小说，是“凡尔纳三部曲”（另两部为《格兰特船长的儿女》和《神秘岛》）的第二部。全书共2卷47章。
+该小说主要讲述了博物学家和生物学家阿龙纳斯、其仆人康塞尔和鱼叉手尼德·兰一起随鹦鹉螺号潜艇船长尼摩周游海底的故事。
+在法国，作品于1869年3月20日～1870年6月20日连载于《教育与娱乐杂志》（Magasin d’Éducation et de Récréation）；第一、二卷的单行本分别出版于1869年10月28日和1870年6月13日（无插图）；插图本出版于1871年11月16日，111幅插图由Edouard Riou和Alphonse de Neuville绘制，Hildibrand雕刻。"
+                TextWrapping="Wrap"
+                Foreground="White"
+                Padding="10"
+                LineHeight="20" />
+        </Border>
+
+        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Center" ShowsPreview="False" />
+
+        <Border Grid.Column="2" Background="Coral">
+            <TextBlock
+                Text="《海底两万里》（Vingt mille lieues sous les mers）是法国作家儒勒·凡尔纳创作的长篇小说，是“凡尔纳三部曲”（另两部为《格兰特船长的儿女》和《神秘岛》）的第二部。全书共2卷47章。
+该小说主要讲述了博物学家和生物学家阿龙纳斯、其仆人康塞尔和鱼叉手尼德·兰一起随鹦鹉螺号潜艇船长尼摩周游海底的故事。
+在法国，作品于1869年3月20日～1870年6月20日连载于《教育与娱乐杂志》（Magasin d’Éducation et de Récréation）；第一、二卷的单行本分别出版于1869年10月28日和1870年6月13日（无插图）；插图本出版于1871年11月16日，111幅插图由Edouard Riou和Alphonse de Neuville绘制，Hildibrand雕刻。"
+                TextWrapping="Wrap"
+                Foreground="White"
+                Padding="10"
+                LineHeight="20" />
+        </Border>
+    </Grid>
+</Window>

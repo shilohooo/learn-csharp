@@ -1,0 +1,69 @@
+﻿<Window x:Class="GroupBox.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="WPF GroupBox Example" Height="450" Width="800">
+
+    <GroupBox Header="缩率图" Margin="10 5">
+        <WrapPanel>
+            <Border
+                BorderThickness="1"
+                BorderBrush="Gray"
+                CornerRadius="8"
+                Padding="3"
+                Margin="3">
+                <Image Source="assets/images/wuhu.jpg" Width="100" Height="100" />
+            </Border>
+            <Border
+                BorderThickness="1"
+                BorderBrush="Gray"
+                CornerRadius="8"
+                Padding="3"
+                Margin="3">
+                <Image Source="assets/images/wuhu.jpg" Width="100" Height="100" />
+            </Border>
+            <Border
+                BorderThickness="1"
+                BorderBrush="Gray"
+                CornerRadius="8"
+                Padding="3"
+                Margin="3">
+                <Image Source="assets/images/wuhu.jpg" Width="100" Height="100" />
+            </Border>
+            <Border
+                BorderThickness="1"
+                BorderBrush="Gray"
+                CornerRadius="8"
+                Padding="3"
+                Margin="3">
+                <Image Source="assets/images/wuhu.jpg" Width="100" Height="100" />
+            </Border>
+            <Border
+                BorderThickness="1"
+                BorderBrush="Gray"
+                CornerRadius="8"
+                Padding="3"
+                Margin="3">
+                <Image Source="assets/images/wuhu.jpg" Width="100" Height="100" />
+            </Border>
+            <Border
+                BorderThickness="1"
+                BorderBrush="Gray"
+                CornerRadius="8"
+                Padding="3"
+                Margin="3">
+                <Image Source="assets/images/wuhu.jpg" Width="100" Height="100" />
+            </Border>
+            <Border
+                BorderThickness="1"
+                BorderBrush="Gray"
+                CornerRadius="8"
+                Padding="3"
+                Margin="3">
+                <Image Source="assets/images/wuhu.jpg" Width="100" Height="100" />
+            </Border>
+        </WrapPanel>
+    </GroupBox>
+</Window>

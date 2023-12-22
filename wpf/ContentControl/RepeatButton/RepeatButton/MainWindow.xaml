@@ -1,0 +1,22 @@
+﻿<Window x:Class="RepeatButton.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="WFP RepeatButton Example" Height="450" Width="800">
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock Text="点击按钮后不要松开鼠标~" Margin="10" />
+        <!-- 
+        RepeatButton,顾名思义，重复执行的按钮。就是当按钮被按下时，所订阅的回调函数会不断被执行
+        
+        RepeatButton 自身提供了两个整型属性，分别是Delay 和Interval 。
+
+        Delay 属性：表示延时重复执行的毫秒数，就是说，RepeatButton被按下后会立即执行一次回调函数，如果您不松开鼠标，
+        在等待Delay 毫秒后，就开始进行重复执行阶段。
+
+        Interval 属性：表示重复执行回调函数的时间间隔毫秒数。
+         -->
+        <RepeatButton Content="点我重复执行某个任务~" Delay="1000" Interval="500" Click="OnClick" Margin="10" />
+    </StackPanel>
+</Window>

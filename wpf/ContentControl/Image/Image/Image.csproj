@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net8.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UseWPF>true</UseWPF>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Include="bin\Debug\net8.0-windows\huaji.jpg" />
+      <None Include="obj\Debug\huaji.jpg" />
+      <None Include="obj\Debug\net8.0-windows\huaji.jpg" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="assets\images\huaji.jpg" />
+      <Resource Include="assets\images\huaji.jpg" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,40 @@
+﻿<Window x:Class="Image.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="WPF Image Example" Height="450" Width="800">
+    <!-- 
+        Image类能够加载显示的图片格式有.bmp、.gif、.ico、.jpg、.png、.wdp 和 .tiff。
+        要注意的是，加载.gif动画图片时，仅显示第一帧。如果要显示gif图片，可以在nuget服务器中下载WpfAnimatedGif组件。
+     -->
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <!-- 常规图片加载：路径基于当前项目 -->
+        <Image
+            Source="/assets/images/huaji.jpg"
+            Width="100"
+            Height="100"
+            ToolTip="我是用常规方式加载的图片" />
+        <!-- 
+            使用统一资源标识（URI）
+            WPF引入了统一资源标识Uri(Unified Resource Identifier)来标识和访问资源。其中较为常见的情况是用Uri加载图像。
+            Uri表达式的一般形式为：协议+授权+路径，协议：pack://，授权有两种：
+            一种用于访问编译时已经知道的文件，用 application:///
+            一种用于访问编译时不知道、运行时才知道的文件，用 siteoforigin:///
+            一般用逗号代替斜杠，也就是改写作application:,,,和pack:,,,
+            路径：分为绝对路径和相对路径。一般选用相对路径，普适性更强
+         -->
+        <Image
+            Source="pack://application:,,,/assets/images/huaji.jpg"
+            Width="100"
+            Height="100"
+            ToolTip="我是用统一资源标识（URI）方式加载的图片" />
+        <!-- 本地图片加载 -->
+        <Image
+            x:Name="LocalImage"
+            Width="100"
+            Height="100"
+            ToolTip="我是用本地路径方式加载的图片" />
+    </StackPanel>
+</Window>

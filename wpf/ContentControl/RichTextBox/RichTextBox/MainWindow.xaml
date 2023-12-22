@@ -1,0 +1,46 @@
+﻿<Window x:Class="RichTextBox.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="WPF RichTextBox Example" Height="450" Width="800">
+    <!-- 富文本框 -->
+    <StackPanel>
+        <RichTextBox x:Name="RichTextBox" Margin="10 5" Height="300">
+            <!-- RichTextBox 唯一能包含的子元素就是 FlowDocument，即流文档 -->
+            <FlowDocument>
+                <!-- 添加段落 -->
+                <Paragraph>
+                    RichTextBox富文本框控件到底有什么强大的功能？
+                    <Bold Foreground="DarkRed">请看下面</Bold>
+                </Paragraph>
+                <Paragraph Foreground="Blue">RichTextBox唯一的子元素是FlowDocument</Paragraph>
+                <Paragraph Foreground="DarkGreen">
+                    FlowDocument是指流文档,一个流文档由一个或多个Block构成，
+                    所以它有一个Blocks属性。Block只是一个抽象基类，
+                    所以流文档的子元素其实是继承了Block的子类，例如：
+                </Paragraph>
+                <List MarkerOffset="25" MarkerStyle="Decimal" StartIndex="1">
+                    <ListItem>
+                        <!-- BlockUIContainer是一个非常强大的段落元素，因为它可以直接包含WPF的控件。 -->
+                        <Paragraph>BlockUIContainer（UI元素容器）</Paragraph>
+                    </ListItem>
+                    <ListItem>
+                        <Paragraph>List（有序列表）</Paragraph>
+                    </ListItem>
+                    <ListItem>
+                        <Paragraph>Paragraph（段落）</Paragraph>
+                    </ListItem>
+                    <ListItem>
+                        <Paragraph>Section（分组），可以把它当作HTML中的div</Paragraph>
+                    </ListItem>
+                    <ListItem>
+                        <Paragraph>Table（表格）</Paragraph>
+                    </ListItem>
+                </List>
+            </FlowDocument>
+        </RichTextBox>
+        <Button Content="获取富文本框中的内容" Margin="10 5" Click="ShowRichTextBoxContent" />
+    </StackPanel>
+</Window>

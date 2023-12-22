@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextBox", "TextBox\TextBox.csproj", "{697EF5F0-DF50-4B80-A31F-008B14E58A20}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{697EF5F0-DF50-4B80-A31F-008B14E58A20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{697EF5F0-DF50-4B80-A31F-008B14E58A20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{697EF5F0-DF50-4B80-A31F-008B14E58A20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{697EF5F0-DF50-4B80-A31F-008B14E58A20}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

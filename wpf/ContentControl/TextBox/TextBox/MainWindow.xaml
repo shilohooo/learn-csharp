@@ -1,0 +1,18 @@
+﻿<Window x:Class="TextBox.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="WPF TextBox Example" Height="450" Width="800">
+    <!-- 文本框：常用组件 -->
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock VerticalAlignment="Center" Text="用户名" Margin="10" />
+        <!-- 
+            CharacterCasing：输入的字符自动转换成大写
+            MaxLength：输入的字符最大长度
+         -->
+        <TextBox x:Name="TextBox" Width="100" Height="25" MaxLength="10" CharacterCasing="Upper" Margin="10" />
+        <Button Content="确定" Click="Confirm" Margin="10" Padding="5" />
+    </StackPanel>
+</Window>

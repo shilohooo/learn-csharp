@@ -1,0 +1,51 @@
+﻿<Window x:Class="TextBlock.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="WPF TextBlock Example" Height="450" Width="800">
+    <WrapPanel>
+        <TextBlock Text="这是一个文本块~" Margin="10" />
+        <TextBlock Text="文字加粗~" FontWeight="Bold" Margin="10" />
+        <TextBlock Text="斜体展示~" FontStyle="Italic" Margin="10" />
+        <TextBlock Text="我用的是宋体~" FontFamily="宋体" Margin="10" />
+        <TextBlock Text="我的字体大小是30~" FontSize="30" Margin="10" />
+        <TextBlock Text="我设置了字体颜色~" Foreground="Red" Margin="10" />
+        <TextBlock Text="我设置了背景颜色~" Foreground="Wheat" Background="Green" Margin="10" />
+        <TextBlock Text="我设置了内边距~" Padding="10" Margin="10" />
+        <TextBlock Background="LightGray" Height="30">
+            <Run Foreground="Red">我是由</Run>
+            <Run Foreground="Green">三部分</Run>
+            <Run Foreground="Blue">组成的文本块</Run>
+        </TextBlock>
+
+        <Grid Width="100" Margin="10" Background="#1989FA">
+            <TextBlock
+                Text="这行文字体现了文本块的换行属性~"
+                TextWrapping="Wrap"
+                Foreground="White"
+                Margin="10" />
+        </Grid>
+
+        <Grid>
+            <TextBlock
+                Width="300"
+                Height="100"
+                FontSize="16"
+                FontFamily="微软雅黑"
+                FontStretch="Condensed"
+                TextWrapping="Wrap"
+                TextAlignment="Center"
+                Background="LightPink"
+                TextTrimming="CharacterEllipsis"
+                ToolTip="《静夜思·李白》"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                LineHeight="30">
+                <Run Foreground="#1989FA" TextDecorations="Underline" Text="床前明月光，疑是地上霜。举头望明月，低头思故乡。" />
+                <Run Text="这是一段很长的文本，它会被截断，无法显示的内容以三个省略号代替。这是一段很长的文本，它会被截断，无法显示的内容以三个省略号代替" />
+            </TextBlock>
+        </Grid>
+    </WrapPanel>
+</Window>

@@ -1,0 +1,43 @@
+﻿<Window x:Class="Popup.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="WPF Popup Example" Height="450" Width="800">
+    <!-- Popup（弹窗）：在指定的元素或窗体中弹出一个具有任意内容的窗口。 -->
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <CheckBox x:Name="CheckBox" Content="勾选显示弹窗" ToolTip="弹窗会在该元素隔壁显示" />
+        <!-- 
+            Binding语法：指定绑定的元素和属性
+            
+            Popup 的 IsOpen 属性绑定了 Checkbox 的 IsChecked，意思是：当用户点击 Checkbox 时，Checkbox 的 IsChecked 属性为true，
+            Popup 的 IsOpen 属性也为 true，于是就可以显示 Popup 的内容了。
+
+            同时，Popup 的 PlacementTarget 属性也绑定到了 Checkbox 控件，意味着 Popup 将显示在 Checkbox 控件身边，
+            至于具体位置，可以设置Placement属性
+            
+            StaysOpen：Popup 失去焦点后是否继续显示
+         -->
+        <Popup
+            x:Name="Popup"
+            IsOpen="{Binding ElementName=CheckBox, Path=IsChecked}"
+            PlacementTarget="{Binding ElementName=CheckBox}"
+            StaysOpen="True"
+            Placement="Top">
+            <Border BorderThickness="1" Background="LightBlue">
+                <StackPanel>
+                    <TextBlock Text="WPF官方网站" FontWeight="Bold" />
+                    <TextBlock Text="点击这个按钮进入WPF官方网站" />
+                    <Border
+                        BorderBrush="Silver"
+                        BorderThickness="0 1 0 0"
+                        Margin="10 5" />
+                    <TextBlock
+                        FontStyle="Italic"
+                        Text="https://learn.microsoft.com/en-us/dotnet/desktop/wpf/overview" />
+                </StackPanel>
+            </Border>
+        </Popup>
+    </StackPanel>
+</Window>

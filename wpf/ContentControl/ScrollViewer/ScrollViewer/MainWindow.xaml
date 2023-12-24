@@ -1,0 +1,160 @@
+﻿<Window x:Class="ScrollViewer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="WPF ScrollViewer Example" Height="450" Width="800">
+    <!--
+    如果某个控件的尺寸太大，当前界面无法全部显示，则可以将这个控件包含在ScrollViewer中，
+    因为ScrollViewer控件封装了一个水平滚动条ScrollBar和一个垂直滚动条ScrollBar，所以，ScrollViewer就是一个包含其它可视元素的可滚动区域控件。
+    ScrollViewer继承于ContentControl，所以它也是一个内容控件，只能在Content属性中设置一个子元素，
+    如果要在ScrollViewer中显示多个子元素，请设置一个集合控件。
+    ScrollViewer 控件既响应鼠标命令，也响应键盘命令，并定义许多可用于按预设的增量滚动内容的方法。 
+    可以使用 ScrollChanged 事件来检测 ScrollViewer 状态的变化。  
+    -->
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <!-- 
+        在WrapPanel中增加了许多子元素，然后在外面套了一层ScrollViewer，
+        由于WrapPanel是自动换行显示所有子元素（图片），所以，ScrollViewer会做出相应适配，只显示垂直滚动条。
+         -->
+        <WrapPanel>
+            <Border
+                BorderThickness="1"
+                Margin="5"
+                Padding="5"
+                CornerRadius="8"
+                BorderBrush="#1989fa">
+                <Image Source="pack://application:,,,/assets/images/sign-in.png" Width="100" Height="100" />
+            </Border>
+            <Border
+                BorderThickness="1"
+                Margin="5"
+                Padding="5"
+                CornerRadius="8"
+                BorderBrush="#1989fa">
+                <Image Source="pack://application:,,,/assets/images/sign-in.png" Width="100" Height="100" />
+            </Border>
+            <Border
+                BorderThickness="1"
+                Margin="5"
+                Padding="5"
+                CornerRadius="8"
+                BorderBrush="#1989fa">
+                <Image Source="pack://application:,,,/assets/images/sign-in.png" Width="100" Height="100" />
+            </Border>
+            <Border
+                BorderThickness="1"
+                Margin="5"
+                Padding="5"
+                CornerRadius="8"
+                BorderBrush="#1989fa">
+                <Image Source="pack://application:,,,/assets/images/sign-in.png" Width="100" Height="100" />
+            </Border>
+            <Border
+                BorderThickness="1"
+                Margin="5"
+                Padding="5"
+                CornerRadius="8"
+                BorderBrush="#1989fa">
+                <Image Source="pack://application:,,,/assets/images/sign-in.png" Width="100" Height="100" />
+            </Border>
+            <Border
+                BorderThickness="1"
+                Margin="5"
+                Padding="5"
+                CornerRadius="8"
+                BorderBrush="#1989fa">
+                <Image Source="pack://application:,,,/assets/images/sign-in.png" Width="100" Height="100" />
+            </Border>
+            <Border
+                BorderThickness="1"
+                Margin="5"
+                Padding="5"
+                CornerRadius="8"
+                BorderBrush="#1989fa">
+                <Image Source="pack://application:,,,/assets/images/sign-in.png" Width="100" Height="100" />
+            </Border>
+            <Border
+                BorderThickness="1"
+                Margin="5"
+                Padding="5"
+                CornerRadius="8"
+                BorderBrush="#1989fa">
+                <Image Source="pack://application:,,,/assets/images/sign-in.png" Width="100" Height="100" />
+            </Border>
+            <Border
+                BorderThickness="1"
+                Margin="5"
+                Padding="5"
+                CornerRadius="8"
+                BorderBrush="#1989fa">
+                <Image Source="pack://application:,,,/assets/images/sign-in.png" Width="100" Height="100" />
+            </Border>
+            <Border
+                BorderThickness="1"
+                Margin="5"
+                Padding="5"
+                CornerRadius="8"
+                BorderBrush="#1989fa">
+                <Image Source="pack://application:,,,/assets/images/sign-in.png" Width="100" Height="100" />
+            </Border>
+            <Border
+                BorderThickness="1"
+                Margin="5"
+                Padding="5"
+                CornerRadius="8"
+                BorderBrush="#1989fa">
+                <Image Source="pack://application:,,,/assets/images/sign-in.png" Width="100" Height="100" />
+            </Border>
+            <Border
+                BorderThickness="1"
+                Margin="5"
+                Padding="5"
+                CornerRadius="8"
+                BorderBrush="#1989fa">
+                <Image Source="pack://application:,,,/assets/images/sign-in.png" Width="100" Height="100" />
+            </Border>
+            <Border
+                BorderThickness="1"
+                Margin="5"
+                Padding="5"
+                CornerRadius="8"
+                BorderBrush="#1989fa">
+                <Image Source="pack://application:,,,/assets/images/sign-in.png" Width="100" Height="100" />
+            </Border>
+            <Border
+                BorderThickness="1"
+                Margin="5"
+                Padding="5"
+                CornerRadius="8"
+                BorderBrush="#1989fa">
+                <Image Source="pack://application:,,,/assets/images/sign-in.png" Width="100" Height="100" />
+            </Border>
+            <Border
+                BorderThickness="1"
+                Margin="5"
+                Padding="5"
+                CornerRadius="8"
+                BorderBrush="#1989fa">
+                <Image Source="pack://application:,,,/assets/images/sign-in.png" Width="100" Height="100" />
+            </Border>
+            <Border
+                BorderThickness="1"
+                Margin="5"
+                Padding="5"
+                CornerRadius="8"
+                BorderBrush="#1989fa">
+                <Image Source="pack://application:,,,/assets/images/sign-in.png" Width="100" Height="100" />
+            </Border>
+            <Border
+                BorderThickness="1"
+                Margin="5"
+                Padding="5"
+                CornerRadius="8"
+                BorderBrush="#1989fa">
+                <Image Source="pack://application:,,,/assets/images/sign-in.png" Width="100" Height="100" />
+            </Border>
+        </WrapPanel>
+    </ScrollViewer>
+</Window>

@@ -1,0 +1,28 @@
+﻿<Window x:Class="DatePicker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="WPF DatePicker Example" Height="450" Width="800">
+    <!-- 日期选择控件 -->
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30">
+        <StackPanel Orientation="Horizontal" Margin="10">
+            <TextBlock Text="开始日期" VerticalAlignment="Center" Margin="10 0"/>
+            <DatePicker
+                x:Name="StartDatePicker"
+                VerticalAlignment="Center"
+                Width="120"
+                />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="10">
+            <TextBlock Text="结束日期" VerticalAlignment="Center" Margin="10 0"/>
+            <DatePicker
+                x:Name="EndDatePicker"
+                VerticalAlignment="Center"
+                Width="120"
+                />
+        </StackPanel>
+        <Button Content="查询" Click="ShowSelectedDate" />
+    </StackPanel>
+</Window>

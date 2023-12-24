@@ -1,0 +1,41 @@
+﻿<Window x:Class="Slider.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="WPF Slider Example" Height="450" Width="800">
+    <!-- 
+    Slider滑动条与ScrollBar滚动条有点相似，甚至某些情况下，两者还可以互换使用。
+    Slider也继承于RangeBase基类，其功能是提供一个可以滑动取值的控件。
+     -->
+    <Grid x:Name="Viewport">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Canvas Grid.Row="0">
+            <Border
+                BorderBrush="#1989FA"
+                BorderThickness="1"
+                CornerRadius="8"
+                Padding="10"
+                Margin="10">
+                <!-- 
+                将图片的宽高绑定到 Slider控件的 Value属性上，
+                当拖动 Slider时，图片的大小也会随之改变。
+                 -->
+                <Image
+                    Source="pack://application:,,,/assets/images/register-page-bg.png"
+                    Width="{Binding ElementName=Slider, Path=Value}"
+                    Height="{Binding ElementName=Slider, Path=Value}" />
+            </Border>
+        </Canvas>
+        <DockPanel Grid.Row="1">
+            <TextBlock Text="滑动改变图片大小" Margin="5" FontSize="14" />
+            <Slider x:Name="Slider" Minimum="50" Maximum="500" Value="50" Margin="5" />
+        </DockPanel>
+    </Grid>
+</Window>

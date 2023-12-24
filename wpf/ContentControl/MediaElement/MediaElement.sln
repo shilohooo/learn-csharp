@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaElement", "MediaElement\MediaElement.csproj", "{6662D29B-E020-4FE8-8ECC-F0E8C69AB29D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6662D29B-E020-4FE8-8ECC-F0E8C69AB29D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6662D29B-E020-4FE8-8ECC-F0E8C69AB29D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6662D29B-E020-4FE8-8ECC-F0E8C69AB29D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6662D29B-E020-4FE8-8ECC-F0E8C69AB29D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

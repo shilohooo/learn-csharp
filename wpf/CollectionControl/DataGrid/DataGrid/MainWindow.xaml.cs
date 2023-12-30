@@ -46,9 +46,23 @@ public partial class MainWindow : Window
     }
 }
 
+/// <summary>
+/// 人员信息
+/// </summary>
 public class Person
 {
+    /// <summary>
+    /// 姓名
+    /// </summary>
     public string Name { get; set; }
+
+    /// <summary>
+    /// 年龄
+    /// </summary>
     public int Age { get; set; }
+
+    /// <summary>
+    /// 地址
+    /// </summary>
     public string Address { get; set; }
 }

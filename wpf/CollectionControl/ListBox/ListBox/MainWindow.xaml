@@ -1,0 +1,47 @@
+﻿<Window x:Class="ListBox.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="WPF ListBox Example" Height="450" Width="800">
+    <!-- ListBox 控件，默认情况下只能显示一个数据项 -->
+    <StackPanel>
+        <!-- 
+        DisplayMemberPath：要显示的属性
+        SelectedValuePath：要选择的属性
+        类比 ElementUI 中 el-select 的 label 和 value
+         -->
+        <ListBox
+            x:Name="ListBox"
+            MinHeight="100"
+            SelectionMode="Extended"
+            DisplayMemberPath="Name"
+            SelectedValuePath="Age" />
+        <Button Content="查看结果~" Click="GetSelectedPersonInfo" />
+        <TextBlock x:Name="TextBlock" />
+
+        <!-- ListBoxItem 控件 -->
+        <ListBox x:Name="ListBox2">
+            <ListBoxItem>
+                <Button Content="这是一个按钮" />
+            </ListBoxItem>
+            <ListBoxItem>
+                <Border Height="30" Background="Red" />
+            </ListBoxItem>
+            <ListBoxItem Content="这是一个字符串" />
+            <ListBoxItem>
+                <ProgressBar Maximum="100" Value="50" Height="25" Width="450" />
+            </ListBoxItem>
+            这是一个直接写在ListBox中的字符串~
+            <ListBox>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox Content="复选框" />
+                    <RadioButton Content="单选框" />
+                </StackPanel>
+            </ListBox>
+        </ListBox>
+        <Button Content="查看结果2" Click="GetListBox2SelectedInfo" />
+        <TextBlock x:Name="TextBlock2" />
+    </StackPanel>
+</Window>

@@ -1,0 +1,79 @@
+﻿<Window x:Class="Menu.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:menu="clr-namespace:Menu"
+        mc:Ignorable="d"
+        Title="WPF Menu Example" Height="450" Width="800">
+    <!-- 菜单控件 -->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <!-- 硬编码菜单 -->
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="6*" />
+            </Grid.RowDefinitions>
+            <TextBlock
+                Grid.Column="0"
+                Grid.Row="0"
+                Text="硬编码菜单"
+                FontSize="18"
+                FontWeight="Bold"
+                Foreground="#1989FA"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center" />
+            <Menu x:Name="HardCodeMenu" Grid.Column="0" Grid.Row="1">
+                <MenuItem Header="File">
+                    <MenuItem Header="Open" Click="OnMenuItemClick" />
+                    <MenuItem Header="New" Click="OnMenuItemClick">
+                        <!-- 设置菜单图标 -->
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/assets/images/new-file.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Edit" />
+                <MenuItem Header="View" />
+                <MenuItem Header="Navigate" />
+                <MenuItem Header="Code" />
+                <MenuItem Header="Build" />
+                <MenuItem Header="VCS" />
+                <MenuItem Header="Tools" />
+                <MenuItem Header="Help" />
+            </Menu>
+        </Grid>
+        <!-- 动态菜单 -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="6*" />
+            </Grid.RowDefinitions>
+            <TextBlock
+                Grid.Column="0"
+                Grid.Row="0"
+                Text="动态菜单（使用数据绑定）"
+                FontSize="18"
+                FontWeight="Bold"
+                Foreground="#1989FA"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center" />
+            <Menu
+                x:Name="DynamicMenu"
+                Grid.Column="0"
+                Grid.Row="1">
+                <Menu.ItemTemplate>
+                    <HierarchicalDataTemplate
+                        ItemsSource="{Binding Children}"
+                        DataType="{x:Type menu:MenuModel}">
+                        <TextBlock Text="{Binding Name}" />
+                    </HierarchicalDataTemplate>
+                </Menu.ItemTemplate>
+            </Menu>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,33 @@
+﻿<Window x:Class="StatusBar.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="WPF StatusBar Example" Height="450" Width="800">
+    <!-- 状态栏控件 -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StatusBar
+            Grid.Row="1"
+            Background="DarkGray"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+            <StatusBarItem Content="版权所有 @shiloh 2023 ~ present" />
+            <StatusBarItem>
+                <CheckBox Content="CheckBox" />
+            </StatusBarItem>
+            <StatusBarItem>
+                <RadioButton Content="RadioButton" />
+            </StatusBarItem>
+            <StatusBarItem>
+                <Button Content="Button" />
+            </StatusBarItem>
+            <!-- StatusBar的元素除了StatusBarItem，甚至可以直接实例化其它控件 -->
+            <TextBlock Text="TextBlock" />
+        </StatusBar>
+    </Grid>
+</Window>

@@ -1,0 +1,29 @@
+﻿<Window x:Class="ItemsControl.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="WPF ItemsControl Example" Height="450" Width="800">
+    <!-- 
+    集合控件用于显示或操作多个元素组成的集合
+     -->
+    <Grid>
+        <ItemsControl>
+            <Button Content="Button" Margin="0 5" />
+            <Border Height="30" Background="LightPink" Margin="0 5" />
+            <TextBlock Text="学习 WPF 中的集合控件~" Background="LightGray" Margin="0 5" />
+            <ItemsControl Height="35" Background="AliceBlue" />
+            <CheckBox Content="CheckBox元素" />
+            <StackPanel Orientation="Horizontal" Margin="0 5">
+                <RadioButton Content="初级" />
+                <RadioButton Content="中级" />
+                <RadioButton Content="高级" />
+            </StackPanel>
+            这是一串字符串，直接写在 ItemsControl 控件里面~
+            <Label Content="这是Label控件" Margin="0 5" />
+            <Control Background="Red" Height="30" />
+            <ProgressBar Value="50" Height="20" Maximum="100" />
+        </ItemsControl>
+    </Grid>
+</Window>

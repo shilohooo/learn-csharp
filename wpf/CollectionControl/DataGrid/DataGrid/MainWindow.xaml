@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dataGrid="clr-namespace:DataGrid"
         mc:Ignorable="d"
         Title="WPF DataGrid Example" Height="450" Width="800">
     <!-- 数据表格控件 -->
@@ -17,7 +18,8 @@
             IsReadOnly="False"
             AutoGenerateColumns="False"
             SelectionChanged="DisplaySelectedPersonInfo"
-            Grid.Column="0" d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True }">
+            Grid.Column="0"
+            d:DataContext="{d:DesignInstance dataGrid:Person, IsDesignTimeCreatable=True }">
             <!-- 定义列 -->
             <DataGrid.Columns>
                 <DataGridTextColumn Header="姓名" Binding="{Binding Name}" />

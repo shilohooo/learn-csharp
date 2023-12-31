@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rectangle", "Rectangle\Rectangle.csproj", "{D74292F4-5C90-49E2-9534-5CAE2F15FB24}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D74292F4-5C90-49E2-9534-5CAE2F15FB24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D74292F4-5C90-49E2-9534-5CAE2F15FB24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D74292F4-5C90-49E2-9534-5CAE2F15FB24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D74292F4-5C90-49E2-9534-5CAE2F15FB24}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

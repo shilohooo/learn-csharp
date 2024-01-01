@@ -1,0 +1,60 @@
+﻿<Window x:Class="Path.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="WPF Path Example" Height="450" Width="800">
+    <!-- 图形控件之路径（用于绘制几何图形） -->
+    <StackPanel Orientation="Horizontal">
+        <!-- 直线几何 -->
+        <Path Stroke="Blue" Fill="Red">
+            <Path.Data>
+                <LineGeometry StartPoint="10,20" EndPoint="100,200" />
+            </Path.Data>
+        </Path>
+        <!-- 矩形几何 -->
+        <Path Stroke="Blue" Fill="Red">
+            <Path.Data>
+                <!-- 通过 Rect 属性设置矩形的位置和尺寸（左边距、上边距、长、宽） -->
+                <RectangleGeometry Rect="20,5,40,30" />
+            </Path.Data>
+        </Path>
+        <!-- 椭圆几何 -->
+        <Path Stroke="Yellow" Fill="LightGreen">
+            <Path.Data>
+                <!-- 
+                通过 Center 属性设置椭圆的中心点
+                RadiusX 和 RadiusY 属性设置椭圆的 X 轴和 Y 轴半径
+                 -->
+                <EllipseGeometry Center="140, 80" RadiusX="30" RadiusY="30" />
+            </Path.Data>
+        </Path>
+        <!-- 路径几何 -->
+        <Path Stroke="Black" Fill="LightPink" StrokeThickness="5">
+            <Path.Data>
+                <PathGeometry>
+                    <PathGeometry.Figures>
+                        <PathFigure StartPoint="150, 200">
+                            <LineSegment Point="300, 200" />
+                            <ArcSegment
+                                Point="300 50"
+                                Size="100 100"
+                                SweepDirection="Clockwise"
+                                IsLargeArc="False" />
+                            <ArcSegment
+                                Point="300 200"
+                                Size="100 100"
+                                SweepDirection="Clockwise"
+                                IsLargeArc="False" />
+                        </PathFigure>
+                        <PathFigure IsFilled="False" StartPoint="5,5">
+                            <BezierSegment Point1="200,50" Point2="50,200" Point3="350, 250" />
+                        </PathFigure>
+                    </PathGeometry.Figures>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
+        <Path Fill="HotPink" Data="M 10,150 L40,150 L40,250 L10,250 Z"/>
+    </StackPanel>
+</Window>

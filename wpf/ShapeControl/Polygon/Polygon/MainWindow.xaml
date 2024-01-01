@@ -1,0 +1,32 @@
+﻿<Window x:Class="Polygon.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="WPF Polygon Example"
+        Height="450"
+        Width="800"
+        PreviewMouseLeftButtonUp="OnPreviewMouseLeftButtonUp"
+        PreviewMouseRightButtonUp="OnPreviewMouseRightButtonUp">
+    <!-- 
+    图形控件之多边形
+    Polygon叫多边形，与Polyline类似，都有一个Points属性，只不过，Polygon会把起点和终点连接起来。
+     -->
+    <Canvas x:Name="Canvas">
+        <Polygon
+            StrokeThickness="20"
+            Points="30,30 200,30 50,250 220,250">
+            <Polygon.Stroke>
+                <LinearGradientBrush
+                    StartPoint="30,30"
+                    EndPoint="220,250"
+                    MappingMode="Absolute">
+                    <GradientStop Color="Red" Offset="1" />
+                    <GradientStop Color="Yellow" Offset="0.66" />
+                    <GradientStop Color="Green" Offset="0" />
+                </LinearGradientBrush>
+            </Polygon.Stroke>
+        </Polygon>
+    </Canvas>
+</Window>

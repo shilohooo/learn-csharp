@@ -1,0 +1,104 @@
+﻿<Window x:Class="DataBindingDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DataBindingDemo.ViewModels"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance local:MainViewModel, IsDesignTimeCreatable=True}"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <SolidColorBrush x:Key="RedBrush" Color="Red" />
+    </Window.Resources>
+    <StackPanel x:Name="StackPanel" VerticalAlignment="Center" Margin="100 0">
+        <!-- 
+        数据绑定的第一种方式：指定 ViewModel 中的 Model 属性
+        {Binding Person.Name}，Binding 后面紧跟的 Person.Name 表示一个 Path 路径，
+        指的是当前的 DataContext 中那个 ViewModel 对象的 Person.Name
+        Binding 对象有一个带参构造函数：public Binding(string path)；
+        这种绑定方式实际上就是将 Person.Name 路径传给了 path 形参。
+         -->
+        <TextBlock Text="{Binding Person.Name}" />
+        <TextBlock Text="{Binding Person.Age}" />
+        <TextBlock Text="{Binding Person.Address}" />
+
+        <!-- 
+        数据绑定的第二种方式：指明某个具体的数据源对象及对象的属性，这种绑定方法使用的是
+         Binding 类的 Source 属性和 Path 属性。
+         Source 属性表示数据源对象，它是一个静态资源对象，Path=Color 表示要绑定这个静态资源对象的 Color 属性。
+         Color=Red，实际上是一个代表颜色的十六进制字符串。
+         -->
+        <TextBlock>
+            <Run Text="Source 绑定示例：" />
+            <Run Text="{Binding Source={StaticResource RedBrush}, Path=Color}" />
+        </TextBlock>
+
+        <!-- 
+        数据绑定的第三种方式：利用 Binding 类的 ElementName 属性指明另一个控件作为数据源，
+        然后再用 Path 属性来指定另一个控件的某个属性作为绑定路径。
+        通过 Binding 类的 ElementName 属性去指定当前 XAML 中的另一个 StackPanel 控件，
+        并绑定其 Margin 属性，这样，TextBlock 就会显示 StackPanel 控件的 Margin 属性值
+         -->
+        <TextBlock>
+            <Run Text="ElementName 绑定示例：" />
+            <Run Text="{Binding ElementName=StackPanel, Path=Margin}" />
+        </TextBlock>
+
+        <!-- 
+        数据绑定的第四种方式：利用 RelativeSource 属性绑定一个相对的数据源。
+        这种绑定方式经常使用，且实用价值很高。
+        
+        RelativeSource 类有3个重要的属性：Mode、AncestorType、AncestorLevel。
+        Mode：表示寻找相对数据源的模式，一共有四种：
+        1. PreviousData：允许在当前显示的数据项列表中绑定上一个数据项（不是包含数据项的控件）。
+        2. TemplateParent：引用应用了模板的元素，其中此模板中存在数据绑定元素
+        3. Self：引用正在其上设置绑定的元素，并允许将该元素的另一个属性绑定到同一个元素的其他属性上。
+        4. FindAncestor：引用数据绑定元素的父链中的上级，这可用于绑定到特定类型的上级或其子类。
+        
+        AncestorType：当 Mode==FindAncestor 时，AncestorType 属性指定要寻找的上级类型。
+        
+        AncestorLevel：获取或设置要查找的上级级别，使用 1 指示最靠近绑定目标元素的项。
+         -->
+        <TextBlock>
+            <Run Text="RelativeSource 绑定示例：" />
+            <!-- 
+            从当前控件开始找类型为 StackPanel 的上级，并把这个 StackPanel 控件的
+            VerticalAlignment 属性绑定显示到当前控件的 Text 属性上。
+             -->
+            <Run
+                Text="{Binding
+                    RelativeSource={
+                        RelativeSource Mode=FindAncestor, AncestorType=StackPanel
+                    },
+                    Path=VerticalAlignment
+                }" />
+        </TextBlock>
+        <!-- 将自己的背景色绑定显示到 Text 属性上 -->
+        <TextBlock
+            Text="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background}"
+            Background="#1989FA" />
+        <TextBlock Text="INotifyPropertyChanged 示例：" />
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="姓名：" Margin="5" />
+            <TextBox
+                Text="{Binding Person.Name, UpdateSourceTrigger=PropertyChanged}"
+                Width="200"
+                Height="25" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="年龄：" Margin="5" />
+            <TextBox
+                Text="{Binding Person.Age, UpdateSourceTrigger=LostFocus}"
+                Width="200"
+                Height="25" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="地址：" Margin="5" />
+            <TextBox
+                Text="{Binding Person.Address, UpdateSourceTrigger=Default}"
+                Width="200"
+                Height="25" />
+        </StackPanel>
+        <Button Content="随机更改内容" Click="ChangePersonInfo" />
+    </StackPanel>
+</Window>

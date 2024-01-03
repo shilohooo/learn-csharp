@@ -1,0 +1,81 @@
+﻿<Window x:Class="ValueConverter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ValueConverter"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:MainViewModel, IsDesignTimeCreatable=True}"
+        Title="WPF DataBinding ValueConverter Example" Height="450" Width="800">
+    <!-- 
+    数据绑定之 ValueConverter
+    主要作用：前后端建立绑定时，定义一套自定义逻辑，让前端显示的数据与后端获取的数据建立一定的对应关系。
+    比如Person对象有一个年龄（Age）属性，在前端显示某个人的年龄时，可以根据不同的年龄，
+    显示不同的背景颜色。这个时候，实际上是根据这个输入的整型数据返回一个不同颜色的画刷。
+     -->
+    <!-- 在资源中定义转换器 -->
+    <Window.Resources>
+        <local:AgeToColorConverter x:Key="AgeToColorConverter" />
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="300" />
+        </Grid.ColumnDefinitions>
+        <ListView
+            Grid.Column="0"
+            ItemsSource="{Binding Persons}"
+            SelectedItem="{Binding Person}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="姓名" DisplayMemberBinding="{Binding Name}" Width="60" />
+                    <GridViewColumn Header="年龄" DisplayMemberBinding="{Binding Age}" />
+                    <GridViewColumn Header="地址" DisplayMemberBinding="{Binding Address}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <!-- 使用转换器：根据年龄调整背景色 -->
+        <StackPanel
+            x:Name="StackPanel"
+            Grid.Column="1"
+            VerticalAlignment="Center"
+            Margin="5 0"
+            Background="{Binding Person.Age, Converter={StaticResource AgeToColorConverter}}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="姓名" Margin="5" />
+                <TextBox
+                    Text="{Binding Person.Name, UpdateSourceTrigger=PropertyChanged}"
+                    Width="145"
+                    Height="25" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="年龄" Margin="5" />
+                <TextBox
+                    Text="{Binding Person.Age, UpdateSourceTrigger=LostFocus}"
+                    Width="145"
+                    Height="25" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="地址" Margin="5" />
+                <TextBox
+                    Text="{Binding Person.Address, UpdateSourceTrigger=Default}"
+                    Width="145"
+                    Height="25" />
+            </StackPanel>
+            <TextBlock Margin="5">
+                <Run Text="姓名：" />
+                <Run Text="{Binding Person.Name}" />
+            </TextBlock>
+            <TextBlock Margin="5">
+                <Run Text="年龄：" />
+                <Run Text="{Binding Person.Age}" />
+            </TextBlock>
+            <TextBlock Margin="5">
+                <Run Text="地址：" />
+                <Run Text="{Binding Person.Address}" />
+            </TextBlock>
+            <Button Content="新增用户" Click="CreateNewPerson" />
+        </StackPanel>
+    </Grid>
+</Window>

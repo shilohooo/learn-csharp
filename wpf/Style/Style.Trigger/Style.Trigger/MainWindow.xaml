@@ -1,0 +1,81 @@
+﻿<Window x:Class="Style.Trigger.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="WPF Style Trigger Example" Height="450" Width="800">
+    <!-- 
+    WPF 样式之触发器
+    
+    触发器是指当满足预设的条件时去执行一些事务的工具，比如希望鼠标移到某个按钮上方时，这个按钮的颜色、大小发生一些改变。
+    这个时候，条件是鼠标移到按钮上，执行的事务是改变按钮的颜色和大小。
+
+    WPF提供了5种触发器，以满足不同场合下的使用要求。触发器主要运用的场景在Style、ControlTemplate、DataTemplate三个地方。
+    
+    
+    大多数控件都有IsMouseOver属性，包括CheckBox,所以，我们在鼠标移到CheckBox上方时，将其字体变成了粗体。
+    另外，完整的触发器写法应如CheckBox一样，如果是bool型的属性，Value的值就有两个，分别是True和False，
+    所以，条件也就有了两个，如果只写了True的情况，WPF也会默认一个False条件的触发器。
+     -->
+
+    <Window.Resources>
+        <Style x:Key="SuccessButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="100" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Background" Value="#67C23A" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="BorderThickness" Value="0" />
+            <!-- 定义触发器 -->
+            <Style.Triggers>
+                <!-- 
+                Property属性：表示定义触发器所指向的属性名称，需要注意的是，它的类似是DependencyProperty（依赖属性），
+                也就是说，触发器所生效的属性必须是WPF中的依赖属性。
+
+                Value属性：表示定义触发器所指向的属性的值，这两个属性要连起来理解，即某个属性的值等于预设的值时，
+                此时将该触发器将被触发，至于要执行哪些具体的事务，就要看Setters集合中定义了哪些项。
+                 -->
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#85ce61" />
+                    <Setter Property="Width" Value="150" />
+                    <Setter Property="Height" Value="50" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="Content" Value="鼠标悬浮于按钮之上" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Button Content="SuccessButton" Style="{StaticResource SuccessButtonStyle}" />
+        <CheckBox Content="CheckBox">
+            <CheckBox.Style>
+                <Style TargetType="CheckBox">
+                    <Setter Property="Width" Value="100" />
+                    <Setter Property="Height" Value="30" />
+                    <Setter Property="Background" Value="Orange" />
+                    <Setter Property="Foreground" Value="Green" />
+                    <Setter Property="Margin" Value="5" />
+                    <Style.Triggers>
+                        <!-- 复选框选中时，文字颜色为红色 -->
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Foreground" Value="Red" />
+                        </Trigger>
+                        <!-- 复选框未选中时，文字颜色为橙色 -->
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Foreground" Value="Orange" />
+                        </Trigger>
+                        <!-- 鼠标悬浮到复选框，字体加粗 -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="FontWeight" Value="Bold" />
+                        </Trigger>
+                        <!-- 鼠标离开复选框时，字体取消加粗 -->
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter Property="FontWeight" Value="Normal" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </CheckBox.Style>
+        </CheckBox>
+    </StackPanel>
+</Window>

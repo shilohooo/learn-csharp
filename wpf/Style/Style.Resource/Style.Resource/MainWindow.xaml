@@ -1,0 +1,24 @@
+﻿<Window x:Class="Style.Resource.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="WPF Style Resource Example" Height="1080" Width="1920">
+    <!-- 
+    WPF 样式之资源
+    WPF中的资源是指可以在应用中的不同位置重复使用的对象。而拥有这些对象的文件，我们可称为资源文件。这些资源文件可以编译到程序集中，
+    可使用包 URI 来引用一组特殊的 WPF 应用程序代码文件，包括窗口、页面、流文档和资源字典。 例如，可以将 Application.StartupUri 
+    属性设置为包 URI，用于引用要在应用程序启动时加载的窗口或页面。
+    
+    WPF的资源的形式是多样化的，它可以是一个主窗体，也可以是一个画笔，或一个样式，或一个别的对象。关键的一点是，它是一个对象。
+    什么是对象？一个类型被实例化之后，就成了一个对象。所以，从本质上讲，资源就是类型实例化之后的对象。
+    
+    首先，资源是以字典的形式存在于程序中——也就是ResourceDictionary（资源字典）。其次，它们通常保存在Resources属性中。
+    哪些类型有Resources属性？答案是：Application类、FrameworkElement基类和FrameworkContentElement基类。
+    
+    从Resources属性可以分析出——每个控件都可以单独定义资源，因为它们都继承了Resources属性。但是，通常情况下，
+    会在Application中去定义Resources属性，这样全局或所有的控件都可以引用。
+     -->
+    <Grid />
+</Window>

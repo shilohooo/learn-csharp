@@ -1,0 +1,37 @@
+﻿<Application x:Class="Style.HelloWorld.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow.xaml">
+    <!-- 
+    WPF 中的样式
+    什么是样式？样式有什么作用？首先，WPF框架提供了许许多多的控件，而这些控件拥有不同的属性，例如一个button控件的长宽、背景颜色、
+    字体字号、内外边距、边框等，我们可以设置这些属性的值，从而让控件呈现出不同的显示效果。如果有多个button，我们该怎么办呢，
+    每个按钮都去设置一遍属性？显示这是不科学的。于是，我们可以将一系列的属性的设置“集中”起来，将它们定义成一个样式，
+    最后将这个样式再设置到控件上，从而达到“一处定义多处引用”的偷懒行为。
+
+    样式——就是一种将一组属性值应用到多个元素的便捷方法。
+     -->
+    <Application.Resources>
+        <!-- 
+        定义样式：
+        通过 Style 对象定义样式，使用 x:Key 属性指定样式的名称，
+        Style 对象的 TargetType 属性指定样式的作用对象类型。
+         -->
+        <Style x:Key="MyButtonStyle" TargetType="Button">
+            <!--
+             Style 对象的 Setters 属性是一个几何，样式是控件属性的值的“提前设置”，
+             所以，我们对控件属性的值的设置都是以Setter条目的形式，一条一条的放到这个Setters集合中。
+             
+             使用 Setter 对象的 Property 属性指定要设置的属性，使用 Value 属性指定要设置的值。
+             
+             另外，Setter 对象还有一个属性叫 TargetName，顾名思义，目标名称，
+             也就是这一对属性名和值是哪个控件的属性名和值。通常它在定义触发器时使用
+              -->
+            <Setter Property="Width" Value="150" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Background" Value="#1989FA" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,19 @@
+﻿<Window x:Class="Style.HelloWorld.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="WPF Style Example" Height="450" Width="800">
+    <Grid>
+        <!-- 
+        引用样式
+        注意：在引用样式时，有两种方式，分别是DynamicResource和StaticResource，后面再写上样式的名称。
+        DynamicResource表示动态资源，StaticResource表示静态资源。
+        这两者的区别是：静态资源在第一次编译后即确定其对象或值，之后不能对其进行修改。
+        动态资源则是在运行时决定，当运行过程中真正需要时，才到资源目标中查找其值。
+        因此，可以动态地修改它。由于动态资源的运行时才能确定其值，因此效率比静态资源要低。
+         -->
+        <Button Content="测试按钮" Style="{StaticResource MyButtonStyle}" />
+    </Grid>
+</Window>

@@ -1,0 +1,41 @@
+﻿<Window x:Class="Style.ResourceDictionary.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="WPF Style Resource Dictionary Example" Height="450" Width="800">
+    <!--
+    WPF 样式之资源字典
+    
+    Resources属性的值只能是一个ResourceDictionary对象，一个ResourceDictionary对象中可以定义多个资源。
+    如果有多个ResourceDictionary对象，则必须使用MergedDictionaries属性。
+    任意类型都可以在Resources中被实例化，但是必须在实例化时指明一个key，因为在xaml中要引入定义好的资源，都是以key进行查找的。
+     -->
+    <Window.Resources>
+        <Style x:Key="SuccessButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="100" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Background" Value="#67C23A" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+    </Window.Resources>
+    <StackPanel VerticalAlignment="Center">
+        <Button Content="PrimaryButton" Style="{StaticResource PrimaryButtonStyle}" />
+        <Button Content="DangerButton" Style="{StaticResource DangerButtonStyle}" />
+        <Button Content="SuccessButton" Style="{StaticResource SuccessButtonStyle}" />
+        <Button Content="WarningButton">
+            <!-- 直接在元素中定义样式 -->
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Width" Value="100" />
+                    <Setter Property="Height" Value="30" />
+                    <Setter Property="Background" Value="#E6A23C" />
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="Margin" Value="5" />
+                </Style>
+            </Button.Style>
+        </Button>
+    </StackPanel>
+</Window>

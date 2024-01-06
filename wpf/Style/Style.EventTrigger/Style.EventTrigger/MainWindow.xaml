@@ -28,6 +28,7 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </Window.Resources>
+    <!-- 定义触发器 -->
     <Window.Triggers>
         <!-- 当复选框的 Checked 事件发生时，执行 OnCheckedStoryboard 中定义的动画。 -->
         <EventTrigger RoutedEvent="ToggleButton.Checked" SourceName="CheckBox">

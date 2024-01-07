@@ -1,0 +1,33 @@
+﻿<Window x:Class="Wpf.Template.LogicalTree.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="WPF Template Logical Tree Example" Height="450" Width="800">
+    <!-- 
+    WPF 模板之逻辑树
+    逻辑树的用途：有时候，我们需要在后端代码中查找前端XAML某个控件，以便对控件进行某个操作，那么，就可以借助逻辑树来遍历元素。
+    LogicalTreeHelper 类就是专门来遍历查找WPF的逻辑树的。
+    LogicalTreeHelper 类提供用于逻辑树遍历的 GetChildren、GetParent 和 FindLogicalNode 方法。
+     -->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Border
+            Grid.Column="0"
+            Width="300"
+            Background="LightCyan">
+            <Button
+                Content="查看当前逻辑树"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Click="ShowLogicalTree" />
+        </Border>
+        <Border Grid.Column="1">
+            <TreeView x:Name="LogicalTreeView" Margin="5" />
+        </Border>
+    </Grid>
+</Window>

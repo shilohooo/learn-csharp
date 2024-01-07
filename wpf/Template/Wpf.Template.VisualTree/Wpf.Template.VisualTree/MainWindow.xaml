@@ -1,0 +1,25 @@
+﻿<Window x:Class="Wpf.Template.VisualTree.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="WPF Template Visual Tree Example" Height="450" Width="800">
+    <!-- WPF 模板之可视化树 -->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" Width="200" Background="LightCyan">
+            <Button
+                Content="查看可视化树"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Click="ShowVisualTree" />
+        </Border>
+        <Border Grid.Column="1">
+            <TreeView x:Name="VisualTreeView" Margin="10" />
+        </Border>
+    </Grid>
+</Window>

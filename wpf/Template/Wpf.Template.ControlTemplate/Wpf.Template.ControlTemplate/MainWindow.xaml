@@ -1,0 +1,102 @@
+﻿<Window x:Class="Wpf.Template.ControlTemplate.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <!-- 2.将控件模板定义在资源中，这种方式可以重用控件模板 -->
+        <ControlTemplate x:Key="ButtonTemplate" TargetType="Button">
+            <Border
+                Background="#c6d2fc"
+                CornerRadius="8"
+                BorderThickness="1"
+                BorderBrush="#545bad">
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Border>
+        </ControlTemplate>
+    </Window.Resources>
+    <StackPanel>
+        <!-- 控件模板的几种设置方式 -->
+
+        <!-- 1.将控件模板定义在控件中 -->
+        <Button
+            Content="将控件模板定义在控件中"
+            Width="200"
+            Height="40"
+            Margin="10"
+            Foreground="#747787">
+            <Button.Template>
+                <!-- TargetType：表示该控件模板要应用到的控件类型。 -->
+
+                <ControlTemplate TargetType="Button">
+                    <Border
+                        Background="Transparent"
+                        CornerRadius="8"
+                        BorderThickness="1"
+                        BorderBrush="#c9ccd5">
+                        <!-- 
+                            ContentPresenter继承于FrameworkElement，说明它也是一个控件。
+                            从命名上看，它叫内容主持者，本质上它只是一个占座的，为谁占座？
+                            为ContentControl内容控件占座。
+                            因为Button继承于ContentControl，所以Button也有Content属性，
+                            在ContentTemplate中的ContentPresenter可视为等于Content属性。
+                            
+                            ContentPresenter 定义边框属性，使你无需使用其他 Border 元素
+                            即可在 ContentPresenter 周围绘制边框 。属性为 ContentPresenter.BorderBrush、
+                            ContentPresenter.BorderThickness、ContentPresenter.CornerRadius
+                            和 ContentPresenter.Padding。
+                         -->
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <Button
+            Content="将控件模板定义在资源中"
+            Width="200"
+            Height="40"
+            Margin="10"
+            Foreground="#747787"
+            Template="{StaticResource ButtonTemplate}" />
+
+        <!-- 3.将控件模板定义在样式中 -->
+        <Button
+            Content="将控件模板定义在样式中"
+            Width="200"
+            Height="40"
+            Margin="10"
+            Foreground="White">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="#1989fa" CornerRadius="8">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            Text="🙂"
+                                            VerticalAlignment="Center"
+                                            Margin="3"
+                                            FontSize="18" />
+                                        <ContentPresenter
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center" />
+                                    </Grid>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+        </Button>
+    </StackPanel>
+</Window>

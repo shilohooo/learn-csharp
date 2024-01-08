@@ -1,0 +1,103 @@
+﻿<Window x:Class="Wpf.Template.TemplateBinding.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf.Template.TemplateBinding.ViewModel"
+        xmlns:dvm="clr-namespace:Wpf.Template.TemplateBinding.Model"
+        d:DataContext="{d:DesignInstance Type=local:MainViewModel, IsDesignTimeCreatable=True}"
+        mc:Ignorable="d"
+        Title="WPF Template TemplateBinding Example" Height="450" Width="800">
+    <!-- WPF 模板之模板绑定的用法 -->
+    <Window.Resources>
+        <Style
+            x:Key="CardButtonStyle"
+            TargetType="Button"
+            d:DataContext="{d:DesignInstance Type=dvm:Person, IsDesignTimeCreatable=True}">
+            <Setter Property="Background" Value="#e7eaf4" />
+            <Setter Property="Foreground" Value="#20232e" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <!-- 
+                        TemplateBinding：控件中的控件模板属性绑定控件的属性
+                        即数据源为：控件的属性，就像这里的 {TemplateBinding Width}，就是绑定了按钮的宽度
+                        绑定目标为：控件模板的属性，就像这里的 Width 属性
+                        此时：控件模板 Border 的宽度将跟随按钮的宽度变化
+                        
+                        Borer 绑定的 Width、Height、Background 属性来自 Button 控件
+                         -->
+                        <Border
+                            x:Name="Border"
+                            Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}"
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="1"
+                            BorderBrush="Gray">
+                            <Border.ToolTip>
+                                <!-- 将按钮的 Content 放到 ToolTip 中 -->
+                                <ContentPresenter />
+                            </Border.ToolTip>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <StackPanel Grid.Row="0" Margin="20">
+                                    <!-- 该文本块绑定的属性来自 Button 的数据上下文 -->
+                                    <TextBlock
+                                        Text="{Binding Name}"
+                                        Foreground="{TemplateBinding Foreground}"
+                                        FontWeight="Bold"
+                                        FontSize="20" />
+                                    <Rectangle Height="5" />
+                                    <TextBlock
+                                        Text="{Binding Occupation}"
+                                        Foreground="{TemplateBinding Foreground}"
+                                        FontSize="20" />
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                    <TextBlock
+                                        Text="🙂"
+                                        VerticalAlignment="Center"
+                                        Margin="20"
+                                        FontSize="50"
+                                        Foreground="#e26441" />
+                                    <StackPanel Width="150">
+                                        <TextBlock Text="COMPANY NAME" />
+                                        <TextBlock>
+                                            <Run Text="Age: " />
+                                            <Run Text="{Binding Age}" />
+                                        </TextBlock>
+                                        <TextBlock>
+                                            <Run Text="Money: " />
+                                            <Run Text="{Binding Money, StringFormat={}{0:C}}" />
+                                        </TextBlock>
+                                        <TextBlock TextWrapping="Wrap">
+                                            <Run Text="Address: " />
+                                            <Run Text="{Binding Address}" />
+                                        </TextBlock>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#7AAB7D" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <StackPanel>
+        <Button
+            Content="将 ControlTemplate 定义在资源中"
+            Width="280"
+            Height="200"
+            Margin="10"
+            Style="{StaticResource CardButtonStyle}"
+            DataContext="{Binding Person}" />
+    </StackPanel>
+</Window>

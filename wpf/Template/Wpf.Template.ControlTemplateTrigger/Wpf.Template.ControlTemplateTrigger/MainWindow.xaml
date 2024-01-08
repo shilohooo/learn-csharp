@@ -1,0 +1,156 @@
+﻿<Window x:Class="Wpf.Template.ControlTemplateTrigger.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="WPF Template ControlTemplateTrigger Example" Height="450" Width="800">
+    <!-- 
+    WPF 模板之控件模板的触发器：在ControlTemplate中定义了一个Triggers 集合，说明可以定义一些触发器，以实现控件的交互效果。
+     -->
+    <Window.Resources>
+        <!-- 2.将控件模板定义在资源中，这种方式可以重用控件模板 -->
+        <ControlTemplate x:Key="ButtonTemplate" TargetType="Button">
+            <Border
+                Background="#c6d2fc"
+                CornerRadius="8"
+                BorderThickness="1"
+                BorderBrush="#545bad">
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Border>
+
+            <!-- 在 Resources 中定义 ControlTemplate 的触发器。 -->
+            <ControlTemplate.Triggers>
+                <!-- 在鼠标移动到控件上时，改变控件的宽度。 -->
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Width" Value="300" />
+                </Trigger>
+                <!-- 
+                在鼠标移出控件时，恢复控件的宽度
+                注意：在触发器执行时更改了Button的宽度，这个时候，要把Button原先设置的Width删除，
+                因为”就近原则“，直接设置控件的属性值大于天，而在模板中设置控件的属性值的权重要小一些。
+                 -->
+                <Trigger Property="IsMouseOver" Value="False">
+                    <Setter Property="Width" Value="200" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+    <StackPanel>
+        <!-- 控件模板的几种设置方式 -->
+
+        <!-- 1.将控件模板定义在控件中 -->
+        <Button
+            Content="将控件模板定义在控件中"
+            Width="200"
+            Height="40"
+            Margin="10"
+            Foreground="#747787">
+            <Button.Template>
+                <!-- TargetType：表示该控件模板要应用到的控件类型。 -->
+                <ControlTemplate TargetType="Button">
+                    <Border
+                        Background="Transparent"
+                        CornerRadius="8"
+                        BorderThickness="1"
+                        BorderBrush="#c9ccd5">
+                        <!-- 
+                            ContentPresenter继承于FrameworkElement，说明它也是一个控件。
+                            从命名上看，它叫内容主持者，本质上它只是一个占座的，为谁占座？
+                            为ContentControl内容控件占座。
+                            因为Button继承于ContentControl，所以Button也有Content属性，
+                            在ContentTemplate中的ContentPresenter可视为等于Content属性。
+                            
+                            ContentPresenter 定义边框属性，使你无需使用其他 Border 元素
+                            即可在 ContentPresenter 周围绘制边框 。属性为 ContentPresenter.BorderBrush、
+                            ContentPresenter.BorderThickness、ContentPresenter.CornerRadius
+                            和 ContentPresenter.Padding。
+                         -->
+                        <ContentPresenter
+                            x:Name="ContentPresenter"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
+                    </Border>
+
+                    <!-- 直接在控件的 ControlTemplate 中定义 ControlTemplate 触发器。 -->
+                    <ControlTemplate.Triggers>
+                        <!-- 当鼠标进入时，改变按钮的文本内容。 -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Content" Value="MouseOver" TargetName="ContentPresenter" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <Button
+            Content="将控件模板定义在资源中"
+            Height="40"
+            Margin="10"
+            Foreground="#747787"
+            Template="{StaticResource ButtonTemplate}" />
+
+        <!-- 3.将控件模板定义在样式中 -->
+        <Button
+            Content="将控件模板定义在样式中"
+            Width="200"
+            Height="40"
+            Margin="10">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border
+                                    x:Name="Border"
+                                    Background="#1989fa"
+                                    CornerRadius="8">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            Text="🙂"
+                                            VerticalAlignment="Center"
+                                            Margin="3"
+                                            FontSize="18" />
+                                        <ContentPresenter
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center" />
+                                    </Grid>
+                                </Border>
+
+                                <!-- 
+                                在按钮的样式中，定义 ControlTemplate 的触发器。
+                                ControlTemplate中使用触发器，还有一个好处是：可以指定设置某个可视化树中的控件对象。
+                                比如下面这段代码，当鼠标移上去的时候，我们修改了border对象的背景色，
+                                这个背景色其实并不是Button本身的背景颜色，而是Button内部可视化树中的Border的背景颜色。
+                                只需要利用Setter的TargetName属性来指定就行了。
+
+                                而鼠标移上去的时候，我们还修改了Foreground前景颜色，这个Foreground才是Button本身的属性。
+                                说明什么问题？说明ControlTemplate中的触发器不但可以修改控件的属性，
+                                还可以修改控件模板中的可视化树的元素的属性。
+                                 -->
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Foreground" Value="#1989FA" />
+                                        <Setter Property="Background" Value="White" TargetName="Border" />
+                                        <Setter Property="BorderThickness" Value="1" TargetName="Border" />
+                                        <Setter Property="BorderBrush" Value="#1989fa" TargetName="Border" />
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="False">
+                                        <Setter Property="Foreground" Value="White" />
+                                        <Setter Property="Background" Value="#1989FA" TargetName="Border" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+        </Button>
+    </StackPanel>
+</Window>

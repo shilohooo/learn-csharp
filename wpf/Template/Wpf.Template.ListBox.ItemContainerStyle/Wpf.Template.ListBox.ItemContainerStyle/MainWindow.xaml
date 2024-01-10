@@ -1,0 +1,119 @@
+﻿<Window x:Class="Wpf.Template.ListBox.ItemContainerStyle.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf.Template.ListBox.ItemContainerStyle.ViewModel"
+        d:DataContext="{d:DesignInstance Type=local:MainViewModel, IsDesignTimeCreatable=True}"
+        mc:Ignorable="d"
+        Title="WPF Template ListBox ItemContainerStyle Example" Height="450" Width="800">
+    <!-- 
+    WPF 模板之ListBox控件的子项容器样式
+    
+    ListBox展示的每个元素的外围，当鼠标移上去时，会出现一个淡蓝色的边框区域，这是因为在ListBox的父类ItemsControl
+    中定义了一个ItemContainerStyle的样式，这个样式决定了ListBox控件中每个元素的容器外观。
+    在集合控件中，并不是说将一堆元素直接丢到里面呈现，而是先给每个元素分配一个容器，再将它们呈现在集合控件中。
+     -->
+    <Grid>
+        <ScrollViewer>
+            <ListBox ItemsSource="{Binding Persons}">
+                <ItemsControl.ItemsPanel>
+                    <!-- 
+                    通过 ItemsPanelTemplate 定义数据如何布局，例如使用 WrapPanel 作为数据布局模板，
+                    将数据以水平方向排列
+                    
+                    默认使用 StackPanel 或 WrapPanel 作为数据布局模板，
+                    还可以使用其他的布局组件，如：Grid、UniformGrid、Canvas、DockPanel 等。
+                     -->
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <!-- 通过数据模板，可以定义数据以哪种形式展示 -->
+                    <DataTemplate>
+                        <Border
+                            x:Name="Border"
+                            Width="280"
+                            Height="200"
+                            Margin="5"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            BorderBrush="Gray">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <StackPanel Grid.Row="0" Margin="20">
+                                    <TextBlock
+                                        Text="{Binding Name}"
+                                        FontWeight="Bold"
+                                        FontSize="20" />
+                                    <Rectangle Height="5" />
+                                    <TextBlock Text="{Binding Occupation}" />
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <TextBlock
+                                        Text="😀"
+                                        VerticalAlignment="Center"
+                                        Margin="0 0 20 20"
+                                        FontSize="50"
+                                        Foreground="#e26441" />
+                                    <StackPanel Width="150">
+                                        <TextBlock Text="COMPANY NAME" />
+                                        <TextBlock Text="Age: ">
+                                            <Run Text="{Binding Age}" />
+                                        </TextBlock>
+                                        <TextBlock Text="Money: ">
+                                            <Run Text="{Binding Money, StringFormat={}{0:C}}" />
+                                        </TextBlock>
+                                        <TextBlock Text="Address: " TextWrapping="Wrap">
+                                            <Run Text="{Binding Address}" />
+                                        </TextBlock>
+                                        <StackPanel.Style>
+                                            <Style TargetType="StackPanel">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="#1989fa" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </StackPanel.Style>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                        <!-- 定义数据模板触发器 -->
+                        <DataTemplate.Triggers>
+                            <!-- 鼠标移到元素上时，改别背景色 -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <!-- 使用 TargetName 属性指定该样式要作用于哪个控件 -->
+                                <Setter Property="Background" Value="#7aab7d" TargetName="Border" />
+                            </Trigger>
+                        </DataTemplate.Triggers>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <!-- 给ListBoxItem的容器设置样式 -->
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <!-- ItemContainerStyle的Template必须是ControlTemplate -->
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <!-- 给每一个子项的容器设置一个背景色 -->
+                                    <Border
+                                        Background="LightGoldenrodYellow"
+                                        Padding="15"
+                                        Margin="5">
+                                        <ContentPresenter />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
+        </ScrollViewer>
+    </Grid>
+</Window>

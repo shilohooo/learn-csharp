@@ -1,5 +1,4 @@
-﻿using Wpf.Template.DataTemplate;
-using Wpf.Template.ItemsPanelTemplate.Model;
+﻿using Wpf.Template.ItemsPanelTemplate.Model;
 
 namespace Wpf.Template.ItemsPanelTemplate.ViewModel;
 

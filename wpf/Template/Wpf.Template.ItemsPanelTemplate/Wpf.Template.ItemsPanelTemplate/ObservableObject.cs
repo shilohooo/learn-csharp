@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Wpf.Template.DataTemplate;
+namespace Wpf.Template.ItemsPanelTemplate;
 
 public class ObservableObject : INotifyPropertyChanged
 {

@@ -1,6 +1,4 @@
-﻿using Wpf.Template.DataTemplate;
-
-namespace Wpf.Template.ItemsPanelTemplate.Model;
+﻿namespace Wpf.Template.ItemsPanelTemplate.Model;
 
 /// <summary>
 /// 人员信息实体

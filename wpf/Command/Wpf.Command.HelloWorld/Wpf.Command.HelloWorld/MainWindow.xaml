@@ -1,0 +1,38 @@
+﻿<Window x:Class="Wpf.Command.HelloWorld.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf.Command.HelloWorld.ViewModel"
+        mc:Ignorable="d"
+        Title="WPF Command HelloWorld" Height="450" Width="800">
+    <!-- 
+    WPF 命令入门：
+    
+    什么是命令？官方的说法是：命令是WPF 中的一种输入机制，与设备输入相比，它提供的输入处理更侧重于语义级别。
+    这样的解释有点抽象，在实际的使用过程中我们会发现，传统的事件驱动模式下，比如一个按钮的Click单击事件，我们会给它订阅一个回调函数，
+    以便触发该事件时，去执行这个回调函数的业务逻辑代码。
+    
+    事件驱动模式有一个不太好的地方是，它的前端XAML代码和后端的C#代码建立了一种强关联的耦合关系，无法体现WPF的MVVM开发模式的优势，
+    于是，WPF提供了一个ICommand接口，以及一个强大的命令系统，将控件的各种事件都能转换成一个命令。这个命令依然像绑定依赖属性一样，
+    将命令定义成一个ViewModel中的命令属性，而ViewModel又被赋值到控件或窗体的DataContext数据上下文中，
+    于是，窗体内的所有控件的事件都可以绑定这个命令，只要控件的事件被触发，命令将会被执行。
+    
+    ICommand是WPF命令的代码协定，也就是说，WPF中所有的命令都要继承这个接口，不管是预定义命令还是自定义命令。
+    这个接口比较关键的是CanExecute和Execute两个方法成员。前者表示当前命令是否可以执行，如果可以的话，
+    WPF命令系统会自动帮我们去调用Execute方法成员。那么，我们要实现这个接口的话，通常只需要在CanExecute编写一些判断逻辑，
+    在Execute调用一个委托就行了。至于这个委托的的签名和具体的代码内容，则是在实际应用时由开发者去编写不同的业务代码。
+     -->
+    <Window.DataContext>
+        <local:MainViewModel />
+    </Window.DataContext>
+    <Grid>
+        <!-- 绑定一个命令，并通过 CommandParameter 传递一个参数 -->
+        <Button
+            Content="打开"
+            Width="150"
+            Height="30"
+            Command="{Binding OpenCommand}"
+            CommandParameter="{Binding RelativeSource={RelativeSource Self}}" />
+    </Grid>
+</Window>

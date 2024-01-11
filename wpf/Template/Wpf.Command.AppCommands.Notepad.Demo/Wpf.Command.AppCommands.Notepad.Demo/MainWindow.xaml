@@ -1,0 +1,89 @@
+﻿<Window
+    x:Class="Wpf.Command.AppCommands.Notepad.Demo.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WPF 预定义命令 ApplicationCommands 简易记事本开发"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <!--  通过 CommandBinding 对象关联命令  -->
+    <Window.CommandBindings>
+        <!--  打开文件命令  -->
+        <CommandBinding
+            CanExecute="OpenCommandCanExecute"
+            Command="Open"
+            Executed="OpenCommandExecuted" />
+        <!--  剪切文本命令  -->
+        <CommandBinding
+            CanExecute="CutCommandCanExecute"
+            Command="Cut"
+            Executed="CutCommandExecuted" />
+        <!--  文本粘贴命令  -->
+        <CommandBinding
+            CanExecute="PasteCommandCanExecute"
+            Command="Paste"
+            Executed="PasteCommandExecuted" />
+        <!--  保存文件命令  -->
+        <CommandBinding
+            CanExecute="SaveCommandCanExecute"
+            Command="Save"
+            Executed="SaveCommandExecuted" />
+    </Window.CommandBindings>
+    <!--  通过快捷键绑定命令  -->
+    <Window.InputBindings>
+        <!--  KeyBinding 对象可以定义快捷键，并指向某个命令  -->
+        <!--  Ctrl + O 打开文件  -->
+        <KeyBinding
+            Key="O"
+            Command="Open"
+            Gesture="Ctrl" />
+        <!--  Ctrl + X 剪切文本  -->
+        <KeyBinding
+            Key="X"
+            Command="Cut"
+            Gesture="Ctrl" />
+        <!--  Ctrl + V 粘贴文本  -->
+        <KeyBinding
+            Key="V"
+            Command="Paste"
+            Gesture="Ctrl" />
+        <!--  Ctrl + S 保存文件  -->
+        <KeyBinding
+            Key="S"
+            Command="Save"
+            Gesture="Ctrl" />
+    </Window.InputBindings>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <!--  通过按钮绑定命令  -->
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Button
+                Margin="10"
+                Command="Open"
+                Content="打开文件" />
+            <Button
+                Margin="10"
+                Command="Cut"
+                Content="剪切" />
+            <Button
+                Margin="10"
+                Command="Paste"
+                Content="粘贴" />
+            <Button
+                Margin="10"
+                Command="Save"
+                Content="保存" />
+        </StackPanel>
+        <TextBox
+            x:Name="TextBox"
+            Grid.Row="1"
+            Margin="10"
+            TextWrapping="Wrap" />
+    </Grid>
+</Window>

@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using Wpf.Command.CommandBinding.ViewModel;
 
 namespace Wpf.Command.CommandBinding
 {
@@ -11,6 +12,7 @@ namespace Wpf.Command.CommandBinding
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainViewModel();
         }
 
         private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)

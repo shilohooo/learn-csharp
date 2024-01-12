@@ -1,0 +1,69 @@
+﻿<Window
+    x:Class="Wpf.Dp.PropertyChangeCallback.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Wpf.Dp.PropertyChangeCallback.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WPF 依赖属性回调函数示例"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <!--  自定义依赖属性时，可以通过 PropertyMetadata 声明回调函数，从而在属性值改变时执行特定的代码。  -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <controls:TrayControl
+            x:Name="TrayControl"
+            Margin="5"
+            Background="White"
+            Count="{Binding ElementName=CountSlider, Path=Value}"
+            Size="{Binding ElementName=SizeSlider, Path=Value}" />
+        <StackPanel
+            Grid.Row="1"
+            Orientation="Horizontal">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        Margin="5"
+                        VerticalAlignment="Center"
+                        Text="托盘尺寸" />
+                    <Slider
+                        x:Name="SizeSlider"
+                        Width="200"
+                        VerticalAlignment="Center"
+                        Maximum="100"
+                        Value="30" />
+                </StackPanel>
+                <Rectangle Height="5" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        Margin="5"
+                        VerticalAlignment="Center"
+                        Text="托盘数量" />
+                    <Slider
+                        x:Name="CountSlider"
+                        Width="200"
+                        VerticalAlignment="Center"
+                        Maximum="30"
+                        Value="0" />
+                </StackPanel>
+            </StackPanel>
+            <TextBlock
+                Margin="5"
+                VerticalAlignment="Center"
+                Text="当前装配的数量：">
+                <Run Text="{Binding ElementName=TrayControl, Path=SelectedCount}" />
+                <Run Text="总数量：" />
+                <Run Text="{Binding ElementName=TrayControl, Path=Count}" />
+            </TextBlock>
+            <Button
+                Width="50"
+                Height="25"
+                Click="Submit"
+                Content="提交" />
+        </StackPanel>
+    </Grid>
+</Window>

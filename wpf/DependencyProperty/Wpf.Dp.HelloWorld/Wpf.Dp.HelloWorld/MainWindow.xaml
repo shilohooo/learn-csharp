@@ -1,0 +1,55 @@
+﻿<Window
+    x:Class="Wpf.Dp.HelloWorld.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Wpf.Dp.HelloWorld.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WPF 依赖属性示例"
+    Width="800"
+    Height="450"
+    Background="DimGray"
+    mc:Ignorable="d">
+    <!--  使用自定义控件，先引入命名空间  -->
+    <StackPanel>
+        <StackPanel
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
+            <controls:Widget
+                Title="本年度销售总额"
+                Width="250"
+                Height="100"
+                Icon="￥"
+                Value="123456" />
+            <controls:Widget
+                Title="系统访问量"
+                Width="250"
+                Height="100"
+                BorderBrush="#87bee4"
+                Foreground="#415767"
+                Icon="⭐"
+                Value="9999" />
+        </StackPanel>
+        <StackPanel
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
+            <controls:Widget
+                Title="系统访问量"
+                Width="250"
+                Height="100"
+                BorderBrush="#495e26"
+                Foreground="#c1e487"
+                Icon="🚀"
+                Value="9999" />
+            <controls:Widget
+                Title="丰田汽车国际进出口贸易有限公司"
+                Width="250"
+                Height="100"
+                BorderBrush="#cb87e4"
+                FontSize="24"
+                Foreground="#4e3a55"
+                Icon="🚗"
+                Value="股票代码123456" />
+        </StackPanel>
+    </StackPanel>
+</Window>

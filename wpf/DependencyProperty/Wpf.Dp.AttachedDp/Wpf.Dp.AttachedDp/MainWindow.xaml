@@ -1,0 +1,55 @@
+﻿<Window
+    x:Class="Wpf.Dp.AttachedDp.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helper="clr-namespace:Wpf.Dp.AttachedDp.Helper"
+    xmlns:local="clr-namespace:Wpf.Dp.AttachedDp.ViewModel"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WPF 附加属性实战：PasswordBox"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <!--  定义数据上下文  -->
+    <Window.DataContext>
+        <local:MainViewModel />
+    </Window.DataContext>
+    <StackPanel Margin="10">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock
+                Width="45"
+                VerticalAlignment="Center"
+                Text="用户名：" />
+            <TextBox
+                Width="200"
+                Height="25"
+                Text="{Binding Person.Username, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock
+                Margin="5,0"
+                VerticalAlignment="Center"
+                Text="{Binding Person.Username}" />
+        </StackPanel>
+        <Rectangle Height="10" />
+        <StackPanel Orientation="Horizontal">
+            <TextBlock
+                Width="45"
+                VerticalAlignment="Center"
+                Text="密码：" />
+            <PasswordBox
+                Width="200"
+                Height="25"
+                helper:PasswordBoxHelper.Password="{Binding Person.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock
+                Margin="5,0"
+                VerticalAlignment="Center"
+                Text="{Binding Person.Password}" />
+        </StackPanel>
+        <Rectangle Height="10" />
+        <Button
+            Width="200"
+            Height="25"
+            Margin="45,0"
+            HorizontalAlignment="Left"
+            Content="登录" />
+    </StackPanel>
+</Window>

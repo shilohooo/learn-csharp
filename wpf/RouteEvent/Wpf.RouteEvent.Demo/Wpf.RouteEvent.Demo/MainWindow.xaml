@@ -1,0 +1,55 @@
+﻿<Window
+    x:Class="Wpf.RouteEvent.Demo.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Wpf.RouteEvent.Demo.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WPF 路由事件实战"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <!--
+        注册一个路由事件，是向WPF的事件系统注册的，由静态类EventManager提供注册服务，具体则交给RegisterRoutedEvent方法成员完成。
+        public static readonly RouteEvent 路由事件名称 = EventManager.RegisterRoutedEvent(
+        name: "路由事件名称",
+        routingStrategy: RoutingStrategy.Bubble / RoutingStrategy.Tunnel / RoutingStrategy.Direct,
+        handlerType: 路由事件委托的反射实例,
+        ownerType: 路由事件拥有者的反射实例
+        );
+        
+        当一个路由事件注册到WPF的事件系统之后，还需要利用event关键词对其进行包装，包装成普通事件的样子，方便开发者调用。
+        public event RoutedEventHandler 普通事件名称
+        {
+        add { AddHandler(路由事件名称, value); }
+        remove { RemoveHandler(路由事件名称, value); }
+        }
+        
+        最后，寻找合适的时候，利用UIElement基类中的RaiseEvent，触发这个路由事件即可。这样就完成了路由事件的注册流程。
+    -->
+    <Border Background="Transparent">
+        <Canvas Background="Transparent">
+            <controls:Widget
+                Title="第四季度北美市场总销售额统计"
+                Canvas.Left="120"
+                Canvas.Top="20"
+                Width="270"
+                Height="100"
+                Completed="Widget_OnCompleted"
+                Target="1000000"
+                Value="{Binding ElementName=Slider, Path=Value}" />
+            <Slider
+                x:Name="Slider"
+                Canvas.Left="120"
+                Canvas.Top="150"
+                Width="250"
+                Maximum="2000000"
+                Value="0" />
+            <ListBox
+                x:Name="ListBox"
+                Canvas.Left="120"
+                Canvas.Top="200"
+                Height="115" />
+        </Canvas>
+    </Border>
+</Window>

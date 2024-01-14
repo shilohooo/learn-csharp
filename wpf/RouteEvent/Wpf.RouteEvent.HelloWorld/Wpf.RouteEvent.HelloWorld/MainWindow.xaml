@@ -1,0 +1,62 @@
+﻿<Window
+    x:Class="Wpf.RouteEvent.HelloWorld.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WPF 路由事件"
+    Width="800"
+    Height="450"
+    MouseUp="Window_OnMouseUp"
+    PreviewMouseUp="Window_OnPreviewMouseUp"
+    mc:Ignorable="d">
+    <!--
+        WPF 路由事件：在WPF的元素树中，若某一个元素引发了一个事件，那么这个事件会沿着整棵树进行传播，
+        而开发者可以在事件传播的沿途进行侦听（有点像设立关卡打劫）。一旦侦听到这个事件，便可以执行事件的回调函数。
+        当然，只有被声明为RoutedEvent路由事件才具备传播功能。
+        
+        假如用户单击了确定按钮，此时，从整个窗体的视角来看，窗体会说，哎呀，你把我给单击了，且单击的是我其中的确定按钮，
+        于是，这个单击事件首先会经历第一个关卡——Window对象。如果开发者恰好订阅了Window对象的单击事件，
+        那首先被执行的就是Window窗体的单击事件回调函数。紧接着单击事件会经历第二道关卡——Border对象，第三道关卡——Canvas对象，
+        直到确定按钮为止。可见这个单击事件一路经历了4个控件，它们分别是Window->Border->Canvas->Button，
+        开发者可以在这4个控件上去订阅单击事件。像这个从根目录一直路由到事件源对象的路由事件，我们称为隧道事件（预览事件），
+        这类事件都是Preview单词开头。
+        
+        但是，从Button按钮的视角，用户肯定是先单击的我呀，我这里才是事件源，事件应该就像小孩向水中投石之后，
+        平静的水面会泛起一圈圈的涟漪，最终消失在岸边——即最外层的Window窗体对象。那么，此时的事件路由方向就反过来了，
+        Button->Canvas->Border->Window。像这种从事件源一直路由到元素树根的路由事件，我们称为冒泡事件。
+        
+        总结：第一点，从输出结果看，隧道事件是从根元素路由到事件源，冒泡事件是从事件源路由到根元素。
+        第二点，如果同时订阅了隧道事件和冒泡事件，那么两条路由路线都将执行。谁先谁后？隧道事件先完成路由！
+    -->
+
+    <!--  注意：Border、Canvas 控件的背景色必须赋值，才能响应鼠标的点击事件。  -->
+    <Border
+        Background="Transparent"
+        MouseUp="Border_OnMouseUp"
+        PreviewMouseUp="Border_OnPreviewMouseUp">
+        <Canvas
+            Background="Transparent"
+            MouseUp="Canvas_OnMouseUp"
+            PreviewMouseUp="Canvas_OnPreviewMouseUp">
+            <Button
+                Canvas.Left="150"
+                Canvas.Top="100"
+                Width="100"
+                Height="25"
+                Click="ConfirmButton_OnClick"
+                Content="确定"
+                MouseUp="ConfirmButton_OnMouseUp"
+                PreviewMouseUp="ConfirmButton_OnPreviewMouseUp" />
+            <Button
+                Canvas.Left="300"
+                Canvas.Top="100"
+                Width="100"
+                Height="25"
+                Click="CancelButton_OnClick"
+                Content="取消"
+                MouseUp="CancelButton_OnMouseUp"
+                PreviewMouseUp="CancelButton_OnPreviewMouseUp" />
+        </Canvas>
+    </Border>
+</Window>

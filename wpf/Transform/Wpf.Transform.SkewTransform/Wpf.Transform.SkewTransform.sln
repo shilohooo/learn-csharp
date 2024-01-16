@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpf.Transform.SkewTransform", "Wpf.Transform.SkewTransform\Wpf.Transform.SkewTransform.csproj", "{8EB123B2-1D2D-4F29-9D53-371F7DCA2EB0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8EB123B2-1D2D-4F29-9D53-371F7DCA2EB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EB123B2-1D2D-4F29-9D53-371F7DCA2EB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EB123B2-1D2D-4F29-9D53-371F7DCA2EB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EB123B2-1D2D-4F29-9D53-371F7DCA2EB0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,54 @@
+﻿<Window
+    x:Class="Wpf.Transform.HelloWorld.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WPF 转换示例"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <!--
+        在WPF框架中有一个抽象类叫Transform，它定义了实现二维平面中的转换的功能。它包括旋转 (RotateTransform)、缩放 (ScaleTransform)、
+        倾斜 (SkewTransform) 和平移 (TranslateTransform)4个子类。它定义如何将点从一个坐标空间映射或转换到另一个坐标空间。
+        此映射由转换 Matrix 来描述，它是一个三行三列 Double 值的集合。这个类可以实现控件的各种转换，比如放置、缩放、倾斜和平移。
+    -->
+
+    <!--  示例：使用 RotateTransform 围绕默认中心点 (0, 0) 将 Rectangle 元素（一种 FrameworkElement）旋转 45 度。  -->
+    <Canvas Width="200" Height="200">
+        <!--
+            默认情况下，元素会围绕其左上角 (0, 0) 旋转。 RotateTransform、ScaleTransform 和 SkewTransform 类提供 CenterX
+            和 CenterY 属性，以便可以指定应用转换的点。
+        -->
+        <Rectangle
+            Canvas.Left="100"
+            Canvas.Top="100"
+            Width="50"
+            Height="50"
+            Fill="#1989fa"
+            Opacity="1.0">
+            <Rectangle.RenderTransform>
+                <RotateTransform Angle="45" />
+            </Rectangle.RenderTransform>
+        </Rectangle>
+        <!--
+            示例：使用 RotateTransform 将 Rectangle 元素旋转 45 度；
+            但是，这次对 CenterX 和 CenterY 属性进行了设置，使得 RotateTransform 以 (25, 25) 为中心。
+            
+            FrameworkElement定义了两个有关转换的属性，分别是LayoutTransform和RenderTransform，前者在布局步骤前应用转换，
+            后者在布局步骤完成后应用，官方推荐使用RenderTransform，原因是可获得性能优势。另外，因为它们继承自 Animatable 类，
+            所以 Transform 类可以被制作成动画。 若要对 Transform 进行动画处理，请将兼容类型的动画应用到要进行动画处理的属性。
+        -->
+        <Rectangle
+            Canvas.Left="200"
+            Canvas.Top="200"
+            Width="50"
+            Height="50"
+            Fill="#1989fa"
+            Opacity="1.0">
+            <Rectangle.RenderTransform>
+                <RotateTransform Angle="45" CenterX="25" CenterY="25" />
+            </Rectangle.RenderTransform>
+        </Rectangle>
+    </Canvas>
+</Window>

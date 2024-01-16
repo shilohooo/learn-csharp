@@ -1,0 +1,54 @@
+﻿<Window
+    x:Class="Wpf.Transform.SimpleImageViewer.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Wpf.Transform.SimpleImageViewer.ViewModel"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WPF 转换之 TransformGroup 示例：一个简单的图片查看器"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <!--
+        TransformGroup同样继承于Transform，但是它多了一个TransformCollection类型的Children属性，
+        表示可以将多个Transform组合成一个复合转换。复合转换就是将旋转、平移、缩放、倾斜合并起来形成一个集团转换。
+        由于Children是一个集合，所以可以叠加多个不同的转换。
+        
+        下面我们用一个示例演示TransformGroup的用法，开发一款图片查看器demo，在查看图片的时候，可以移动和缩放图片。
+        移动图片需要用到TranslateTransform平移对象，缩放图片需要用到ScaleTransform缩放对象，
+        将两个对象放到TransformGroup的Children属性中，最后将TransformGroup 作用到Image控件上即可。
+        
+        下一步就是在鼠标的操作下，根据当前鼠标坐标位置，不断计算平移位置和缩放倍数，
+        并修改TranslateTransform和ScaleTransform的相关属性，即可完成图片查看器的基本功能。
+    -->
+
+    <Window.DataContext>
+        <local:MainViewModel />
+    </Window.DataContext>
+
+    <Grid>
+        <!--  注意，Canvas一定要设置背景颜色！不然捕捉不到鼠标事件。  -->
+        <Canvas
+            x:Name="Canvas"
+            Background="Transparent"
+            MouseLeftButtonDown="Canvas_OnMouseLeftButtonDown"
+            MouseLeftButtonUp="Canvas_OnMouseLeftButtonUp"
+            MouseMove="Canvas_OnMouseMove"
+            MouseWheel="Canvas_OnMouseWheel">
+            <Image x:Name="Image" Source="pack://application:,,,/Assets/Images/avatar.png" />
+        </Canvas>
+
+        <TextBlock
+            Margin="15"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
+            Foreground="Red">
+            <Run Text="X：" />
+            <Run Text="{Binding X}" />
+            <Run Text="Y：" />
+            <Run Text="{Binding Y}" />
+            <Run Text="Delta：" />
+            <Run Text="{Binding Delta}" />
+        </TextBlock>
+    </Grid>
+</Window>

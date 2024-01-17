@@ -1,0 +1,45 @@
+﻿<Window
+    x:Class="Wpf.Brush.LinearGradientBrush.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WPF 画刷之渐变画刷（LinearGradientBrush）"
+    Width="800"
+    Height="450"
+    MouseMove="MainWindow_OnMouseMove"
+    mc:Ignorable="d">
+    <!--
+        可以从一种颜色过度到另外一种颜色，使被填充的区域呈现渐变效果
+        从定义上看，LinearGradientBrush 有StartPoint 和EndPoint 两个点，表示获取和设置线性渐变的二维起始坐标和结束坐标。而它因为继承于GradientBrush基类，
+        所以它的颜色都保存在GradientStops集合属性中。GradientStops集合中的元素类型必须为GradientStop，表示渐变中转换点的位置和颜色。
+        所以，GradientStop拥有Color属性和Offset属性，分别表示颜色值和偏移值。
+    -->
+    <Grid x:Name="Grid">
+        <Grid.Background>
+            <!--
+                LinearGradientBrush将整个Grid看成是一个0-1的矩形，所以StartPoint=（0，0）表示左上角，EndPoint=（1，1）表示右下角，
+                这就控制了渐变的方向是从左上角到右下角的斜线。GradientStop 对象中的Offset表示在渐变方向上各颜色的占比或起点。
+            -->
+            <LinearGradientBrush StartPoint="0 0" EndPoint="1 1">
+                <!--  绿色占据了整个填充区域50%，并从50%处开始向蓝色进行渐变  -->
+                <GradientStop Offset="0.5" Color="LightGreen" />
+                <GradientStop Offset="1" Color="LightBlue" />
+            </LinearGradientBrush>
+        </Grid.Background>
+        <TextBlock
+            x:Name="TextBlock"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="50"
+            Text="渐变色画刷示例">
+            <TextBlock.Foreground>
+                <LinearGradientBrush>
+                    <GradientStop Offset="0" Color="Gold" />
+                    <GradientStop Offset="0.5" Color="White" />
+                    <GradientStop Offset="1" Color="LightPink" />
+                </LinearGradientBrush>
+            </TextBlock.Foreground>
+        </TextBlock>
+    </Grid>
+</Window>

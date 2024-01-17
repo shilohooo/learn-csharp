@@ -1,0 +1,41 @@
+﻿<Window
+    x:Class="Wpf.Brush.RadialGradientBrush.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WPF 画刷之径向渐变(RadialGradientBrush)"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <!--
+        RadialGradientBrush径向渐变像一个圆一样，从焦点中心位置开始向四周渐变，
+        LinearGradientBrush线性渐变具有用于定义渐变矢量的起点和终点，而径向渐变具有一个圆和一个焦点，用于定义渐变行为。
+        圆定义渐变的终点。 换句话说，渐变停止点为 1.0 定义圆周的颜色。 焦点定义渐变的中心。 渐变停止点为 0.0 定义焦点处的颜色。
+        
+        Center属性：获取或设置径向渐变的最外面圆的中心。
+        RadiusX属性：获取或设置径向渐变的最外面圆的水平半径。默认值为 0.5。
+        RadiusY属性：获取或设置径向渐变的最外面圆的垂直半径。默认值为 0.5。
+        GradientOrigin属性：获取或设置用于定义渐变开始的二维焦点的位置。默认值为 0.5。
+    -->
+    <Grid x:Name="Grid">
+        <Ellipse
+            x:Name="Ellipse"
+            Width="200"
+            Height="200"
+            MouseMove="Ellipse_OnMouseMove">
+            <Ellipse.Fill>
+                <RadialGradientBrush
+                    GradientOrigin="0.25 0.25"
+                    RadiusX="0.75"
+                    RadiusY="0.75">
+                    <RadialGradientBrush.GradientStops>
+                        <GradientStop Offset="0" Color="White" />
+                        <GradientStop Offset="0.65" Color="Goldenrod" />
+                        <GradientStop Offset="0.8" Color="Gray" />
+                    </RadialGradientBrush.GradientStops>
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+    </Grid>
+</Window>

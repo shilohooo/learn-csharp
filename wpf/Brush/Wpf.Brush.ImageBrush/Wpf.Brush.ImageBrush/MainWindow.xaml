@@ -1,0 +1,30 @@
+﻿<Window
+    x:Class="Wpf.Brush.ImageBrush.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WPF 画刷之图像画刷"
+    Width="800"
+    Height="450"
+    MouseWheel="MainWindow_OnMouseWheel"
+    mc:Ignorable="d">
+
+    <Grid x:Name="Grid">
+        <Grid.Background>
+            <!--  Stretch = UniformToFill 表示自适应填充  -->
+            <ImageBrush
+                ImageSource="/Assets/Images/avatar.png"
+                Stretch="UniformToFill"
+                TileMode="Tile">
+                <ImageBrush.Viewport>
+                    <Rect
+                        Width="1"
+                        Height="1"
+                        X="0"
+                        Y="0" />
+                </ImageBrush.Viewport>
+            </ImageBrush>
+        </Grid.Background>
+    </Grid>
+</Window>

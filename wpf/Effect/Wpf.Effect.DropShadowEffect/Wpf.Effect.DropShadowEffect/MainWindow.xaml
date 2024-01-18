@@ -1,0 +1,29 @@
+﻿<Window
+    x:Class="Wpf.Effect.DropShadowEffect.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WPF 特效之阴影特效"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <Grid
+        x:Name="Grid"
+        Background="Transparent"
+        MouseMove="Grid_OnMouseMove">
+        <Button
+            x:Name="Button"
+            Width="150"
+            Height="50"
+            Content="WPF特效之阴影特效">
+            <Button.Effect>
+                <DropShadowEffect
+                    BlurRadius="25"
+                    Direction="45"
+                    ShadowDepth="10"
+                    Color="Gray" />
+            </Button.Effect>
+        </Button>
+    </Grid>
+</Window>

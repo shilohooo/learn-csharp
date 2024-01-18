@@ -1,0 +1,35 @@
+﻿<Window
+    x:Class="Wpf.Effect.BlurEffect.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WPF 特效之模糊特效"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <Grid
+        x:Name="Grid"
+        Background="Transparent"
+        MouseMove="Grid_OnMouseMove">
+        <Ellipse
+            x:Name="Ellipse"
+            Width="200"
+            Height="200">
+            <Ellipse.Effect>
+                <BlurEffect
+                    KernelType="Box"
+                    Radius="0" />
+            </Ellipse.Effect>
+            <Ellipse.Fill>
+                <RadialGradientBrush GradientOrigin="0.25 0.25" RadiusX="0.75" RadiusY="0.75">
+                    <RadialGradientBrush.GradientStops>
+                        <GradientStop Offset="0" Color="White" />
+                        <GradientStop Offset="0.65" Color="Goldenrod" />
+                        <GradientStop Offset="0.8" Color="Gray" />
+                    </RadialGradientBrush.GradientStops>
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+    </Grid>
+</Window>

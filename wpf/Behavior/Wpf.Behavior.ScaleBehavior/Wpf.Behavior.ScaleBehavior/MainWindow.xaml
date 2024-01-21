@@ -1,0 +1,54 @@
+﻿<Window
+    x:Class="Wpf.Behavior.ScaleBehavior.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behavior="clr-namespace:Wpf.Behavior.ScaleBehavior.Behavior"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WPF 行为之控件缩放效果"
+    Width="800"
+    Height="450"
+    Background="DarkCyan"
+    mc:Ignorable="d">
+    <!--
+        利用Behavior行为实现控件的缩放效果。要实现此效果，需要在鼠标的滚轮事件下，
+        通过获取Delta值去设置ScaleTransform缩放对象的ScaleX和ScaleY，从而将控件进行放大或缩小。
+    -->
+    <Canvas>
+        <Border
+            Canvas.Left="230"
+            Canvas.Top="20"
+            Width="50"
+            Height="50"
+            Background="LightGoldenrodYellow"
+            CornerRadius="50">
+            <i:Interaction.Behaviors>
+                <behavior:ScaleBehavior />
+            </i:Interaction.Behaviors>
+        </Border>
+
+        <TextBlock
+            Canvas.Left="100"
+            Canvas.Top="80"
+            FontSize="40"
+            Foreground="White"
+            Text="学习WPF行为之控件缩放效果">
+            <i:Interaction.Behaviors>
+                <behavior:ScaleBehavior />
+            </i:Interaction.Behaviors>
+        </TextBlock>
+
+        <Button
+            Canvas.Left="300"
+            Canvas.Top="200"
+            Width="100"
+            Height="30"
+            Content="退出"
+            FontSize="14">
+            <i:Interaction.Behaviors>
+                <behavior:ScaleBehavior />
+            </i:Interaction.Behaviors>
+        </Button>
+    </Canvas>
+</Window>

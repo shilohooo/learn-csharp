@@ -1,0 +1,56 @@
+﻿<Window
+    x:Class="Wpf.Behavior.DragBehavior.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behavior="clr-namespace:Wpf.Behavior.DragBehavior.Behavior"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WPF 行为之控件移动效果"
+    Width="800"
+    Height="450"
+    Background="DarkCyan"
+    mc:Ignorable="d">
+    <!--
+        关于控件的平移，只需要设置TranslateTransform的X属性和Y属性，使可以移动一个控件的位置。
+        在学习了行为之后，我们肯定不希望一遍又一遍地去实现控件的移动效果，
+        如果将移动效果做成一个行为，那么，任何一个控件，只要想拥有移动效果，直接调用行为即可，岂不快哉。
+    -->
+    <Canvas>
+        <Border
+            Canvas.Left="230"
+            Canvas.Top="20"
+            Width="50"
+            Height="50"
+            Background="LightGoldenrodYellow"
+            CornerRadius="50">
+            <i:Interaction.Behaviors>
+                <behavior:DragBehavior />
+            </i:Interaction.Behaviors>
+        </Border>
+
+        <TextBlock
+            Canvas.Left="20"
+            Canvas.Top="180"
+            FontSize="40"
+            Foreground="White"
+            Text="学习用WPF行为拖动控件">
+            <i:Interaction.Behaviors>
+                <behavior:DragBehavior />
+            </i:Interaction.Behaviors>
+        </TextBlock>
+
+        <!--  这里拖动按钮需要使用鼠标右键  -->
+        <Button
+            Canvas.Left="375"
+            Canvas.Top="265"
+            Width="100"
+            Height="30"
+            Content="退出"
+            FontSize="14">
+            <i:Interaction.Behaviors>
+                <behavior:DragBehavior />
+            </i:Interaction.Behaviors>
+        </Button>
+    </Canvas>
+</Window>

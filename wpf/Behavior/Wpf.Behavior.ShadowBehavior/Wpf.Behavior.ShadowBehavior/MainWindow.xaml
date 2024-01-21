@@ -1,0 +1,51 @@
+﻿<Window
+    x:Class="Wpf.Behavior.ShadowBehavior.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behavior="clr-namespace:Wpf.Behavior.ShadowBehavior.Behavior"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WPF 行为之UIElement阴影效果"
+    Width="800"
+    Height="450"
+    Background="DarkCyan"
+    mc:Ignorable="d">
+    <!--  通过行为给任意控件加阴影  -->
+    <Canvas>
+        <Border
+            Canvas.Left="230"
+            Canvas.Top="20"
+            Width="50"
+            Height="50"
+            Background="LightGoldenrodYellow"
+            BorderThickness="0"
+            CornerRadius="50">
+            <i:Interaction.Behaviors>
+                <behavior:ShadowBehavior />
+            </i:Interaction.Behaviors>
+        </Border>
+
+        <TextBlock
+            Canvas.Left="100"
+            Canvas.Top="80"
+            FontSize="60"
+            Foreground="White"
+            Text="通用的阴影行为">
+            <i:Interaction.Behaviors>
+                <behavior:ShadowBehavior />
+            </i:Interaction.Behaviors>
+        </TextBlock>
+        <Button
+            Canvas.Left="380"
+            Canvas.Top="270"
+            Width="100"
+            Height="30"
+            Content="退出"
+            FontSize="14">
+            <i:Interaction.Behaviors>
+                <behavior:ShadowBehavior />
+            </i:Interaction.Behaviors>
+        </Button>
+    </Canvas>
+</Window>

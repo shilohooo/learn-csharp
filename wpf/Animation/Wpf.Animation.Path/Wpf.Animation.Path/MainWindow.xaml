@@ -1,0 +1,116 @@
+﻿<Window
+    x:Class="Wpf.Animation.Path.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WPF 动画之路径动画"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <!--  路径动画是一种使用 PathGeometry（路径几何）作为输入的动画  -->
+    <Window.Resources>
+        <Storyboard
+            x:Key="PathStoryboard"
+            AutoReverse="True"
+            RepeatBehavior="Forever">
+            <DoubleAnimationUsingPath
+                BeginTime="00:00:00"
+                Source="X"
+                Storyboard.TargetName="EllipseTranslateTransform"
+                Storyboard.TargetProperty="X"
+                Duration="00:00:05">
+                <DoubleAnimationUsingPath.PathGeometry>
+                    <PathGeometry>
+                        <PathGeometry.Figures>
+                            <PathFigure IsFilled="False" StartPoint="5 5">
+                                <BezierSegment
+                                    Point1="200 50"
+                                    Point2=" 50 200"
+                                    Point3="350 250" />
+                            </PathFigure>
+                        </PathGeometry.Figures>
+                    </PathGeometry>
+                </DoubleAnimationUsingPath.PathGeometry>
+            </DoubleAnimationUsingPath>
+            <DoubleAnimationUsingPath
+                BeginTime="00:00:00"
+                Source="Y"
+                Storyboard.TargetName="EllipseTranslateTransform"
+                Storyboard.TargetProperty="Y"
+                Duration="00:00:05">
+                <DoubleAnimationUsingPath.PathGeometry>
+                    <PathGeometry>
+                        <PathGeometry.Figures>
+                            <PathFigure IsFilled="False" StartPoint="5 5">
+                                <BezierSegment
+                                    Point1="200 50"
+                                    Point2=" 50 200"
+                                    Point3="350 250" />
+                            </PathFigure>
+                        </PathGeometry.Figures>
+                    </PathGeometry>
+                </DoubleAnimationUsingPath.PathGeometry>
+            </DoubleAnimationUsingPath>
+        </Storyboard>
+    </Window.Resources>
+    <Canvas x:Name="Canvas" MouseUp="Canvas_OnMouseUp">
+        <Canvas.Triggers>
+            <EventTrigger RoutedEvent="Loaded">
+                <BeginStoryboard Storyboard="{StaticResource PathStoryboard}" />
+            </EventTrigger>
+        </Canvas.Triggers>
+
+        <Canvas.Background>
+            <LinearGradientBrush StartPoint="0.1 0.5" EndPoint="0.8 0.1">
+                <LinearGradientBrush.GradientStops>
+                    <GradientStop Offset="0" Color="LightBlue" />
+                    <GradientStop Offset="0.5" Color="LightGoldenrodYellow" />
+                    <GradientStop Offset="1" Color="LightPink" />
+                </LinearGradientBrush.GradientStops>
+            </LinearGradientBrush>
+        </Canvas.Background>
+
+        <Ellipse
+            x:Name="Ellipse"
+            Canvas.Left="0"
+            Canvas.Top="0"
+            Width="100"
+            Height="100">
+            <Ellipse.RenderTransform>
+                <TranslateTransform x:Name="EllipseTranslateTransform" />
+            </Ellipse.RenderTransform>
+
+            <Ellipse.Fill>
+                <RadialGradientBrush
+                    GradientOrigin="0.25 0.25"
+                    RadiusX="0.75"
+                    RadiusY="0.75">
+                    <RadialGradientBrush.GradientStops>
+                        <GradientStop Offset="0" Color="White" />
+                        <GradientStop Offset="0.65" Color="Goldenrod" />
+                        <GradientStop Offset="0.8" Color="Gray" />
+                    </RadialGradientBrush.GradientStops>
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+
+        <Path
+            Fill="LightPink"
+            Stroke="Black"
+            StrokeThickness="5">
+            <Path.Data>
+                <PathGeometry>
+                    <PathGeometry.Figures>
+                        <PathFigure IsFilled="False" StartPoint="5 5">
+                            <BezierSegment
+                                Point1="200 50"
+                                Point2="50 200"
+                                Point3="350 250" />
+                        </PathFigure>
+                    </PathGeometry.Figures>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
+    </Canvas>
+</Window>

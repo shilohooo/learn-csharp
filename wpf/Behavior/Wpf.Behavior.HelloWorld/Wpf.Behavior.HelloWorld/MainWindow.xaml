@@ -1,0 +1,49 @@
+﻿<Window
+    x:Class="Wpf.Behavior.HelloWorld.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behavior="clr-namespace:Wpf.Behavior.HelloWorld.Behavior"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WPF 行为"
+    Width="800"
+    Height="450"
+    Background="DarkCyan"
+    mc:Ignorable="d">
+    <!--
+        在WPF中，假如需要给Button增加阴影效果，同时又需要给TextBlock增加阴影效果，或者又来了新的需求，连DataGrid也需要增加阴影效果。
+        虽然已经学过如何给一个控件增加阴影效果，那就是在UIElement基类中去设置Effect属性，但是，每个控件都要单独去实现一次阴影效果，
+        未免太繁琐。那又该如何偷懒呢？
+        
+        Behavior类(行为)就是专门用来实现这类需求的。
+        
+        一句话，行为就是某些控件的共同特征的实现。如上所示，既然所有控件都有Effect属性，那干脆将这个特征写成一个行为，哪个控件有这个需求，
+        直接调用这个行为即可。说是调用行为，专业点说，是将这个行业附加到某个控件上。
+        
+        要使用行为，需要引入一个.dll动态库，或者可以在nuget上找到它: 安装Microsoft.Xaml.Behaviors.Wpf这个组件包。
+    -->
+    <Canvas>
+        <TextBlock
+            Canvas.Left="92"
+            Canvas.Top="75"
+            FontSize="60"
+            Foreground="White"
+            Text="学习WPF中的行为">
+            <i:Interaction.Behaviors>
+                <behavior:TextBlockBehavior />
+            </i:Interaction.Behaviors>
+        </TextBlock>
+        <TextBlock
+            Canvas.Left="21"
+            Canvas.Top="182"
+            FontSize="40"
+            Foreground="White"
+            Text="Behavior行为之阴影相关">
+            <!--  定义行为  -->
+            <i:Interaction.Behaviors>
+                <behavior:TextBlockBehavior />
+            </i:Interaction.Behaviors>
+        </TextBlock>
+    </Canvas>
+</Window>

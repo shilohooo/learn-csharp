@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpf.Behavior.HelloWorld", "Wpf.Behavior.HelloWorld\Wpf.Behavior.HelloWorld.csproj", "{580398D4-A66C-4891-B106-B9B1863538D8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{580398D4-A66C-4891-B106-B9B1863538D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{580398D4-A66C-4891-B106-B9B1863538D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{580398D4-A66C-4891-B106-B9B1863538D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{580398D4-A66C-4891-B106-B9B1863538D8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,72 @@
+﻿<Window
+    x:Class="Wpf.Animation.UsingInStyle.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WPF 动画之在样式中使用动画"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <!--
+        只要是在XAML代码中定义和执行动画，都需要用到Trigger中的事件触发器去启动一个动画。
+        除了控件（FrameworkElement基类）拥有Triggers属性，Style样式也拥有Triggers属性，
+        这也就意味着，可以在定义某个控件的Style样式时，再定义一些动画交互。
+    -->
+    <Window.Resources>
+        <Style x:Key="RectangleStyle" TargetType="Rectangle">
+            <Setter Property="Width" Value="50" />
+            <Setter Property="Height" Value="50" />
+            <Setter Property="Margin" Value="10,5" />
+            <Setter Property="StrokeThickness" Value="1" />
+            <Setter Property="Stroke" Value="DarkCyan" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+
+            <Style.Triggers>
+                <!--  控件加载完成时触发动画改变其宽度  -->
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetProperty="Width"
+                                To="450"
+                                Duration="0:0:0.5" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+
+                <!--  鼠标移入控件范围内时,通过动画改为其宽度  -->
+                <EventTrigger RoutedEvent="MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetProperty="Width"
+                                To="350"
+                                Duration="0:0:0.5" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+
+                <!--  鼠标离开控件范围内时,通过动画改变其宽度  -->
+                <EventTrigger RoutedEvent="MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetProperty="Width"
+                                To="50"
+                                Duration="0:0:0.5" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <StackPanel>
+        <Rectangle Fill="LightCoral" Style="{StaticResource RectangleStyle}" />
+        <Rectangle Fill="LawnGreen" Style="{StaticResource RectangleStyle}" />
+        <Rectangle Fill="LightGoldenrodYellow" Style="{StaticResource RectangleStyle}" />
+        <Rectangle Fill="LightGray" Style="{StaticResource RectangleStyle}" />
+        <Rectangle Fill="LightPink" Style="{StaticResource RectangleStyle}" />
+    </StackPanel>
+</Window>

@@ -1,0 +1,15 @@
+﻿<NavigationWindow
+    x:Class="Wpf.Navigation.NavigationWindow.PageWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WPF 导航之导航窗口"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <!--  默认加载Page1  -->
+    <NavigationWindow.Source>
+        Pages/Page1.xaml
+    </NavigationWindow.Source>
+</NavigationWindow>

@@ -1,0 +1,21 @@
+﻿<Page
+    x:Class="Wpf.Navigation.NavigationWindow.Pages.Page2"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Page2"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <Grid>
+        <TextBlock
+            FontSize="40"
+            Foreground="LightGreen"
+            MouseUp="ToPage3"
+            Text="我是Page2，点我跳转到Page3" />
+        <TextBlock
+            x:Name="TimeTextBlock"
+            Margin="0,100,0,0" />
+    </Grid>
+</Page>

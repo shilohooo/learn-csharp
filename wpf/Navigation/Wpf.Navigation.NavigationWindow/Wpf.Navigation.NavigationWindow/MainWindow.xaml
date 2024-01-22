@@ -1,0 +1,16 @@
+﻿<Window
+    x:Class="Wpf.Navigation.NavigationWindow.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WPF 导航之导航窗口（NavigationWindow）"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <!--
+        NavigationWindow表示支持导航内容的窗体。虽然它继承于Window类型，但是，NavigationWindow不可以在XAML直接设置它的Content属性，
+        不过可以在C#代码中实现。当然，这样做并没有什么太大的好处，因为既然它是用来做导航页面的
+    -->
+    <Grid />
+</Window>

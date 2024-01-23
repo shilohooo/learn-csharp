@@ -4,4 +4,5 @@
 - Entity Framework Core：https://www.entityframeworktutorial.net/efcore/entity-framework-core.aspx
   - 版本有点旧的，学完建议去官方看看版本更新日志：https://learn.microsoft.com/zh-cn/ef/core/what-is-new/
 - WPF：https://www.wpfsoft.com/
+- LINQ：https://hzd.plus/2019/08/26/C-%E5%9B%BE%E8%A7%A3%E6%95%99%E7%A8%8B%E4%B9%8BLINQ/
 

@@ -22,4 +22,33 @@ foreach (var evenNumber in evenNumbers2)
 }
 
 // 匿名类型
-var student = new { Name = "shiloh", Age = 26, Gender = "Male", Major = "Computer Science & Technology" };
+// 匿名类型只能和局部变量配合使用，不能用于类成员
+// 由于匿名类型没有名字，必须使用 var 关键字作为变量类型
+// 不能设置匿名类型对象的属性。编译器为匿名类型创建的属性是只读的。
+var student = new
+{
+    Name = "shiloh",
+    Age = 26,
+    Gender = "Male",
+    Major = "Computer Science & Technology"
+};
+Console.WriteLine(
+    $"StudentInfo: [Name={student.Name}, Age={student.Age}, Gender={student.Gender}, Major={student.Major}]"
+);
+
+// 使用投影初始化语句创建匿名类型
+const string major = "History";
+var studentInfo = new
+{
+    Age = 19,
+    Other.Name,
+    Major = major
+};
+Console.WriteLine(
+    $"StudentInfo2: [Age={studentInfo.Age}, Name={studentInfo.Name}, Major={studentInfo.Major}]"
+);
+
+internal abstract class Other
+{
+    public const string Name = "Bruce Lee";
+}

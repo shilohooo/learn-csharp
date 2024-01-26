@@ -44,6 +44,17 @@ var oddNumCount = numbers.Count(myDelegate);
 Console.WriteLine($"Odd Number Count: {oddNumCount}");
 Console.WriteLine();
 
+// 使用 lambda 表达式参数
+var oddNumCountUsingLambda = numbers.Count(x => x % 2 != 1);
+Console.WriteLine($"Odd Number Count Using Lambda: {oddNumCountUsingLambda}");
+Console.WriteLine();
+
+// 使用匿名方法替代 lambda 表达式
+var anonymousMethod = delegate(int x) { return x % 2 != 0; };
+var oddNumCount2 = numbers.Count(anonymousMethod);
+Console.WriteLine($"Odd Number Count Using Anonymous Method: {oddNumCount2}");
+Console.WriteLine();
+
 return;
 
 // 判断一个数是否为奇数

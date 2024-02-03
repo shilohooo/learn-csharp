@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Data;
 using Microsoft.EntityFrameworkCore;
 using Wpf.Integration.EfCore.Context;
+using Wpf.Integration.EfCore.Models;
 
 namespace Wpf.Integration.EfCore;
 
@@ -64,5 +65,17 @@ public partial class MainWindow : Window
         // 强制让 DataGrid 控件刷新数据到最新值
         CategoryDataGrid.Items.Refresh();
         ProductsDataGrid.Items.Refresh();
+    }
+
+    private void EditCategory(object sender, RoutedEventArgs e)
+    {
+        if (CategoryDataGrid.SelectedItem is not Category category)
+        {
+            return;
+        }
+
+        Console.WriteLine($"Selected Item: {category}");
+
+        category.Name = "New Category";
     }
 }

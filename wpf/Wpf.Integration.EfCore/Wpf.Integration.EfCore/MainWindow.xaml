@@ -32,6 +32,24 @@
                     Width="*"
                     Binding="{Binding Name}"
                     Header="产品类别名称" />
+                <DataGridTemplateColumn Width="*" Header="操作">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button
+                                    Width="50"
+                                    Margin="0,0,10,0"
+                                    HorizontalAlignment="Left"
+                                    Click="EditCategory"
+                                    Content="编辑" />
+                                <Button
+                                    Width="50"
+                                    HorizontalAlignment="Left"
+                                    Content="删除" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
         <DataGrid

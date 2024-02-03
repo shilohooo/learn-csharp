@@ -63,10 +63,14 @@ public partial class MainWindow : Window
         _productContext.SaveChanges();
 
         // 强制让 DataGrid 控件刷新数据到最新值
-        CategoryDataGrid.Items.Refresh();
-        ProductsDataGrid.Items.Refresh();
+        Reload();
     }
 
+    /// <summary>
+    /// 修改产品类别
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void EditCategory(object sender, RoutedEventArgs e)
     {
         if (CategoryDataGrid.SelectedItem is not Category category)
@@ -77,5 +81,38 @@ public partial class MainWindow : Window
         Console.WriteLine($"Selected Item: {category}");
 
         category.Name = "New Category";
+    }
+
+    /// <summary>
+    /// 删除产品类别以及其下的所有产品信息
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void DeleteCategory(object sender, RoutedEventArgs e)
+    {
+        if (CategoryDataGrid.SelectedItem is not Category category)
+        {
+            return;
+        }
+
+        var tips = $"您确定要删除名称为【{category.Name}】的产品类别吗？\n请注意：这将会同时删除该产品类别下的所有产品信息！！！";
+        var result = MessageBox.Show(tips, "提示", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+        if (result != MessageBoxResult.Yes)
+        {
+            return;
+        }
+
+        _productContext.Categories.Remove(category);
+        _productContext.SaveChanges();
+        Reload();
+    }
+
+    /// <summary>
+    /// 重新加载数据
+    /// </summary>
+    private void Reload()
+    {
+        CategoryDataGrid.Items.Refresh();
+        ProductsDataGrid.Items.Refresh();
     }
 }

@@ -45,6 +45,7 @@
                                 <Button
                                     Width="50"
                                     HorizontalAlignment="Left"
+                                    Click="DeleteCategory"
                                     Content="删除" />
                             </StackPanel>
                         </DataTemplate>

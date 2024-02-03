@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Wpf.Integration.EfCore.Models;
 
 namespace Wpf.Integration.EfCore.Context;
@@ -28,6 +29,6 @@ public class ProductContext : DbContext
         const string connStr = @"Server=(localdb)\mssqllocaldb;Database=ProductDb;Trusted_Connection=True;";
         // UseLazyLoadingProxies() 方法启用延迟加载代理
         // 当父实体访问子实体时，EF 会自动加载子实体
-        optionsBuilder.UseSqlServer(connStr).UseLazyLoadingProxies().LogTo(Console.WriteLine);
+        optionsBuilder.UseSqlServer(connStr).UseLazyLoadingProxies().LogTo(Console.WriteLine, LogLevel.Information);
     }
 }

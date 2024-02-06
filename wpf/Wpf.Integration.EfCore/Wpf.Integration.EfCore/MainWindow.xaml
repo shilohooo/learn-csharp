@@ -1,0 +1,89 @@
+﻿<Window
+    x:Class="Wpf.Integration.EfCore.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="MainWindow"
+    Width="800"
+    Height="450"
+    Loaded="LoadCategories"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <!--  定义集合视图数据源  -->
+        <CollectionViewSource x:Key="CategoryViewSource" />
+        <CollectionViewSource x:Key="CategoryProductViewSource" Source="{Binding Products, Source={StaticResource CategoryViewSource}}" />
+    </Window.Resources>
+    <Grid>
+        <DataGrid
+            x:Name="CategoryDataGrid"
+            Margin="13,13,43,229"
+            AutoGenerateColumns="False"
+            ItemsSource="{Binding Source={StaticResource CategoryViewSource}}"
+            RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <!--  注意：产品类型编号设置为只读，这是因为它的值由数据库生成，不能由用户修改  -->
+                <DataGridTextColumn
+                    Width="SizeToHeader"
+                    Binding="{Binding CategoryId}"
+                    Header="产品列表编号"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Name}"
+                    Header="产品类别名称" />
+                <DataGridTemplateColumn Width="*" Header="操作">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button
+                                    Width="50"
+                                    Margin="0,0,10,0"
+                                    HorizontalAlignment="Left"
+                                    Click="EditCategory"
+                                    Content="编辑" />
+                                <Button
+                                    Width="50"
+                                    HorizontalAlignment="Left"
+                                    Click="DeleteCategory"
+                                    Content="删除" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid
+            x:Name="ProductsDataGrid"
+            Margin="13,205,43,108"
+            AutoGenerateColumns="False"
+            EnableRowVirtualization="True"
+            ItemsSource="{Binding Source={StaticResource CategoryProductViewSource}}"
+            RenderTransformOrigin="0.488 0.251"
+            RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Width="SizeToHeader"
+                    Binding="{Binding CategoryId}"
+                    Header="产品类别编号"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Width="SizeToHeader"
+                    Binding="{Binding ProductId}"
+                    Header="产品编号"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Name}"
+                    Header="产品名称" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button
+            Width="123"
+            Height="20"
+            Margin="0,270,0,0"
+            HorizontalAlignment="Center"
+            Click="SaveProducts"
+            Content="Save" />
+    </Grid>
+</Window>

@@ -1,4 +1,5 @@
-﻿using EfCore.MySql.Crud.Context;
+﻿using System.Linq.Expressions;
+using EfCore.MySql.Crud.Context;
 using EfCore.MySql.Crud.Model;
 using Microsoft.EntityFrameworkCore;
 
@@ -62,11 +63,42 @@ public class StudentRepository(SchoolContext schoolContext)
     /// <returns>学生信息列表</returns>
     public List<Student>? FindAll()
     {
+        // 使用表达式树构建动态查询条件
+        var parameterExpression = Expression.Parameter(typeof(Student));
+
+        // 根据姓名模糊查询 where name like ?
+        // 1.声明属性表达式
+        var nameExp = Expression.Property(parameterExpression, typeof(Student), "Name");
+        // 2.声明值表达式
+        Expression<Func<object>> nameValExp = () => "赵六";
+        // 3.转换值表达式类型
+        var nameConvertExp = Expression.Convert(nameValExp.Body, nameExp.Type);
+        // 4.声明条件表达式
+        var strContainsMethod = typeof(string).GetMethod("Contains", [typeof(string)])!;
+        var nameEqExp = Expression.Call(nameExp, strContainsMethod, nameConvertExp);
+
+        // 根据年龄范围查询 where age >= ? and age <= ?
+        var minAgeExp = Expression.Property(parameterExpression, typeof(Student), "Age");
+        Expression<Func<object>> minAgeValExp = () => 16;
+        var ageGoeExp = Expression.GreaterThanOrEqual(
+            minAgeExp, Expression.Convert(minAgeValExp.Body, minAgeExp.Type)
+        );
+        var maxAgeExp = Expression.Property(parameterExpression, typeof(Student), "Age");
+        Expression<Func<object>> maxAgeValExp = () => 18;
+        var ageLoeExp = Expression.LessThanOrEqual(
+            maxAgeExp, Expression.Convert(maxAgeValExp.Body, maxAgeExp.Type)
+        );
+        var ageBetweenExp = Expression.AndAlso(ageGoeExp, ageLoeExp);
+
+        // 拼接条件 where name = ? and (age >= ? and age <= ?)
+        // var andCondition = Expression.AndAlso(nameEqExp, ageGoeExp);
+        // 拼接条件 where name = ? or (age >= ? and age <= ?)
+        var andCondition = Expression.OrElse(nameEqExp, ageBetweenExp);
+
         return schoolContext.Student?
             .Include(student => student.StudentFace)
+            .Where(Expression.Lambda<Func<Student, bool>>(andCondition, parameterExpression))
             .OrderByDescending(student => student.Age)
-            .Skip((2 - 1) * 2)
-            .Take(2)
             .ToList();
     }
 

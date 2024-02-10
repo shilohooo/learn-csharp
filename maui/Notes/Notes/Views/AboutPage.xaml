@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Notes.Views.AboutPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:Notes.Models"
+    Title="About">
+    <!--  使用属性元素语法定义绑定上下文  -->
+    <ContentPage.BindingContext>
+        <models:About />
+    </ContentPage.BindingContext>
+    <!--  ContentPage 只能有一个子元素  -->
+    <VerticalStackLayout Margin="10" Spacing="10">
+        <!--  VerticalStackLayout 可以有多个子元素，该布局使子元素垂直排列  -->
+        <HorizontalStackLayout Spacing="10">
+            <!--  HorizontalStackLayout 使子元素水平排列  -->
+
+            <!--  MAUI 会自动将 SVG图像转换为 PNG 图像  -->
+            <Image
+                HeightRequest="64"
+                SemanticProperties.Description="The dot net bot waving hello!"
+                Source="dotnet_bot.png" />
+            <!--
+                数据绑定语法：{Binding PATH}
+                数据绑定将在运行时处理，它允许返回动态的绑定值
+                PATH 指的是要绑定的属性路径
+                可绑定的属性来自于当前控件的绑定上下文中
+                Label 控件没有设置绑定上下文，它的绑定上下文继承自父控件
+                设置了绑定上下文的父对象是根元素 ContentPage
+                
+                位于绑定上下文中的对象是 About 模型类的实例
+                其他一个 Label 控件的绑定路径将 Label 的 Text属性绑定到
+                了 About 模型类的 Title 属性
+            -->
+            <Label
+                FontAttributes="Bold"
+                FontSize="22"
+                Text="{Binding Title}"
+                VerticalOptions="End" />
+            <Label
+                FontSize="22"
+                Text="{Binding Version}"
+                VerticalOptions="End" />
+        </HorizontalStackLayout>
+
+        <Label Text="{Binding Message}" />
+        <Label x:Name="TimeLabel" />
+        <Button Clicked="LearnMore_Clicked" Text="Learn more..." />
+    </VerticalStackLayout>
+</ContentPage>

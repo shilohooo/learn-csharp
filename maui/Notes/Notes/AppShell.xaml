@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="Notes.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Notes.Views"
+    Title="Notes"
+    Shell.FlyoutBehavior="Disabled">
+    <!--
+        XML 命名空间引入 .NET 命名空间的定义格式为：
+        xmlns:{XML namespace name}="clr-namespace:{.NET namespace}"
+        如上面的：xmlns:local="clr-namespace:Notes.Views"
+        
+        通常会把 local 命名空间映射到项目根命名空间，就像本项目的 Notes
+    -->
+    <TabBar>
+        <!--
+            每个 ShellContent 都指向一个页面，用于显示页面内容，这是使用 ContentProperty 属性设置的
+            OnPlatform 定义每个平台使用的资源，每个平台默认使用 icon_notes.png，
+            而 iOS 和 MacCatalyst 使用的是 icon_notes_ios.png
+        -->
+        <ShellContent
+            Title="Notes"
+            ContentTemplate="{DataTemplate views:AllNotesPage}"
+            Icon="{OnPlatform 'icon_notes.png',
+                              iOS='icon_notes_ios.png',
+                              MacCatalyst='icon_notes_ios.png'}"
+            Route="MainPage" />
+        <ShellContent
+            Title="About"
+            ContentTemplate="{DataTemplate views:AboutPage}"
+            Icon="{OnPlatform 'icon_about.png',
+                              iOS='icon_about_ios.png',
+                              MacCatalyst='icon_about_ios.png'}"
+            Route="AboutPage" />
+    </TabBar>
+</Shell>

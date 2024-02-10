@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Notes.Views.NotePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Note">
+    <VerticalStackLayout Margin="5" Spacing="10">
+        <!--  多行文本编辑器控件  -->
+        <Editor
+            x:Name="TextEditor"
+            HeightRequest="100"
+            Placeholder="Enter your note..."
+            Text="{Binding Text}" />
+        <!--
+            Grid布局控件，定义列和行用于创建单元格
+            子控件都是放在单元格里面的
+            默认包含一行一列，也就是创建了一个单元格
+            列通常跟随宽度一起定义，* 号表示占满空间
+            ColumnDefinitions 定义列，多列使用逗号分隔
+            
+            行和列的索引从0开始
+        -->
+        <Grid ColumnDefinitions="*,*" ColumnSpacing="4">
+            <!--  如果一个控件没有指定它所在的列或行，那么它默认是在第一列/第一行  -->
+            <Button Clicked="SaveNote" Text="Save" />
+            <!--  可以使用 Grid.Column 属性指定控件所在的列  -->
+            <Button
+                Grid.Column="1"
+                Clicked="DeleteNote"
+                Text="Delete" />
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>

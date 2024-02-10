@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Notes.Views.AllNotesPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Your Notes">
+    <!--
+        添加子项按钮到工具栏，通常显示在顶部，
+        当这些按钮被点击后，将会触发 Clicked 事件
+        就像一个普通的按钮一样
+    -->
+    <ContentPage.ToolbarItems>
+        <!--
+            IconImageSource：设置按钮图标
+            FontImage：可以将一个简单的字体用作图片
+        -->
+        <ToolbarItem
+            Clicked="AddNote"
+            IconImageSource="{FontImage Glyph='+',
+                                        Color=White,
+                                        Size=22}"
+            Text="Add" />
+    </ContentPage.ToolbarItems>
+    <StackLayout>
+        <Button
+            Margin="10"
+            Clicked="AddNote"
+            Text="Add New Note" />
+        <!--  将笔记显示到一个列表中  -->
+        <CollectionView
+            x:Name="notesCollection"
+            Margin="20"
+            ItemsSource="{Binding Notes}"
+            SelectionChanged="SelectionChanged"
+            SelectionMode="Single">
+            <!--  设置列表子项布局方式  -->
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+
+            <!--  定义每一个子项的外观  -->
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <Label FontSize="22" Text="{Binding Text}" />
+                        <Label
+                            FontSize="24"
+                            Text="{Binding Date}"
+                            TextColor="Silver" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </StackLayout>
+</ContentPage>

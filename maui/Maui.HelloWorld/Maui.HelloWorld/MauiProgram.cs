@@ -1,4 +1,6 @@
-﻿namespace Maui.HelloWorld
+﻿using Microsoft.Extensions.Logging;
+
+namespace Maui.HelloWorld
 {
     public static class MauiProgram
     {
@@ -14,7 +16,7 @@
                 });
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

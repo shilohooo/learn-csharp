@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
+
 <ContentPage
     x:Class="Notes.Views.AllNotesPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Your Notes">
+    xmlns:vm="clr-namespace:Notes.ViewModels"
+    Title="Your Notes"
+    NavigatedTo="AllNotesPage_OnNavigatedTo">
+    <ContentPage.BindingContext>
+        <vm:NotesViewModel />
+    </ContentPage.BindingContext>
     <!--
         添加子项按钮到工具栏，通常显示在顶部，
         当这些按钮被点击后，将会触发 Clicked 事件
@@ -15,7 +21,7 @@
             FontImage：可以将一个简单的字体用作图片
         -->
         <ToolbarItem
-            Clicked="AddNote"
+            Command="{Binding NewCommand}"
             IconImageSource="{FontImage Glyph='+',
                                         Color=White,
                                         Size=22}"
@@ -24,14 +30,20 @@
     <StackLayout>
         <Button
             Margin="10"
-            Clicked="AddNote"
+            Command="{Binding NewCommand}"
             Text="Add New Note" />
-        <!--  将笔记显示到一个列表中  -->
+        <!--
+            将笔记显示到一个列表中
+            SelectionChangedCommand：当用户选择一个笔记时，触发命令
+            SelectionChangedCommandParameter：当命令触发时，传递参数给命令
+            参数为当前选择的笔记
+        -->
         <CollectionView
-            x:Name="notesCollection"
+            x:Name="NotesCollection"
             Margin="20"
-            ItemsSource="{Binding Notes}"
-            SelectionChanged="SelectionChanged"
+            ItemsSource="{Binding AllNotes}"
+            SelectionChangedCommand="{Binding SelectNoteCommand}"
+            SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}"
             SelectionMode="Single">
             <!--  设置列表子项布局方式  -->
             <CollectionView.ItemsLayout>

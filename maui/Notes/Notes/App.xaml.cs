@@ -1,4 +1,6 @@
-﻿namespace Notes
+﻿using Microsoft.Maui.Controls;
+
+namespace Notes
 {
     public partial class App : Application
     {

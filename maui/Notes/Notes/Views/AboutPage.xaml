@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
+
 <ContentPage
     x:Class="Notes.Views.AboutPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:models="clr-namespace:Notes.Models"
+    xmlns:vm="clr-namespace:Notes.ViewModels"
     Title="About">
     <!--  使用属性元素语法定义绑定上下文  -->
     <ContentPage.BindingContext>
-        <models:About />
+        <vm:AboutViewModel />
     </ContentPage.BindingContext>
     <!--  ContentPage 只能有一个子元素  -->
     <VerticalStackLayout Margin="10" Spacing="10">
@@ -44,7 +45,12 @@
         </HorizontalStackLayout>
 
         <Label Text="{Binding Message}" />
-        <Label x:Name="TimeLabel" />
-        <Button Clicked="LearnMore_Clicked" Text="Learn more..." />
+        <!--
+            许多控件都有 Command 属性，它可以绑定某个命令属性，在用户与控件交互时调用
+            在按钮中使用 Command 属性时，绑定的命令将在用户点击按钮时被调用，就像 Clicked 事件一样
+            当调用命令时，它将会运行 AboutViewModel 中 ShowMoreInfo 方法里面的代码
+            打开系统默认浏览器，并跳转到指定页面
+        -->
+        <Button Command="{Binding ShowMoreInfoCommand}" Text="更新信息..." />
     </VerticalStackLayout>
 </ContentPage>

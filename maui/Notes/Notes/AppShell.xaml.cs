@@ -1,4 +1,7 @@
-﻿namespace Notes
+﻿using Microsoft.Maui.Controls;
+using Notes.Views;
+
+namespace Notes
 {
     public partial class AppShell : Shell
     {
@@ -9,7 +12,7 @@
             // 定义在 TabBar 控件中的页面将自动注册为路由
             // RegisterRoute() 方法的第一个参数是页面 URL，比如这里为："NotePage"
             // 第二个参数是页面的类型
-            Routing.RegisterRoute(nameof(Views.NotePage), typeof(Views.NotePage));
+            Routing.RegisterRoute(nameof(NotePage), typeof(NotePage));
         }
     }
 }

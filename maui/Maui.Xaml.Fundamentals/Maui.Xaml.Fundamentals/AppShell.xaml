@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+
 <Shell
     x:Class="Maui.Xaml.Fundamentals.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Maui.Xaml.Fundamentals"
-    Shell.FlyoutBehavior="Disabled"
-    Title="Maui.Xaml.Fundamentals">
-
+    Title="Maui.Xaml.Fundamentals"
+    FlyoutBehavior="Disabled">
+    <!--  在此处设置了应用启动后要显示的第一个页面  -->
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"

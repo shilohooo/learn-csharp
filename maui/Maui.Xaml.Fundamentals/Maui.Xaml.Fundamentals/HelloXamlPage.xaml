@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Maui.Xaml.Fundamentals.HelloXamlPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="HelloXaml">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <!--  设置该页面在安卓平台上的内边距，其他平台使用默认值  -->
+            <On Platform="Android" Value="10,10,10,0" />
+        </OnPlatform>
+    </ContentPage.Padding>
+    <StackLayout Padding="10" Spacing="10">
+        <Slider
+            Maximum="100"
+            Minimum="0"
+            ValueChanged="Slider_ValueChanged"
+            VerticalOptions="Center"
+            Value="10" />
+        <Label
+            x:Name="SliderValueLabel"
+            FontSize="18"
+            HorizontalOptions="Center"
+            Text="xaml 页面导航"
+            VerticalOptions="Center" />
+        <Button
+            Clicked="DisplayAlertMsg"
+            HorizontalOptions="Center"
+            Text="Click Me!"
+            VerticalOptions="Center" />
+        <Grid>
+            <!--  使用属性元素实例化对象  -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="100" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="100" />
+            </Grid.ColumnDefinitions>
+            <!--
+                使用 Grid.Row、Grid.Column 附加属性来指定元素所在的行和列，默认为：0
+                还可以使用 Grid.RowSpan、Grid.ColumnSpan 附加属性来指定元素是否跨行和跨列，默认值为：1
+            -->
+            <Label
+                Background="LightBlue"
+                Text="自动设置大小的单元格"
+                TextColor="White" />
+            <BoxView Grid.Column="1" Color="Silver" />
+            <BoxView Grid.Row="1" Color="Teal" />
+            <Label
+                Grid.Row="1"
+                Grid.Column="1"
+                Background="Aqua"
+                HorizontalTextAlignment="Center"
+                Text="左侧剩余空间"
+                TextColor="Purple"
+                VerticalTextAlignment="Center" />
+            <Label
+                Grid.RowSpan="2"
+                Grid.Column="2"
+                Background="Blue"
+                HorizontalTextAlignment="Center"
+                Text="跨两行"
+                TextColor="Yellow"
+                VerticalTextAlignment="Center" />
+            <Label
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                Background="Yellow"
+                HorizontalTextAlignment="Center"
+                Text="跨两列"
+                TextColor="Blue"
+                VerticalTextAlignment="Center" />
+            <Label
+                Grid.Row="2"
+                Grid.Column="2"
+                Background="Red"
+                HorizontalTextAlignment="Center"
+                Text="固定宽高 100x100"
+                TextColor="Aqua"
+                VerticalTextAlignment="Center" />
+        </Grid>
+    </StackLayout>
+</ContentPage>

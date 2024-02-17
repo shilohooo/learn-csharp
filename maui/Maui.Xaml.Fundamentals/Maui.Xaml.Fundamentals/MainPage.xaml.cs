@@ -2,22 +2,20 @@
 
 public partial class MainPage : ContentPage
 {
-    int count = 0;
-
     public MainPage()
     {
+        // 调用该方法初始化 XAML 文件中定义的所有对象
+        // 并将事件处理器附加到 XAML 文件的事件集中
         InitializeComponent();
     }
 
-    private void OnCounterClicked(object sender, EventArgs e)
+    /// <summary>
+    /// 页面跳转
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private async void GoToAsync(object sender, EventArgs e)
     {
-        count++;
-
-        if (count == 1)
-            CounterBtn.Text = $"Clicked {count} time";
-        else
-            CounterBtn.Text = $"Clicked {count} times";
-
-        SemanticScreenReader.Announce(CounterBtn.Text);
+        await Navigation.PushAsync(new HelloXamlPage());
     }
 }

@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34607.119
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crud.Domain", "Crud.Domain\Crud.Domain.csproj", "{C64D6DF7-C8D7-412E-84E0-0D8E7CFC7DAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crud.EFCore", "Crud.EFCore\Crud.EFCore.csproj", "{A3AA123D-7D7C-4C85-89C3-8AE10A2E6573}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crud.UI", "Crud.UI\Crud.UI.csproj", "{CE3470EB-2AD9-4BF6-B2C0-43F5AF30B24E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C64D6DF7-C8D7-412E-84E0-0D8E7CFC7DAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C64D6DF7-C8D7-412E-84E0-0D8E7CFC7DAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C64D6DF7-C8D7-412E-84E0-0D8E7CFC7DAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C64D6DF7-C8D7-412E-84E0-0D8E7CFC7DAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3AA123D-7D7C-4C85-89C3-8AE10A2E6573}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3AA123D-7D7C-4C85-89C3-8AE10A2E6573}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3AA123D-7D7C-4C85-89C3-8AE10A2E6573}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3AA123D-7D7C-4C85-89C3-8AE10A2E6573}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE3470EB-2AD9-4BF6-B2C0-43F5AF30B24E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE3470EB-2AD9-4BF6-B2C0-43F5AF30B24E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE3470EB-2AD9-4BF6-B2C0-43F5AF30B24E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE3470EB-2AD9-4BF6-B2C0-43F5AF30B24E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {17CA99DA-5F6C-4782-BC26-EAEDDF40EC55}
+	EndGlobalSection
+EndGlobal

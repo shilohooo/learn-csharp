@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shiloh.Wpf.Toolkit", "Shiloh.Wpf.Toolkit\Shiloh.Wpf.Toolkit.csproj", "{CD0BA1BF-A6ED-4D6F-A3C0-9EE9629FEC75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shiloh.Wpf.Toolkit.Samples", "Shiloh.Wpf.Toolkit.Samples\Shiloh.Wpf.Toolkit.Samples.csproj", "{3B350427-3A5F-4411-8678-22D56C09CD53}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CD0BA1BF-A6ED-4D6F-A3C0-9EE9629FEC75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD0BA1BF-A6ED-4D6F-A3C0-9EE9629FEC75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD0BA1BF-A6ED-4D6F-A3C0-9EE9629FEC75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD0BA1BF-A6ED-4D6F-A3C0-9EE9629FEC75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B350427-3A5F-4411-8678-22D56C09CD53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B350427-3A5F-4411-8678-22D56C09CD53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B350427-3A5F-4411-8678-22D56C09CD53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B350427-3A5F-4411-8678-22D56C09CD53}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4A0F08A2-5703-4D8A-9CD7-2AC668578672}
+	EndGlobalSection
+EndGlobal

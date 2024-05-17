@@ -1,18 +1,18 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using System.Text.RegularExpressions;
 using SqlParser;
 using SqlParser.Ast;
 using SqlParser.Dialects;
 
-Console.WriteLine("Hello, World!");
 // 解析建表语句
-// language=mysql
+// 
 const string sql = """
                    create table T_Users(
-                       id bigint primary key comment 'ID',
-                       username varchar(255) not null comment 'Username'
-                   ) comment 'UserInfo Table'
+                       id bigint primary key,
+                       username varchar(50) not null,
+                       address nvarchar(255) not null,
+                       gender char(1)
+                   )
                    """;
 var parser = new Parser();
 const string dbType = "mysql";
@@ -22,29 +22,28 @@ Dialect dialect = dbType.ToUpper() switch
     _ => new MsSqlDialect()
 };
 var ast = parser.ParseSql(sql, dialect);
-Console.WriteLine(ast.ToSql());
 var createTable = ast.First() as Statement.CreateTable;
 // 获取表名称
 Console.WriteLine($"Table name：{createTable?.Name}");
 // 获取表注释
 Console.WriteLine($"Table comment：{createTable?.Comment}");
+Console.WriteLine("============================================================");
 // 获取字段列表
 var columnDefs = createTable?.Columns.ToList();
 if (columnDefs is null) return;
+// key = 表字段类型，value = 表字段类型对应的语言数据类型
+var typeMap = new Dictionary<Type, string> {
+    // 添加数据库类型与字段类型的映射
+    { typeof(DataType.Varchar), nameof(String).ToLower() },
+    { typeof(DataType.Char), nameof(String).ToLower() },
+    { typeof(DataType.Nvarchar), nameof(String).ToLower() },
+    { typeof(DataType.BigInt), "long" }
+};
 foreach (var (columnName, dataType, _, columnDefOptions) in columnDefs)
 {
-    if (dataType is DataType.CharacterLengthDataType characterLengthDataType)
-    {
-        Console.WriteLine("CharacterLengthDataType");
-    }
     Console.WriteLine($"Column name：{columnName}");
     // 获取字段数据类型
-    var columnDataType = dataType.ToSql();
-    Console.WriteLine($"Column data type：{columnDataType}");
-    // 获取字段长度
-    var matches = ColumnDataLengthPattern().Match(columnDataType);
-    if (matches.Length > 0) Console.WriteLine($"Column length：{matches.Groups[1].Value}");
-
+    Console.WriteLine($"Column data type：{dataType.GetType().Name}");
     if (columnDefOptions?.Count > 0)
         foreach (var columnDefOption in columnDefOptions)
         {
@@ -60,10 +59,7 @@ foreach (var (columnName, dataType, _, columnDefOptions) in columnDefs)
                     break;
             }
         }
-}
 
-internal partial class Program
-{
-    [GeneratedRegex(@"\((\d+)\)")]
-    private static partial Regex ColumnDataLengthPattern();
+    Console.WriteLine($"Column field type：{typeMap[dataType.GetType()]}");
+    Console.WriteLine("============================================================");
 }

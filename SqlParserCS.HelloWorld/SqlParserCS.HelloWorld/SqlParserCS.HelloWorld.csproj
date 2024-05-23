@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Pluralize.NET" Version="1.0.2"/>
         <PackageReference Include="Scriban" Version="5.10.0"/>
         <PackageReference Include="SqlParserCS" Version="0.3.0"/>
 

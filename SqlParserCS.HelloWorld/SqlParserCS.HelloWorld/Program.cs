@@ -1,10 +1,15 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using System.ComponentModel;
 using System.Text.RegularExpressions;
 using Pluralize.NET;
+using Scriban;
 using SqlParser;
 using SqlParser.Ast;
 using SqlParser.Dialects;
+
+const string dbType = "mysql";
+const string tablePrefix = "T_";
 
 // 解析建表语句
 const string sql = """
@@ -16,8 +21,6 @@ const string sql = """
                    )
                    """;
 var parser = new Parser();
-const string dbType = "mysql";
-const string tablePrefix = "T_";
 Dialect dialect = dbType.ToUpper() switch
 {
     "MYSQL" => new MySqlDialect(),
@@ -29,7 +32,7 @@ var pluralizer = new Pluralizer();
 var entity = new Entity
 {
     TableName = createTable?.Name.ToString(),
-    Comment = createTable?.Comment,
+    Comment = createTable?.Comment ?? createTable?.Name.ToString(),
     // 实体名称使用单数形式
     EntityName = pluralizer.Singularize(createTable?.Name.ToString().Replace(tablePrefix, ""))
 };
@@ -51,6 +54,7 @@ foreach (var (columnName, dataType, _, columnDefOptions) in columnDefs)
     var field = new Field
     {
         Name = columnName.ToString(),
+        Comment = columnName.ToString(),
         Type = typeMap[dataType.GetType()]
     };
     if (columnDefOptions?.Count > 0)
@@ -81,6 +85,21 @@ foreach (var (columnName, dataType, _, columnDefOptions) in columnDefs)
 entity.Fields = fields;
 entity.Display();
 
+// scriban 模板引擎测试，https://github.com/scriban/scriban
+// 注意：在模板中，变量名称使用小写加下划线的形式
+// 如：Name 属性对应模板的变量 name，EntityName 属性对应模板中的变量 entity_name
+var helloScriban = Template.Parse(File.ReadAllText(@"Templates\test-template.txt"));
+var hellResult = helloScriban.Render(new { Name = "World:)" });
+Console.WriteLine($"hello result: {hellResult}");
+// 生成实体类代码
+var templateText = File.ReadAllText(@"Templates\CSharpEntity.txt");
+Console.WriteLine(templateText);
+var template = Template.Parse(templateText);
+var result = template.Render(new { Entity = entity });
+Console.WriteLine($"entity generate result: \n{result}");
+// 追加到文件中
+var entityFilepath = $"{entity.EntityName}.{SourceFileSuffix.CSharp.GetDescription()}";
+File.WriteAllText(entityFilepath, result);
 
 /// <summary>
 ///     实体信息
@@ -166,4 +185,31 @@ internal static partial class RegexConstants
 {
     [GeneratedRegex(@"\((\d+)\)")]
     public static partial Regex LengthPattern();
+}
+
+/// <summary>
+///     代码源文件后缀枚举
+/// </summary>
+internal enum SourceFileSuffix
+{
+    [Description("cs")] CSharp,
+    [Description("java")] Java,
+    [Description("ts")] TypeScript,
+    [Description("js")] JavaScript
+}
+
+internal static class EnumExtensions
+{
+    /// <summary>
+    ///     获取枚举的描述信息
+    /// </summary>
+    /// <param name="enumInstance">枚举实例</param>
+    /// <returns>枚举的描述信息</returns>
+    public static string GetDescription(this Enum enumInstance)
+    {
+        var field = enumInstance.GetType().GetField(enumInstance.ToString());
+        if (field == null) return enumInstance.ToString();
+        var attribute = Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute));
+        return attribute == null ? enumInstance.ToString() : ((DescriptionAttribute)attribute).Description;
+    }
 }

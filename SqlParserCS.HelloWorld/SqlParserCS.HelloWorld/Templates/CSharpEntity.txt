@@ -1,0 +1,12 @@
+﻿/// <summary>
+/// {{ entity.comment }}
+/// </summary>
+public class {{ entity.entity_name }}
+{
+{{ for filed in entity.fields }}
+    /// <summary>
+    /// {{ filed.comment }}
+    /// </summary>
+    public {{ filed.type }}{{ if !filed.mandatory }}?{{ end }} {{ filed.name }} { get; set; }
+{{ end }}
+}

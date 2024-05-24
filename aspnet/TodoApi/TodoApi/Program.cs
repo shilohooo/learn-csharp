@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddDbContext<TodoContext>(optionsBuilder =>
 {
-    // 指定使用内存数据库，方便测试
+    // 鎸囧畾浣跨敤鍐呭瓨鏁版嵁搴擄紝鏂逛究娴嬭瘯
     optionsBuilder.UseInMemoryDatabase("TodoListDb")
         .LogTo(Console.WriteLine);
 });

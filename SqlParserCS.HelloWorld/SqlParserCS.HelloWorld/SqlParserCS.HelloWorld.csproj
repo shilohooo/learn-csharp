@@ -12,7 +12,7 @@
         <PackageReference Include="Scriban" Version="5.10.0"/>
         <PackageReference Include="SqlParserCS" Version="0.3.0"/>
 
-        <Content Include="Templates\test-template.txt">
+        <Content Include="Templates\*">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
     </ItemGroup>

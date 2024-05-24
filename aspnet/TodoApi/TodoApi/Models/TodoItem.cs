@@ -1,4 +1,6 @@
-﻿namespace TodoApi.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TodoApi.Models;
 
 /// <summary>
 /// 实体
@@ -6,6 +8,11 @@
 public class TodoItem
 {
     public int Id { get; set; }
-    public string Name { get; set; }
+
+    [Required(ErrorMessage = "待办事项不能为空")]
+    [StringLength(50, ErrorMessage = "待办事项长度不能超过 50 个字符")]
+    public string? Name { get; set; }
+
+    [Required(ErrorMessage = "待办事项状态不能为空")]
     public bool IsComplete { get; set; }
 }

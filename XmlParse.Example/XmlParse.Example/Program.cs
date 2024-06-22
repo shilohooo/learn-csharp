@@ -111,8 +111,9 @@ internal static class Program
     /// </summary>
     private static bool CheckIsPrimaryKey(XElement tableElement, string columnId)
     {
+        // TODO 待修复BUG：没有主键时会导致解析失败 
         var primaryKey = tableElement.Elements(
-                XName.Get(CollectionElements.Keys.GetDescription(), Namespace.C.GetDescription())
+                XName.Get(CollectionElements.PrimaryKey.GetDescription(), Namespace.C.GetDescription())
             )
             .First()
             .Elements(XName.Get(ObjectElements.Key.GetDescription(), Namespace.O.GetDescription()))

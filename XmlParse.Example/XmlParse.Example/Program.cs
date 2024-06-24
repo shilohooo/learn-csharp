@@ -18,6 +18,8 @@ internal static class Program
         // 查找所有表对象
         var tableElements = GetTableElements(pdmRootEle);
 
+        Console.WriteLine($"总共读取到 {tableElements.Count} 个表");
+
         foreach (var table in tableElements)
         {
             Console.WriteLine("======================== 表信息 =========================");
@@ -40,7 +42,7 @@ internal static class Program
     /// <param name="rootElement">文档根节点</param>
     /// <returns>表信息列表</returns>
     /// </summary>
-    private static IEnumerable<Table> GetTableElements(XElement rootElement)
+    private static List<Table> GetTableElements(XElement rootElement)
     {
         return rootElement.Descendants(
                 XName.Get(CollectionElements.Tables.GetDescription(), Namespace.C.GetDescription())
@@ -56,7 +58,8 @@ internal static class Program
                     XName.Get(AttributeElements.Name.GetDescription(), Namespace.A.GetDescription())
                 )?.Value,
                 Columns = GetColumns(item)
-            });
+            })
+            .ToList();
     }
 
     /// <summary>
@@ -111,12 +114,11 @@ internal static class Program
     /// </summary>
     private static bool CheckIsPrimaryKey(XElement tableElement, string columnId)
     {
-        // TODO 待修复BUG：没有主键时会导致解析失败 
         var primaryKey = tableElement.Elements(
                 XName.Get(CollectionElements.PrimaryKey.GetDescription(), Namespace.C.GetDescription())
             )
-            .First()
-            .Elements(XName.Get(ObjectElements.Key.GetDescription(), Namespace.O.GetDescription()))
+            .FirstOrDefault()
+            ?.Elements(XName.Get(ObjectElements.Key.GetDescription(), Namespace.O.GetDescription()))
             .Select(item => new Key
             {
                 Ref = item.Attribute(AttributeNames.Ref.GetDescription())?.Value
@@ -137,7 +139,7 @@ internal static class Program
                 )?.Value,
                 KeyColumns = GetKeyColumns(item)
             })
-            .Where(item => item.Id.Equals(primaryKey.Ref))
+            .Where(item => item.Id.Equals(primaryKey?.Ref))
             .Any(item =>
                 item.KeyColumns != null && item.KeyColumns.Any(keyColumn => columnId.Equals(keyColumn.Ref))) ?? false;
     }

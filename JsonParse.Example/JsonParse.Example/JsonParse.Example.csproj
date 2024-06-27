@@ -7,4 +7,13 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <!--    将 data.json 文件包含到输出目录-->
+    <ItemGroup>
+        <Content Include="data.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="Pluralize.NET" Version="1.0.2" />
+    </ItemGroup>
 </Project>

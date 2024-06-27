@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Nodes;
 using JsonParse.Example.Models;
+using Pluralize.NET;
 
 namespace JsonParse.Example;
 
@@ -11,25 +12,17 @@ internal static class Program
 {
     private static void Main()
     {
-        const string jsonStr = """
-                               {
-                                 "id": 1,
-                                 "username": "shiloh",
-                                 "gender": 1,
-                                 "birthday": "1998-03-02",
-                                 "address": {
-                                   "country": "China",
-                                   "province": "Guangdong",
-                                   "city": "FoShan",
-                                   "street": "桂城街道"
-                                 },
-                                 "enabled": true
-                               }
-                               """;
+        var jsonStr = File.ReadAllText("data.json");
         // 通过 JsonNode 反序列化，在没有具体的类型时可以使用
         var jsonNode = JsonNode.Parse(jsonStr);
-        // 转换成 JsonObject，获取可枚举的键值对列表进行遍历
-        GenerateEntity(jsonNode!.AsObject(), "RootObject");
+        GenerateEntity(
+            jsonNode!.GetValueKind() is JsonValueKind.Array
+                // JSON 数组获取第一个元素，再转换成 JsonObject
+                ? jsonNode.AsArray()[0]!.AsObject()
+                // JSON 对象直接转换成 JsonObject，获取可枚举的键值对列表进行遍历
+                : jsonNode.AsObject(),
+            "RootObject"
+        );
     }
 
     /// <summary>
@@ -38,9 +31,11 @@ internal static class Program
     /// </summary>
     private static void GenerateEntity(JsonObject jsonObject, string entityName)
     {
+        var pluralizer = new Pluralizer();
         var entity = new Entity { Name = entityName };
         foreach (var (key, value) in jsonObject.AsEnumerable())
         {
+            // 对象处理
             if (value is JsonObject)
             {
                 // 首字母大写
@@ -55,6 +50,24 @@ internal static class Program
                 continue;
             }
 
+            // 数组处理
+            if (value is JsonArray)
+            {
+                // 首字母大写
+                var firstLetter = key[0] - 32;
+                var name = (char)firstLetter + key[1..];
+                // 将实体类名称转换为单数形式
+                var singularizeEntityName = pluralizer.Singularize(name);
+                entity.Fields.Add(new Field
+                {
+                    Name = key,
+                    Type = $"List<{singularizeEntityName}>"
+                });
+                GenerateEntity(value.AsArray()[0]!.AsObject(), singularizeEntityName);
+                continue;
+            }
+
+            // 日期处理
             if (DateTimeOffset.TryParse(value?.ToString(), out _))
             {
                 entity.Fields.Add(new Field
@@ -70,12 +83,11 @@ internal static class Program
                     Name = key,
                     Type = value?.GetValueKind() switch
                     {
-                        JsonValueKind.String => nameof(String),
+                        JsonValueKind.String => "string",
                         JsonValueKind.Number => "int",
                         JsonValueKind.True => "bool",
                         JsonValueKind.False => "bool",
-                        JsonValueKind.Array => "List",
-                        _ => nameof(Object)
+                        _ => "object"
                     }
                 });
             }

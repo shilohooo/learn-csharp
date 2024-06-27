@@ -13,7 +13,7 @@ public class Entity
     /// <summary>
     /// 字段列表
     /// </summary>
-    public List<Field> Fields { get; set; } = [];
+    public List<Field> Fields { get; } = [];
 
     /// <inheritdoc />
     public override string ToString()

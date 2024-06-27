@@ -1,0 +1,38 @@
+﻿[
+  {
+    "id": 1,
+    "username": "shiloh",
+    "gender": 1,
+    "birthday": "1998-03-02",
+    "address": {
+      "country": "China",
+      "province": "Guangdong",
+      "city": "FoShan",
+      "street": "桂城街道"
+    },
+    "roles": [
+      {
+        "id": 1,
+        "roleName": "admin"
+      },
+      {
+        "id": 2,
+        "roleName": "user"
+      }
+    ],
+    "enabled": true
+  },
+  {
+    "id": 2,
+    "username": "bruce",
+    "gender": 1,
+    "birthday": "1998-03-02",
+    "address": {
+      "country": "China",
+      "province": "Guangdong",
+      "city": "FoShan",
+      "street": "桂城街道"
+    },
+    "enabled": false
+  }
+]

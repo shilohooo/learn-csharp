@@ -12,12 +12,15 @@ namespace TodoApi.Controllers;
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-public class TodoItemsController(TodoContext context) : ControllerBase
+public class TodoItemsController(TodoContext context, ILogger<TodoItemsController> logger) : ControllerBase
 {
     // GET: api/TodoItems
     [HttpGet]
     public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems()
     {
+        logger.LogInformation("GetTodoItems");
+        logger.LogWarning("GetTodoItems");
+        logger.LogError("GetTodoItems");
         return await context.TodoItems.ToListAsync();
     }
 
@@ -71,6 +74,7 @@ public class TodoItemsController(TodoContext context) : ControllerBase
     [HttpPost]
     public async Task<ActionResult<TodoItem>> PostTodoItem(TodoItem todoItem)
     {
+        todoItem.CreatedAt = DateTimeOffset.Now;
         context.TodoItems.Add(todoItem);
         await context.SaveChangesAsync();
 

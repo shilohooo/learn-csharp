@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+using TodoApi.Converters;
 
 namespace TodoApi.Models;
 
@@ -15,4 +17,10 @@ public class TodoItem
 
     [Required(ErrorMessage = "待办事项状态不能为空")]
     public bool IsComplete { get; set; }
+
+    /// <summary>
+    /// 创建时间
+    /// </summary>
+    [JsonConverter(typeof(CustomJsonDateTimeOffsetConverter))]
+    public DateTimeOffset? CreatedAt { get; set; }
 }

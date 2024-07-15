@@ -3,12 +3,18 @@ using System.Text;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TodoApi.Converters;
 using TodoApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        // 配置日期、时间序列化格式
+        options.JsonSerializerOptions.Converters.Add(new CustomJsonDateTimeOffsetConverter());
+    })
     // 请求参数校验失败处理
     .ConfigureApiBehaviorOptions(options =>
     {

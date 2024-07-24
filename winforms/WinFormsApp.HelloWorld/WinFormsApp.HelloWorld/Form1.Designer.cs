@@ -40,7 +40,7 @@
             button1.TabIndex = 0;
             button1.Text = "Click Me:)";
             button1.UseVisualStyleBackColor = true;
-            button1.Click += Button1_Click;
+            button1.Click += ButtonClickCallback;
             // 
             // lb1HelloWorld
             // 

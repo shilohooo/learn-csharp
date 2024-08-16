@@ -1,4 +1,6 @@
-﻿namespace FileIO;
+﻿using System.Globalization;
+
+namespace FileIO;
 
 /// <summary>
 /// C#中的文件读写
@@ -9,10 +11,24 @@ public class Program
     {
         // FileReadWriteTest();
         // TextFileReadTest("io-test.txt");
-        TextFileWriteTest("io-write-test.txt");
-        const string binaryFilePath = "io-binary-test";
-        WriteContentToBinaryFile(binaryFilePath);
-        ReadContentFromBinaryFile(binaryFilePath);
+        // TextFileWriteTest("io-write-test.txt");
+        // const string binaryFilePath = "io-binary-test";
+        // WriteContentToBinaryFile(binaryFilePath);
+        // ReadContentFromBinaryFile(binaryFilePath);
+        DisplayAllCultureInfo();
+    }
+
+    private static void DisplayAllCultureInfo()
+    {
+        Console.WriteLine($"Current CultureInfo Name: {CultureInfo.CurrentCulture.Name}");
+        Console.WriteLine($"Current CultureInfo DisplayName: {CultureInfo.CurrentCulture.DisplayName}");
+        var cultureInfos = CultureInfo.GetCultures(CultureTypes.AllCultures);
+        Console.WriteLine($"CultureInfos size: {cultureInfos.Length}");
+        foreach (var cultureInfo in cultureInfos)
+        {
+            Console.WriteLine($"Name: {cultureInfo.Name}");
+            Console.WriteLine($"DisplayName: {cultureInfo.DisplayName}");
+        }
     }
 
     /// <summary>

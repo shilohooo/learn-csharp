@@ -32,21 +32,54 @@ public class Program
         foreach (var customAttribute in typeOfRectangle.GetCustomAttributes(false))
         {
             // 获取 DebugInfo 特性
-            var debugInfo = (DebugInfo)customAttribute;
+            var debugInfo = (DebugInfoAttribute)customAttribute;
             Console.WriteLine(debugInfo);
         }
 
         // 遍历函数属性
-        foreach (var methodInfo in typeOfRectangle.GetMethods())
+        // foreach (var methodInfo in typeOfRectangle.GetMethods())
+        // {
+        //     Console.WriteLine($"====方法 {typeOfRectangle.Name}.{methodInfo.Name} 上的特性====");
+        //     foreach (var customAttribute in methodInfo.GetCustomAttributes(true))
+        //     {
+        //         // 获取 DebugInfo 特性
+        //         var debugInfo = (DebugInfoAttribute)customAttribute;
+        //         Console.WriteLine(debugInfo);
+        //     }
+        // }
+        // 获取类上面声明的泛型对应的实际类型
+        var myTypeHandler = new MyTypeHandler<int>();
+        var instanceType = myTypeHandler.GetType();
+        if (!instanceType.IsGenericType)
         {
-            Console.WriteLine($"====方法 {typeOfRectangle.Name}.{methodInfo.Name} 上的特性====");
-            foreach (var customAttribute in methodInfo.GetCustomAttributes(true))
-            {
-                // 获取 DebugInfo 特性
-                var debugInfo = (DebugInfo)customAttribute;
-                Console.WriteLine(debugInfo);
-            }
+            return;
         }
+
+        var genericArguments = instanceType.GetGenericArguments();
+        foreach (var genericArgument in genericArguments)
+        {
+            Console.WriteLine($"{instanceType.Name}上的泛型：{genericArgument.Name}");
+        }
+        
+        // 获取类方法上面声明的泛型对应的实际类型
+        var methodInfo = instanceType.GetMethod("GenericMethod");
+        if (!methodInfo!.IsGenericMethod)
+        {
+            return;
+        }
+        foreach (var genericArgument in methodInfo.GetGenericArguments())
+        {
+            Console.WriteLine($"类{instanceType.Name} - {methodInfo.Name}方法上的泛型：{genericArgument.Name}");
+        }
+        
+        // 获取泛型字段的实际类型
+        var fieldInfo = instanceType.GetField("value");
+        if (fieldInfo is null)
+        {
+            return;
+        }
+
+        Console.WriteLine($"类{instanceType.Name} - 泛型字段{fieldInfo.Name}的实际类型：{fieldInfo.FieldType}");
     }
 }
 
@@ -94,21 +127,21 @@ public class MyClass;
         AllowMultiple = true
     )
 ]
-public class DebugInfo : Attribute
+public class DebugInfoAttribute : Attribute
 {
     // bug编号
-    private int _bugNo;
+    private readonly int _bugNo;
 
     // 开发者名称
-    private string _developer;
+    private readonly string _developer;
 
     // 上次审查代码的日期：yyyy-MM-dd
-    private string _lastReviewDate;
+    private readonly string _lastReviewDate;
 
     // 开发者信息
     public string Message;
 
-    public DebugInfo(int bugNo, string developer, string lastReviewDate)
+    public DebugInfoAttribute(int bugNo, string developer, string lastReviewDate)
     {
         _bugNo = bugNo;
         _developer = developer;
@@ -147,5 +180,19 @@ public class Rectangle
     public void Display()
     {
         Console.WriteLine($"length: {_length}, width: {_width}, area: {GetArea()}");
+    }
+}
+
+/// <summary>
+/// 泛型测试类
+/// </summary>
+/// <typeparam name="T">值的类型</typeparam>
+public class MyTypeHandler<T>
+{
+    public T value;
+
+    public void GenericMethod<T>(T input)
+    {
+        
     }
 }

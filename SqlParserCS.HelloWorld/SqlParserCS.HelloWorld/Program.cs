@@ -1,12 +1,11 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using System.ComponentModel;
-using System.Text.RegularExpressions;
 using Pluralize.NET;
 using Scriban;
 using SqlParser;
 using SqlParser.Ast;
 using SqlParser.Dialects;
+using SqlParserCS.HelloWorld;
 
 const string dbType = "mysql";
 const string tablePrefix = "T_";
@@ -27,18 +26,21 @@ Dialect dialect = dbType.ToUpper() switch
     _ => new MsSqlDialect()
 };
 var ast = parser.ParseSql(sql, dialect);
-var createTable = ast.First() as Statement.CreateTable;
+
+// 创建实体
+var createTable = ast[0] as Statement.CreateTable;
 var pluralizer = new Pluralizer();
 var entity = new Entity
 {
-    TableName = createTable?.Name.ToString(),
-    Comment = createTable?.Comment ?? createTable?.Name.ToString(),
+    TableName = createTable!.Name.ToString(),
+    Comment = createTable.Comment ?? createTable.Name.ToString(),
     // 实体名称使用单数形式
-    EntityName = pluralizer.Singularize(createTable?.Name.ToString().Replace(tablePrefix, ""))
+    EntityName = pluralizer.Singularize(createTable.Name.ToString().Replace(tablePrefix, ""))
 };
+
 // 获取字段列表
-var columnDefs = createTable?.Columns.ToList();
-if (columnDefs is null) return;
+var columnDefs = createTable.Columns.ToList();
+if (columnDefs.Count == 0) return;
 // key = 表字段类型，value = 表字段类型对应的语言数据类型
 var typeMap = new Dictionary<Type, string>
 {
@@ -88,128 +90,23 @@ entity.Display();
 // scriban 模板引擎测试，https://github.com/scriban/scriban
 // 注意：在模板中，变量名称使用小写加下划线的形式
 // 如：Name 属性对应模板的变量 name，EntityName 属性对应模板中的变量 entity_name
-var helloScriban = Template.Parse(File.ReadAllText(@"Templates\test-template.txt"));
-var hellResult = helloScriban.Render(new { Name = "World:)" });
-Console.WriteLine($"hello result: {hellResult}");
+// var helloScriban = Template.Parse(await File.ReadAllTextAsync(@"Templates\test-template.txt"));
+// var hellResult = await helloScriban.RenderAsync(new { Name = "World:)" });
+// Console.WriteLine($"hello result: {hellResult}");
+
 // 生成实体类代码
-var templateText = File.ReadAllText(@"Templates\CSharpEntity.txt");
-Console.WriteLine(templateText);
+var templateText = await File.ReadAllTextAsync(@"Templates\CSharpEntity.txt");
 var template = Template.Parse(templateText);
-var result = template.Render(new { Entity = entity });
-Console.WriteLine($"entity generate result: \n{result}");
+const SourceFileSuffix sourceFileSuffix = SourceFileSuffix.CSharp;
+// ReSharper disable once ConditionIsAlwaysTrueOrFalse
+if (SourceFileSuffix.CSharp.Equals(sourceFileSuffix))
+    // CSharp 要求属性命名首字母大写
+    entity.Fields.ForEach(field =>
+    {
+        var firstLetter = field.Name![0] - 32;
+        field.Name = (char)firstLetter + field.Name[1..];
+    });
+var result = await template.RenderAsync(new { Entity = entity });
 // 追加到文件中
-var entityFilepath = $"{entity.EntityName}.{SourceFileSuffix.CSharp.GetDescription()}";
-File.WriteAllText(entityFilepath, result);
-
-/// <summary>
-///     实体信息
-/// </summary>
-internal class Entity
-{
-    /// <summary>
-    ///     表名称
-    /// </summary>
-    public string? TableName { get; init; }
-
-    /// <summary>
-    ///     注释
-    /// </summary>
-    public string? Comment { get; init; }
-
-    /// <summary>
-    ///     实体名称
-    /// </summary>
-    public string? EntityName { get; init; }
-
-    /// <summary>
-    ///     字段列表
-    /// </summary>
-    public List<Field> Fields { get; set; } = [];
-
-    /// <summary>
-    ///     显示实体信息
-    /// </summary>
-    public void Display()
-    {
-        Console.WriteLine($"TableName: {TableName}\t| TableComment: {Comment}\t| EntityName: {EntityName}");
-        Console.WriteLine("Fields:");
-        foreach (var field in Fields)
-            Console.WriteLine(field);
-    }
-}
-
-/// <summary>
-///     字段信息
-/// </summary>
-internal class Field
-{
-    /// <summary>
-    ///     字段名称
-    /// </summary>
-    public string? Name { get; init; }
-
-    /// <summary>
-    ///     字段类型
-    /// </summary>
-    public string? Type { get; init; }
-
-    /// <summary>
-    ///     字段长度
-    /// </summary>
-    public string? Length { get; set; }
-
-    /// <summary>
-    ///     字段是否为主键
-    /// </summary>
-    public bool IsPrimaryKey { get; set; }
-
-    /// <summary>
-    ///     是否为非空字段
-    /// </summary>
-    public bool Mandatory { get; set; }
-
-    /// <summary>
-    ///     字段注释
-    /// </summary>
-    public string? Comment { get; set; }
-
-    public override string ToString()
-    {
-        return
-            $"Name: {Name}\t| Type: {Type}\t| Length: {Length}\t| IsPrimaryKey: {IsPrimaryKey}\t| " +
-            $"Mandatory: {Mandatory}\t| Comment: {Comment}";
-    }
-}
-
-internal static partial class RegexConstants
-{
-    [GeneratedRegex(@"\((\d+)\)")]
-    public static partial Regex LengthPattern();
-}
-
-/// <summary>
-///     代码源文件后缀枚举
-/// </summary>
-internal enum SourceFileSuffix
-{
-    [Description("cs")] CSharp,
-    [Description("java")] Java,
-    [Description("ts")] TypeScript,
-    [Description("js")] JavaScript
-}
-
-internal static class EnumExtensions
-{
-    /// <summary>
-    ///     获取枚举的描述信息
-    /// </summary>
-    /// <param name="enumInstance">枚举实例</param>
-    /// <returns>枚举的描述信息</returns>
-    public static string GetDescription(this Enum enumInstance)
-    {
-        var field = enumInstance.GetType().GetField(enumInstance.ToString());
-        if (field == null) return enumInstance.ToString();
-        var attribute = Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute));
-        return attribute == null ? enumInstance.ToString() : ((DescriptionAttribute)attribute).Description;
-    }
-}
+var entityFilepath = $"{entity.EntityName}.{sourceFileSuffix.GetDescription()}";
+await File.WriteAllTextAsync(entityFilepath, result);

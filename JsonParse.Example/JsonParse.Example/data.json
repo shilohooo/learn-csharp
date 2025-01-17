@@ -4,6 +4,8 @@
     "username": "shiloh",
     "gender": 1,
     "birthday": "1998-03-02",
+    "email": null,
+    "pi": 3.1415926,
     "address": {
       "country": "China",
       "province": "Guangdong",
@@ -13,7 +15,15 @@
     "roles": [
       {
         "id": 1,
-        "roleName": "admin"
+        "roleName": "admin",
+        "permissions": [
+          {
+            "id": 1,
+            "code": "sys:user:view",
+            "description": "查看用户列表",
+            "url": "/api/users"
+          }
+        ]
       },
       {
         "id": 2,
@@ -27,6 +37,8 @@
     "username": "bruce",
     "gender": 1,
     "birthday": "1998-03-02",
+    "email": "bruce@gmail.com",
+    "pi": 3.1415926,
     "address": {
       "country": "China",
       "province": "Guangdong",

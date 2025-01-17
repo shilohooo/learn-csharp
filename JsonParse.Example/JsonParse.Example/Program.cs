@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Globalization;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 using JsonParse.Example.Models;
 using Pluralize.NET;
@@ -35,40 +36,42 @@ internal static class Program
         var entity = new Entity { Name = entityName };
         foreach (var (key, value) in jsonObject.AsEnumerable())
         {
-            // 对象处理
-            if (value is JsonObject)
+            switch (value)
             {
-                // 首字母大写
-                var firstLetter = key[0] - 32;
-                var name = (char)firstLetter + key[1..];
-                entity.Fields.Add(new Field
+                // 对象处理
+                case JsonObject:
                 {
-                    Name = key,
-                    Type = name
-                });
-                GenerateEntity(value.AsObject(), name);
-                continue;
-            }
-
-            // 数组处理
-            if (value is JsonArray)
-            {
-                // 首字母大写
-                var firstLetter = key[0] - 32;
-                var name = (char)firstLetter + key[1..];
-                // 将实体类名称转换为单数形式
-                var singularizeEntityName = pluralizer.Singularize(name);
-                entity.Fields.Add(new Field
+                    // 首字母大写
+                    var firstLetter = key[0] - 32;
+                    var name = (char)firstLetter + key[1..];
+                    entity.Fields.Add(new Field
+                    {
+                        Name = key,
+                        Type = name
+                    });
+                    GenerateEntity(value.AsObject(), name);
+                    continue;
+                }
+                // 数组处理
+                case JsonArray:
                 {
-                    Name = key,
-                    Type = $"List<{singularizeEntityName}>"
-                });
-                GenerateEntity(value.AsArray()[0]!.AsObject(), singularizeEntityName);
-                continue;
+                    // 首字母大写
+                    var firstLetter = key[0] - 32;
+                    var name = (char)firstLetter + key[1..];
+                    // 将实体类名称转换为单数形式
+                    var singularizeEntityName = pluralizer.Singularize(name);
+                    entity.Fields.Add(new Field
+                    {
+                        Name = key,
+                        Type = $"List<{singularizeEntityName}>"
+                    });
+                    GenerateEntity(value.AsArray()[0]!.AsObject(), singularizeEntityName);
+                    continue;
+                }
             }
 
             // 日期处理
-            if (DateTimeOffset.TryParse(value?.ToString(), out _))
+            if (DateTimeOffset.TryParse(value?.ToString(), CultureInfo.CurrentCulture, out _))
             {
                 entity.Fields.Add(new Field
                 {
@@ -84,7 +87,7 @@ internal static class Program
                     Type = value?.GetValueKind() switch
                     {
                         JsonValueKind.String => "string",
-                        JsonValueKind.Number => "int",
+                        JsonValueKind.Number => value.ToString().Contains('.') ? "double" : "int",
                         JsonValueKind.True => "bool",
                         JsonValueKind.False => "bool",
                         _ => "object"

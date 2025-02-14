@@ -55,17 +55,53 @@ internal static class Program
                 // 数组处理
                 case JsonArray:
                 {
-                    // 首字母大写
-                    var firstLetter = key[0] - 32;
-                    var name = (char)firstLetter + key[1..];
-                    // 将实体类名称转换为单数形式
-                    var singularizeEntityName = pluralizer.Singularize(name);
-                    entity.Fields.Add(new Field
+                    var firstElement = value[0];
+                    if (firstElement?.GetValueKind() == JsonValueKind.Object)
                     {
-                        Name = key,
-                        Type = $"List<{singularizeEntityName}>"
-                    });
-                    GenerateEntity(value.AsArray()[0]!.AsObject(), singularizeEntityName);
+                        // 首字母大写
+                        var firstLetter = key[0] - 32;
+                        var name = (char)firstLetter + key[1..];
+                        // 将实体类名称转换为单数形式
+                        var singularizeEntityName = pluralizer.Singularize(name);
+                        entity.Fields.Add(new Field
+                        {
+                            Name = key,
+                            Type = $"List<{singularizeEntityName}>"
+                        });
+                        GenerateEntity(value.AsArray()[0]!.AsObject(), singularizeEntityName);
+                        continue;
+                    }
+
+                    if (firstElement?.GetValueKind() is JsonValueKind.False or JsonValueKind.True)
+                    {
+                        entity.Fields.Add(new Field
+                        {
+                            Name = key,
+                            Type = "List<bool>"
+                        });
+                        continue;
+                    }
+
+                    if (firstElement?.GetValueKind() == JsonValueKind.Number)
+                    {
+                        entity.Fields.Add(new Field
+                        {
+                            Name = key,
+                            Type = firstElement.GetValue<double>().ToString(CultureInfo.CurrentCulture)
+                                .Contains('.')
+                                ? "List<double>"
+                                : "List<int>"
+                        });
+                        continue;
+                    }
+
+                    if (firstElement?.GetValueKind() == JsonValueKind.String)
+                        entity.Fields.Add(new Field
+                        {
+                            Name = key,
+                            Type = "List<string>"
+                        });
+
                     continue;
                 }
             }

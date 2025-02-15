@@ -1,0 +1,9 @@
+﻿{
+  //  database connection strings
+  "ConnectionStrings": {
+    //    tenant a
+    "TenantA": "Data Source=127.0.0.1,1433;Initial Catalog=TestTenantA;Persist Security Info=True;User ID=sa;Password={0};Connect Timeout=1000;TrustServerCertificate=True",
+    //    tenant b
+    "TenantB": "Data Source=127.0.0.1,1433;Initial Catalog=TestTenantB;Persist Security Info=True;User ID=sa;Password={0};Connect Timeout=1000;TrustServerCertificate=True"
+  }
+}

@@ -1,0 +1,74 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:AvaloniaPdmFileViewer.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:models="clr-namespace:AvaloniaPdmFileViewer.Models"
+        mc:Ignorable="d" d:DesignWidth="375" d:DesignHeight="667"
+        x:Class="AvaloniaPdmFileViewer.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="AvaloniaPdmFileViewer">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <StackPanel Orientation="Vertical">
+        <!-- <Border Margin="5" CornerRadius="10" Background="LightBlue"> -->
+        <!--     <TextBlock Margin="5" FontSize="24" HorizontalAlignment="Center" Text="Temperature Converter" /> -->
+        <!-- </Border> -->
+        <!-- -->
+        <!-- <Grid Margin="5" ColumnDefinitions="120, 100" RowDefinitions="Auto,Auto,Auto"> -->
+        <!--     <Label Grid.Row="0" Grid.Column="0" Margin="10">Celsius</Label> -->
+        <!--     <TextBox Grid.Row="0" Grid.Column="1" Margin="0 5" Name="Celsius" TextChanged="Celsius_OnTextChanged" /> -->
+        <!-- -->
+        <!--     <Label Grid.Row="1" Grid.Column="0" Margin="10">Fahrenheit</Label> -->
+        <!--     <TextBox Grid.Row="1" Grid.Column="1" Margin="0 5" Name="Fahrenheit" IsReadOnly="True" /> -->
+        <!-- -->
+        <!--     <Button Grid.Row="2" Grid.Column="1" Margin="0 5" Click="Button_OnClicked">Calculate</Button> -->
+        <!-- </Grid> -->
+        <!-- <TabControl Margin="5"> -->
+        <!--     <TabItem Header="Tab 1"> -->
+        <!--         <DataGrid Margin="20" ItemsSource="{Binding People}" -->
+        <!--                   AutoGenerateColumns="True" IsReadOnly="True" -->
+        <!--                   GridLinesVisibility="All" -->
+        <!--                   BorderThickness="1" BorderBrush="Gray" /> -->
+        <!--     </TabItem> -->
+        <!--     <TabItem Header="Tab 2"> -->
+        <!--         <TextBlock Margin="5">This is tab 2 content</TextBlock> -->
+        <!--     </TabItem> -->
+        <!--     <TabItem Header="Tab 3"> -->
+        <!--         <TextBlock Margin="5">This is tab 3 content</TextBlock> -->
+        <!--     </TabItem> -->
+        <!-- </TabControl> -->
+
+
+        <TabControl ItemsSource="{Binding Tables}">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Code}" />
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+
+
+            <TabControl.ContentTemplate>
+                <DataTemplate x:DataType="models:Table">
+                    <DataGrid ItemsSource="{Binding Columns}" AutoGenerateColumns="False" IsReadOnly="True"
+                              Margin="10">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="列名" Binding="{Binding Code}" />
+                            <DataGridTextColumn Header="数据类型" Binding="{Binding DataType}" />
+                            <DataGridTextColumn Header="数据长度" Binding="{Binding Length}" />
+                            <DataGridTextColumn Header="是否必填" Binding="{Binding Mandatory}" />
+                            <DataGridTextColumn Header="是否为主键" Binding="{Binding IsPrimaryKey}" />
+                            <DataGridTextColumn Header="注释" Binding="{Binding Name}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+    </StackPanel>
+</Window>

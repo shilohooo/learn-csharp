@@ -1,5 +1,6 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:themes="clr-namespace:Material.Styles.Themes;assembly=Material.Styles"
              x:Class="AvaloniaPdmFileViewer.App"
              xmlns:local="using:AvaloniaPdmFileViewer"
              RequestedThemeVariant="Default">
@@ -10,8 +11,8 @@
     </Application.DataTemplates>
 
     <Application.Styles>
-        <FluentTheme />
-        <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
+        <themes:MaterialTheme BaseTheme="Light" PrimaryColor="Blue" SecondaryColor="Lime" />
+        <!-- <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" /> -->
     </Application.Styles>
 
     <Application.Resources>
@@ -48,6 +49,7 @@
                     </ItemsPanelTemplate>
                 </Setter>
             </ControlTheme>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -8,7 +8,7 @@
         x:Class="AvaloniaPdmFileViewer.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="AvaloniaPdmFileViewer">
+        Title="PDM File Viewer">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
@@ -16,59 +16,63 @@
         <vm:MainWindowViewModel />
     </Design.DataContext>
 
-    <StackPanel Orientation="Vertical">
-        <!-- <Border Margin="5" CornerRadius="10" Background="LightBlue"> -->
-        <!--     <TextBlock Margin="5" FontSize="24" HorizontalAlignment="Center" Text="Temperature Converter" /> -->
-        <!-- </Border> -->
-        <!-- -->
-        <!-- <Grid Margin="5" ColumnDefinitions="120, 100" RowDefinitions="Auto,Auto,Auto"> -->
-        <!--     <Label Grid.Row="0" Grid.Column="0" Margin="10">Celsius</Label> -->
-        <!--     <TextBox Grid.Row="0" Grid.Column="1" Margin="0 5" Name="Celsius" TextChanged="Celsius_OnTextChanged" /> -->
-        <!-- -->
-        <!--     <Label Grid.Row="1" Grid.Column="0" Margin="10">Fahrenheit</Label> -->
-        <!--     <TextBox Grid.Row="1" Grid.Column="1" Margin="0 5" Name="Fahrenheit" IsReadOnly="True" /> -->
-        <!-- -->
-        <!--     <Button Grid.Row="2" Grid.Column="1" Margin="0 5" Click="Button_OnClicked">Calculate</Button> -->
-        <!-- </Grid> -->
-        <!-- <TabControl Margin="5"> -->
-        <!--     <TabItem Header="Tab 1"> -->
-        <!--         <DataGrid Margin="20" ItemsSource="{Binding People}" -->
-        <!--                   AutoGenerateColumns="True" IsReadOnly="True" -->
-        <!--                   GridLinesVisibility="All" -->
-        <!--                   BorderThickness="1" BorderBrush="Gray" /> -->
-        <!--     </TabItem> -->
-        <!--     <TabItem Header="Tab 2"> -->
-        <!--         <TextBlock Margin="5">This is tab 2 content</TextBlock> -->
-        <!--     </TabItem> -->
-        <!--     <TabItem Header="Tab 3"> -->
-        <!--         <TextBlock Margin="5">This is tab 3 content</TextBlock> -->
-        <!--     </TabItem> -->
-        <!-- </TabControl> -->
+    <Window.Styles>
+        <Style Selector="TextBlock.h1">
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="FontWeight" Value="Bold" />
+
+            <Style Selector="^:pointerover">
+                <Setter Property="Foreground" Value="Red" />
+            </Style>
+        </Style>
 
 
-        <TabControl ItemsSource="{Binding Tables}">
-            <TabControl.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Code}" />
-                </DataTemplate>
-            </TabControl.ItemTemplate>
+        <Style Selector="TextBlock.textWhite">
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+    </Window.Styles>
+
+    <DockPanel LastChildFill="True" Background="#f4f5fa">
+        <Border Background="#2196F3" Padding="12" DockPanel.Dock="Top">
+            <TextBlock Text="Your system name here..."
+                       Classes="h1 textWhite"
+                       TextAlignment="Center"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center" />
+        </Border>
+
+        <Border Background="White" Padding="12" Width="300" DockPanel.Dock="Left" BoxShadow="0 0 12 0 DarkGray">
+            <TextBlock Text="Sidebar menu..." />
+        </Border>
+
+        <Border Background="White" Margin="12" Padding="12" CornerRadius="8" BoxShadow="0 0 12 0 DarkGray">
+            <StackPanel Orientation="Vertical">
+                <TabControl ItemsSource="{Binding Tables}">
+                    <TabControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Margin="12" Text="{Binding Code}" />
+                        </DataTemplate>
+                    </TabControl.ItemTemplate>
 
 
-            <TabControl.ContentTemplate>
-                <DataTemplate x:DataType="models:Table">
-                    <DataGrid ItemsSource="{Binding Columns}" AutoGenerateColumns="False" IsReadOnly="True"
-                              Margin="10">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="列名" Binding="{Binding Code}" />
-                            <DataGridTextColumn Header="数据类型" Binding="{Binding DataType}" />
-                            <DataGridTextColumn Header="数据长度" Binding="{Binding Length}" />
-                            <DataGridTextColumn Header="是否必填" Binding="{Binding Mandatory}" />
-                            <DataGridTextColumn Header="是否为主键" Binding="{Binding IsPrimaryKey}" />
-                            <DataGridTextColumn Header="注释" Binding="{Binding Name}" />
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </DataTemplate>
-            </TabControl.ContentTemplate>
-        </TabControl>
-    </StackPanel>
+                    <TabControl.ContentTemplate>
+                        <DataTemplate x:DataType="models:Table">
+                            <DataGrid ItemsSource="{Binding Columns}" AutoGenerateColumns="False" IsReadOnly="True"
+                                      Margin="10" GridLinesVisibility="Horizontal"
+                                      HorizontalAlignment="Left">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Width="*" Header="列名" Binding="{Binding Code}" />
+                                    <DataGridTextColumn Width="*" Header="数据类型" Binding="{Binding DataType}" />
+                                    <DataGridTextColumn Width="*" Header="数据长度" Binding="{Binding Length}" />
+                                    <DataGridTextColumn Width="*" Header="是否必填" Binding="{Binding Mandatory}" />
+                                    <DataGridTextColumn Width="*" Header="是否为主键" Binding="{Binding IsPrimaryKey}" />
+                                    <DataGridTextColumn Width="2*" Header="注释" Binding="{Binding Name}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DataTemplate>
+                    </TabControl.ContentTemplate>
+                </TabControl>
+            </StackPanel>
+        </Border>
+    </DockPanel>
 </Window>

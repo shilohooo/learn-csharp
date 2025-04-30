@@ -28,11 +28,6 @@
         <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.2.1"/>
         <PackageReference Include="Material.Avalonia" Version="3.10.2"/>
         <PackageReference Include="Material.Avalonia.DataGrid" Version="3.10.2"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <None Update="Templates\test.xml">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.4"/>
     </ItemGroup>
 </Project>

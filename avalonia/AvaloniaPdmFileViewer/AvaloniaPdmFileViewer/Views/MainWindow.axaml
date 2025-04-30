@@ -3,7 +3,6 @@
         xmlns:vm="using:AvaloniaPdmFileViewer.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:models="clr-namespace:AvaloniaPdmFileViewer.Models"
         mc:Ignorable="d" d:DesignWidth="375" d:DesignHeight="667"
         x:Class="AvaloniaPdmFileViewer.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
@@ -17,62 +16,84 @@
     </Design.DataContext>
 
     <Window.Styles>
-        <Style Selector="TextBlock.h1">
-            <Setter Property="FontSize" Value="24" />
-            <Setter Property="FontWeight" Value="Bold" />
-
-            <Style Selector="^:pointerover">
-                <Setter Property="Foreground" Value="Red" />
-            </Style>
-        </Style>
-
-
-        <Style Selector="TextBlock.textWhite">
-            <Setter Property="Foreground" Value="White" />
+        <Style Selector="TextBlock.h1:pointerover">
+            <Setter Property="Foreground" Value="Red" />
         </Style>
     </Window.Styles>
 
     <DockPanel LastChildFill="True" Background="#f4f5fa">
-        <Border Background="#2196F3" Padding="12" DockPanel.Dock="Top">
-            <TextBlock Text="Your system name here..."
-                       Classes="h1 textWhite"
-                       TextAlignment="Center"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Center" />
+        <Border Background="#2196F3" DockPanel.Dock="Top" Padding="0 0 12 0">
+            <DockPanel LastChildFill="True">
+                <Menu DockPanel.Dock="Left" Foreground="White">
+                    <MenuItem Header="_File">
+                        <MenuItem Header="_Open..." Command="{Binding SelectPdmFileCommand}" />
+                        <Separator />
+                        <MenuItem Header="_Exit" Command="{Binding ExitCommand}" />
+                    </MenuItem>
+                </Menu>
+
+                <TextBlock DockPanel.Dock="Right"
+                           Text="A Simple PDM File Viewer:)"
+                           FontSize="24"
+                           Foreground="White"
+                           FontWeight="Bold"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center" />
+            </DockPanel>
         </Border>
 
         <Border Background="White" Padding="12" Width="300" DockPanel.Dock="Left" BoxShadow="0 0 12 0 DarkGray">
-            <TextBlock Text="Sidebar menu..." />
+            <DockPanel LastChildFill="True">
+                <TextBox DockPanel.Dock="Top" Watermark="Filter table name..." Margin="0 0 0 12" />
+                <ListBox DockPanel.Dock="Bottom" ItemsSource="{Binding Tables}" SelectedItem="{Binding CurrentTable}"
+                         SelectionMode="Single">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <Run Text="{Binding Code}" />
+                                <LineBreak />
+                                <Run Text="{Binding Name}" />
+                            </TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
         </Border>
 
         <Border Background="White" Margin="12" Padding="12" CornerRadius="8" BoxShadow="0 0 12 0 DarkGray">
-            <StackPanel Orientation="Vertical">
-                <TabControl ItemsSource="{Binding Tables}">
-                    <TabControl.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Margin="12" Text="{Binding Code}" />
-                        </DataTemplate>
-                    </TabControl.ItemTemplate>
-
-
-                    <TabControl.ContentTemplate>
-                        <DataTemplate x:DataType="models:Table">
-                            <DataGrid ItemsSource="{Binding Columns}" AutoGenerateColumns="False" IsReadOnly="True"
-                                      Margin="10" GridLinesVisibility="Horizontal"
-                                      HorizontalAlignment="Left">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Width="*" Header="列名" Binding="{Binding Code}" />
-                                    <DataGridTextColumn Width="*" Header="数据类型" Binding="{Binding DataType}" />
-                                    <DataGridTextColumn Width="*" Header="数据长度" Binding="{Binding Length}" />
-                                    <DataGridTextColumn Width="*" Header="是否必填" Binding="{Binding Mandatory}" />
-                                    <DataGridTextColumn Width="*" Header="是否为主键" Binding="{Binding IsPrimaryKey}" />
-                                    <DataGridTextColumn Width="2*" Header="注释" Binding="{Binding Name}" />
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </DataTemplate>
-                    </TabControl.ContentTemplate>
-                </TabControl>
-            </StackPanel>
+            <DockPanel LastChildFill="True">
+                <TextBox DockPanel.Dock="Top" Watermark="Filter column name..." />
+                <Grid DockPanel.Dock="Top" RowDefinitions="*" ColumnDefinitions="*,*">
+                    <TextBlock Grid.Column="0" Margin="10">
+                        <Run Text="{Binding CurrentTable.Code}" />
+                        <Run Text="-" />
+                        <Run Text="{Binding CurrentTable.Name}" />
+                    </TextBlock>
+                    <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="10">
+                        <Run Text="Total Columns: " />
+                        <Run Text="{Binding CurrentTable.TotalColumns}" />
+                    </TextBlock>
+                </Grid>
+                <DataGrid IsVisible="{Binding CurrentTable, Converter={x:Static ObjectConverters.IsNotNull}}"
+                          ItemsSource="{Binding CurrentTable.Columns}"
+                          AutoGenerateColumns="False" IsReadOnly="True"
+                          VerticalAlignment="Top"
+                          Margin="10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="*" Header="Column Name" Binding="{Binding Code}" />
+                        <DataGridTextColumn Width="*" Header="Data Type" Binding="{Binding DataType}" />
+                        <DataGridTextColumn Width="*" Header="Length" Binding="{Binding Length}" />
+                        <DataGridTextColumn Width="*" Header="Mandatory" Binding="{Binding Mandatory}" />
+                        <DataGridTextColumn Width="*" Header="Primary Key" Binding="{Binding IsPrimaryKey}" />
+                        <DataGridTextColumn Width="*" Header="Default Value" Binding="{Binding DefaultValue}" />
+                        <DataGridTextColumn Width="2*" Header="Comment" Binding="{Binding Name}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+                <TextBlock Text="Please select a table or open a pdm file..."
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center" FontSize="24" FontWeight="Bold"
+                           IsVisible="{Binding CurrentTable, Converter={x:Static ObjectConverters.IsNull}}" />
+            </DockPanel>
         </Border>
     </DockPanel>
 </Window>

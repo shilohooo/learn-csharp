@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using XmlParse.Example.Models;
+using System.Linq;
 
 namespace AvaloniaPdmFileViewer.Models;
 
@@ -22,6 +22,11 @@ public class Table
     ///     列信息列表
     /// </summary>
     public IEnumerable<Column>? Columns { get; init; }
+
+    /// <summary>
+    ///     总列数
+    /// </summary>
+    public int TotalColumns => Columns?.Count() ?? 0;
 
     public override string ToString()
     {

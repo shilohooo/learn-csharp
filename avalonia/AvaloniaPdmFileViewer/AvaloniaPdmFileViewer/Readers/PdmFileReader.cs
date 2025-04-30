@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Xml;
 using System.Xml.Linq;
 using AvaloniaPdmFileViewer.Enums;
 using AvaloniaPdmFileViewer.Models;
-using XmlParse.Example.Enums;
-using XmlParse.Example.Models;
 
 namespace AvaloniaPdmFileViewer.Readers;
 
@@ -14,11 +14,11 @@ public static class PdmFileReader
     /// <summary>
     ///     解析 pdm xml 文档
     /// </summary>
-    /// <param name="filePath"></param>
-    public static List<Table> Read(string filePath)
+    /// <param name="stream"></param>
+    public static List<Table> Read(Stream stream)
     {
         // 加载 xml 文档
-        var pdmRootEle = XElement.Load(filePath);
+        var pdmRootEle = XElement.Load(new XmlTextReader(stream));
         // 查找所有表对象
         var tableElements = GetTableElements(pdmRootEle);
 
@@ -101,7 +101,10 @@ public static class PdmFileReader
                                 Namespace.A.GetDescription())
                         )?.Value ?? "0"
                     ),
-                    IsPrimaryKey = CheckIsPrimaryKey(tableElement, id)
+                    IsPrimaryKey = CheckIsPrimaryKey(tableElement, id),
+                    DefaultValue = column.Element(
+                        XName.Get(AttributeElements.DefaultValue.GetDescription(), Namespace.A.GetDescription())
+                    )?.Value
                 };
             });
     }

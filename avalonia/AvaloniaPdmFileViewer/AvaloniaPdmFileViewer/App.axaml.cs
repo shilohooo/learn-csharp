@@ -1,11 +1,14 @@
-using Avalonia;
-using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
-using Avalonia.Data.Core.Plugins;
 using System.Linq;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using AvaloniaPdmFileViewer.Extensions;
 using AvaloniaPdmFileViewer.ViewModels;
 using AvaloniaPdmFileViewer.Views;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AvaloniaPdmFileViewer;
 
@@ -18,6 +21,7 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        var serviceCollection = new ServiceCollection();
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
@@ -27,6 +31,11 @@ public partial class App : Application
             {
                 DataContext = new MainWindowViewModel(),
             };
+            // 注入 StorageProvider，方便访问文件系统
+            serviceCollection.AddStorageProvider(TopLevel.GetTopLevel(desktop.MainWindow)!.StorageProvider);
+
+            var buildServiceProvider = serviceCollection.BuildServiceProvider();
+            Ioc.Default.ConfigureServices(buildServiceProvider);
         }
 
         base.OnFrameworkInitializationCompleted();

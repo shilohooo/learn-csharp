@@ -1,6 +1,4 @@
-﻿using AvaloniaPdmFileViewer.Models;
-
-namespace XmlParse.Example.Models;
+﻿namespace AvaloniaPdmFileViewer.Models;
 
 /// <summary>
 ///     主键信息

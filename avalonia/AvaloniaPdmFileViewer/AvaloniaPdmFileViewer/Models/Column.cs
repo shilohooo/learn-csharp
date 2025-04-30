@@ -1,4 +1,4 @@
-﻿namespace XmlParse.Example.Models;
+﻿namespace AvaloniaPdmFileViewer.Models;
 
 /// <summary>
 /// 列信息 
@@ -45,8 +45,14 @@ public class Column
     /// </summary>
     public string? Ref { get; init; }
 
+    /// <summary>
+    ///     默认值
+    /// </summary>
+    public string? DefaultValue { get; init; }
+
     public override string ToString()
     {
-        return $"[ID：{Id}，列名称：{Code}，注释：{Name}，数据类型：{DataType}，是否必填：{Mandatory}，数据长度：{Length}，是否为主键：{IsPrimaryKey}]";
+        return
+            $"[ID：{Id}，列名称：{Code}，注释：{Name}，数据类型：{DataType}，是否必填：{Mandatory}，数据长度：{Length}，是否为主键：{IsPrimaryKey}，默认值：{DefaultValue}]";
     }
 }

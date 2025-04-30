@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace XmlParse.Example.Enums;
+namespace AvaloniaPdmFileViewer.Enums;
 
 /// <summary>
 /// 对象元素枚举 

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace XmlParse.Example.Enums;
+namespace AvaloniaPdmFileViewer.Enums;
 
 /// <summary>
 /// 属性元素枚举 
@@ -30,5 +30,10 @@ internal enum AttributeElements
     /// <summary>
     /// 是否必填，值为 1 = 必填 
     /// </summary>
-    [Description("Column.Mandatory")] Mandatory
+    [Description("Column.Mandatory")] Mandatory,
+
+    /// <summary>
+    ///     默认值
+    /// </summary>
+    [Description("DefaultValue")] DefaultValue
 }

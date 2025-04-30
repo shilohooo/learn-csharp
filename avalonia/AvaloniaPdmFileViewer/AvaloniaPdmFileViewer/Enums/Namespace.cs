@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace XmlParse.Example.Enums;
+namespace AvaloniaPdmFileViewer.Enums;
 
 /// <summary>
 /// 命名空间枚举 

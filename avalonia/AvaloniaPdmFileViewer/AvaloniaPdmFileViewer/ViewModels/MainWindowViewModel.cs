@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Platform.Storage;
+using Avalonia.Threading;
 using AvaloniaPdmFileViewer.Models;
 using AvaloniaPdmFileViewer.Readers;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -26,7 +28,7 @@ public partial class MainWindowViewModel : ViewModelBase
     /// <summary>
     ///     loading flag
     /// </summary>
-    [ObservableProperty] private bool _isLoading = true;
+    [ObservableProperty] private bool _isLoading;
 
     /// <summary>
     ///     选择文件
@@ -57,19 +59,22 @@ public partial class MainWindowViewModel : ViewModelBase
     /// <param name="storageFile">选中的pdm文件</param>
     private async Task LoadPdmFile(IStorageFile storageFile)
     {
-        IsLoading = true;
+        await Dispatcher.UIThread.InvokeAsync(() => IsLoading = true);
         try
         {
-            Tables.Clear();
-            await using var stream = await storageFile.OpenReadAsync();
-            // 基础流读取 xml 文件
-            var resolvedTables = PdmFileReader.Read(stream);
-            resolvedTables.ForEach(item => Tables.Add(item));
-            CurrentTable = Tables[0];
+            var resolveTables = await Task.Run(async () =>
+            {
+                await using var stream = await storageFile.OpenReadAsync();
+                // 基础流读取 xml 文件
+                return PdmFileReader.Read(stream);
+            });
+
+            await Dispatcher.UIThread.InvokeAsync(() => Tables = new ObservableCollection<Table>(resolveTables));
+            if (Tables.Any()) CurrentTable = Tables[0];
         }
         finally
         {
-            IsLoading = false;
+            await Dispatcher.UIThread.InvokeAsync(() => IsLoading = false);
         }
     }
 

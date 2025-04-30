@@ -44,7 +44,11 @@
 
         <Border Background="White" Padding="12" Width="300" DockPanel.Dock="Left" BoxShadow="0 0 12 0 DarkGray">
             <DockPanel LastChildFill="True">
-                <TextBox DockPanel.Dock="Top" Watermark="Filter table name..." Margin="0 0 0 12" />
+                <StackPanel DockPanel.Dock="Top">
+                    <TextBox Watermark="Filter table name..." Margin="0 0 0 12" />
+                    <ProgressBar Classes="circular" Width="30" Height="30" IsVisible="{Binding IsLoading}"
+                                 IsIndeterminate="{Binding IsLoading}" Margin="0 0 0 10" />
+                </StackPanel>
                 <ListBox DockPanel.Dock="Bottom" ItemsSource="{Binding Tables}" SelectedItem="{Binding CurrentTable}"
                          SelectionMode="Single">
                     <ListBox.ItemTemplate>

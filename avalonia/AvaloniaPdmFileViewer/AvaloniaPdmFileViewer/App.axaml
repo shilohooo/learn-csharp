@@ -17,38 +17,6 @@
 
     <Application.Resources>
         <ResourceDictionary>
-            <ControlTheme x:Key="{x:Type TabControl}" TargetType="TabControl">
-                <Setter Property="Template">
-                    <ControlTemplate>
-                        <Border BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding CornerRadius}"
-                                Background="{TemplateBinding Background}"
-                                HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalAlignment}">
-                            <DockPanel>
-                                <ScrollViewer DockPanel.Dock="{TemplateBinding TabStripPlacement}"
-                                              HorizontalAlignment="Stretch"
-                                              HorizontalScrollBarVisibility="Auto">
-                                    <ItemsPresenter Name="PART_ItemsPresenter"
-                                                    ItemsPanel="{TemplateBinding ItemsPanel}" />
-                                </ScrollViewer>
-                                <ContentPresenter Name="PART_SelectedContentHost"
-                                                  Margin="{TemplateBinding Padding}"
-                                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                  Content="{TemplateBinding SelectedContent}"
-                                                  ContentTemplate="{TemplateBinding SelectedContentTemplate}" />
-                            </DockPanel>
-                        </Border>
-                    </ControlTemplate>
-                </Setter>
-                <Setter Property="ItemsPanel">
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </Setter>
-            </ControlTheme>
 
         </ResourceDictionary>
     </Application.Resources>

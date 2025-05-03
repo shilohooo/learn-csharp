@@ -19,6 +19,6 @@ public class Student
     /// <inheritdoc />
     public override string ToString()
     {
-        return $"Student: [Id={Id}, Name={Name}, Age={Age}]";
+        return $"Student: [{nameof(Id)}={Id}, {nameof(Name)}={Name}, {nameof(Age)}={Age}]";
     }
 }

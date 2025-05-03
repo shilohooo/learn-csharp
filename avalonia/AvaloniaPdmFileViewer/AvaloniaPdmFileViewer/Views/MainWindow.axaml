@@ -1,17 +1,23 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:AvaloniaPdmFileViewer.ViewModels"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="375" d:DesignHeight="667"
-        x:Class="AvaloniaPdmFileViewer.Views.MainWindow"
-        x:DataType="vm:MainWindowViewModel"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="PDM File Viewer">
+<Window
+    Icon="/Assets/avalonia-logo.ico"
+    Title="PDM File Viewer"
+    d:DesignHeight="667"
+    d:DesignWidth="375"
+    mc:Ignorable="d"
+    x:Class="AvaloniaPdmFileViewer.Views.MainWindow"
+    x:DataType="vm:MainWindowViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:AvaloniaPdmFileViewer.ViewModels"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <!--
+            This only sets the DataContext for the previewer in an IDE,
+            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
+        -->
         <vm:MainWindowViewModel />
     </Design.DataContext>
 
@@ -21,82 +27,223 @@
         </Style>
     </Window.Styles>
 
-    <DockPanel LastChildFill="True" Background="#f4f5fa">
-        <Border Background="#2196F3" DockPanel.Dock="Top" Padding="0 0 12 0">
+    <DockPanel Background="#f4f5fa" LastChildFill="True">
+        <Border
+            Background="#2196F3"
+            DockPanel.Dock="Top"
+            Height="50"
+            Padding="8">
             <DockPanel LastChildFill="True">
                 <Menu DockPanel.Dock="Left" Foreground="White">
                     <MenuItem Header="_File">
-                        <MenuItem Header="_Open..." Command="{Binding SelectPdmFileCommand}" />
+                        <MenuItem Command="{Binding SelectPdmFileCommand}" Header="_Open..." />
                         <Separator />
-                        <MenuItem Header="_Exit" Command="{Binding ExitCommand}" />
+                        <MenuItem Command="{Binding ExitCommand}" Header="_Exit" />
                     </MenuItem>
                 </Menu>
 
-                <TextBlock DockPanel.Dock="Right"
-                           Text="A Simple PDM File Viewer:)"
-                           FontSize="24"
-                           Foreground="White"
-                           FontWeight="Bold"
-                           HorizontalAlignment="Right"
-                           VerticalAlignment="Center" />
+                <StackPanel
+                    DockPanel.Dock="Right"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Center">
+                    <TextBox
+                        Background="White"
+                        CornerRadius="20"
+                        Watermark="Search..."
+                        Width="300">
+                        <TextBox.InnerRightContent>
+                            <materialIcons:MaterialIcon
+                                Height="24"
+                                Kind="Search"
+                                VerticalAlignment="Center"
+                                Width="24" />
+                        </TextBox.InnerRightContent>
+                    </TextBox>
+                </StackPanel>
             </DockPanel>
         </Border>
 
-        <Border Background="White" Padding="12" Width="300" DockPanel.Dock="Left" BoxShadow="0 0 12 0 DarkGray">
+        <Border
+            Background="White"
+            BoxShadow="0 0 12 0 DarkGray"
+            DockPanel.Dock="Left"
+            Padding="12"
+            Width="300">
             <DockPanel LastChildFill="True">
                 <StackPanel DockPanel.Dock="Top">
-                    <TextBox Watermark="Filter table name..." Margin="0 0 0 12" />
-                    <ProgressBar Classes="circular" Width="30" Height="30" IsVisible="{Binding IsLoading}"
-                                 IsIndeterminate="{Binding IsLoading}" Margin="0 0 0 10" />
+                    <TextBox Margin="0,0,0,12" Watermark="Filter table name..." />
+                    <ProgressBar
+                        Classes="circular"
+                        Height="30"
+                        IsIndeterminate="{Binding IsLoading}"
+                        IsVisible="{Binding IsLoading}"
+                        Margin="0,0,0,10"
+                        Width="30" />
+                    <TextBlock
+                        FontSize="16"
+                        FontWeight="Bold"
+                        Foreground="#099fff"
+                        HorizontalAlignment="Center"
+                        IsVisible="{Binding IsLoading}"
+                        Margin="10"
+                        Text="正在解析 PDM 文件，请稍等..."
+                        VerticalAlignment="Center" />
                 </StackPanel>
-                <ListBox DockPanel.Dock="Bottom" ItemsSource="{Binding Tables}" SelectedItem="{Binding CurrentTable}"
-                         SelectionMode="Single">
+                <ListBox
+                    DockPanel.Dock="Bottom"
+                    ItemsSource="{Binding Tables}"
+                    SelectedItem="{Binding CurrentTable}"
+                    SelectionMode="Single">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock>
-                                <Run Text="{Binding Code}" />
-                                <LineBreak />
-                                <Run Text="{Binding Name}" />
-                            </TextBlock>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <materialIcons:MaterialIcon
+                                    Foreground="#099fff"
+                                    Height="24"
+                                    Kind="Table"
+                                    Width="24" />
+                                <TextBlock Margin="10,0,0,0">
+                                    <Run
+                                        FontSize="16"
+                                        FontWeight="Bold"
+                                        Text="{Binding Code}" />
+                                    <LineBreak />
+                                    <Run Foreground="Gray" Text="{Binding Name}" />
+                                </TextBlock>
+                            </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
             </DockPanel>
         </Border>
 
-        <Border Background="White" Margin="12" Padding="12" CornerRadius="8" BoxShadow="0 0 12 0 DarkGray">
+        <Border
+            Background="White"
+            BoxShadow="0 0 12 0 DarkGray"
+            CornerRadius="8"
+            Margin="12"
+            Padding="12">
             <DockPanel LastChildFill="True">
                 <TextBox DockPanel.Dock="Top" Watermark="Filter column name..." />
-                <Grid DockPanel.Dock="Top" RowDefinitions="*" ColumnDefinitions="*,*">
+                <Grid
+                    ColumnDefinitions="*,*"
+                    DockPanel.Dock="Top"
+                    RowDefinitions="*">
                     <TextBlock Grid.Column="0" Margin="10">
-                        <Run Text="{Binding CurrentTable.Code}" />
+                        <Run Text="{Binding CurrentTable.Code, FallbackValue='No Table Selected'}" />
                         <Run Text="-" />
-                        <Run Text="{Binding CurrentTable.Name}" />
+                        <Run Text="{Binding CurrentTable.Name, FallbackValue='No Table Selected'}" />
                     </TextBlock>
-                    <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="10">
+                    <TextBlock
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        Margin="10">
                         <Run Text="Total Columns: " />
-                        <Run Text="{Binding CurrentTable.TotalColumns}" />
+                        <Run Text="{Binding CurrentTable.TotalColumns, FallbackValue=0}" />
                     </TextBlock>
                 </Grid>
-                <DataGrid IsVisible="{Binding CurrentTable, Converter={x:Static ObjectConverters.IsNotNull}}"
-                          ItemsSource="{Binding CurrentTable.Columns}"
-                          AutoGenerateColumns="False" IsReadOnly="True"
-                          VerticalAlignment="Top"
-                          Margin="10">
+                <DataGrid
+                    AutoGenerateColumns="False"
+                    IsReadOnly="True"
+                    IsVisible="{Binding CurrentTable, Converter={x:Static ObjectConverters.IsNotNull}}"
+                    ItemsSource="{Binding CurrentTable.Columns, FallbackValue=[]}"
+                    Margin="10"
+                    VerticalAlignment="Top">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Width="*" Header="Column Name" Binding="{Binding Code}" />
-                        <DataGridTextColumn Width="*" Header="Data Type" Binding="{Binding DataType}" />
-                        <DataGridTextColumn Width="*" Header="Length" Binding="{Binding Length}" />
-                        <DataGridTextColumn Width="*" Header="Mandatory" Binding="{Binding Mandatory}" />
-                        <DataGridTextColumn Width="*" Header="Primary Key" Binding="{Binding IsPrimaryKey}" />
-                        <DataGridTextColumn Width="*" Header="Default Value" Binding="{Binding DefaultValue}" />
-                        <DataGridTextColumn Width="2*" Header="Comment" Binding="{Binding Name}" />
+                        <DataGridTemplateColumn Header="Column Name" Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialIcons:MaterialIcon
+                                            Foreground="#099fff"
+                                            IsVisible="{Binding IsPrimaryKey}"
+                                            Kind="Key"
+                                            Margin="0,0,10,0" />
+                                        <TextBlock Text="{Binding Code}" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn
+                            Binding="{Binding DataType}"
+                            FontWeight="SemiBold"
+                            Header="Data Type"
+                            Width="*" />
+                        <DataGridTemplateColumn Header="Length" Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            IsVisible="{Binding Length}"
+                                            Text="{Binding Length}"
+                                            VerticalAlignment="Center" />
+                                        <TextBlock
+                                            IsVisible="{Binding !Length}"
+                                            Text="-"
+                                            VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Mandatory" Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialIcons:MaterialIcon
+                                            Foreground="Green"
+                                            HorizontalAlignment="Left"
+                                            IsVisible="{Binding Mandatory}"
+                                            Kind="Check"
+                                            VerticalAlignment="Center" />
+                                        <materialIcons:MaterialIcon
+                                            Foreground="Red"
+                                            HorizontalAlignment="Left"
+                                            IsVisible="{Binding !Mandatory}"
+                                            Kind="Close"
+                                            VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Primary Key" Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialIcons:MaterialIcon
+                                            Foreground="Green"
+                                            HorizontalAlignment="Left"
+                                            IsVisible="{Binding IsPrimaryKey}"
+                                            Kind="Check"
+                                            VerticalAlignment="Center" />
+                                        <materialIcons:MaterialIcon
+                                            Foreground="Red"
+                                            HorizontalAlignment="Left"
+                                            IsVisible="{Binding !IsPrimaryKey}"
+                                            Kind="Close"
+                                            VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn
+                            Binding="{Binding DefaultValue}"
+                            Header="Default Value"
+                            Width="*" />
+                        <DataGridTextColumn
+                            Binding="{Binding Name}"
+                            Foreground="Gray"
+                            Header="Comment"
+                            Width="2*" />
                     </DataGrid.Columns>
                 </DataGrid>
-                <TextBlock Text="Please select a table or open a pdm file..."
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center" FontSize="24" FontWeight="Bold"
-                           IsVisible="{Binding CurrentTable, Converter={x:Static ObjectConverters.IsNull}}" />
+                <TextBlock
+                    FontSize="24"
+                    FontWeight="Bold"
+                    HorizontalAlignment="Center"
+                    IsVisible="{Binding CurrentTable, Converter={x:Static ObjectConverters.IsNull}}"
+                    Text="Please select a table or open a pdm file..."
+                    VerticalAlignment="Center" />
             </DockPanel>
         </Border>
     </DockPanel>

@@ -1,0 +1,67 @@
+<Window
+    x:Class="Avalonia.TodoApp.Views.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Avalonia.TodoApp.ViewModels"
+    Title="Avalonia.TodoApp"
+    Padding="12"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vm:MainWindowViewModel"
+    Icon="/Assets/avalonia-logo.ico"
+    mc:Ignorable="d">
+
+    <Design.DataContext>
+        <!--
+            This only sets the DataContext for the previewer in an IDE,
+            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
+        -->
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+
+    <Grid x:Name="RootGrid" RowDefinitions="Auto, * , Auto">
+        <TextBlock Classes="h1" Text="My Todo-List" />
+
+        <ScrollViewer Grid.Row="1">
+            <ItemsControl ItemsSource="{Binding TodoItems}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="vm:TodoItemViewModel">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <CheckBox Content="{Binding Content}" IsChecked="{Binding IsChecked}" />
+                            <!--
+                                Command 要绑定到父级 ViewModel 中的命令，这里进行强制类型转换，以访问父级或命名控件的 DataContext
+                                CommandParameter - 给命令传递参数，值绑定为当前项
+                            -->
+                            <Button
+                                Grid.Column="1"
+                                Command="{Binding #RootGrid.((vm:MainWindowViewModel)DataContext).RemoveItemCommand}"
+                                CommandParameter="{Binding .}"
+                                Foreground="White">
+                                <PathIcon Data="{DynamicResource DeleteIconData}" Foreground="Red" />
+                            </Button>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <TextBox
+            Grid.Row="2"
+            Text="{Binding NewItemContent}"
+            Watermark="Add a new item...">
+            <!--  在输入框右侧添加按钮  -->
+            <TextBox.InnerRightContent>
+                <Button Command="{Binding AddItemCommand}">
+                    <PathIcon Background="Green" Data="{DynamicResource AcceptIconData}" />
+                </Button>
+            </TextBox.InnerRightContent>
+            <TextBox.KeyBindings>
+                <!--  绑定快捷键  -->
+                <KeyBinding Command="{Binding AddItemCommand}" Gesture="Enter" />
+            </TextBox.KeyBindings>
+        </TextBox>
+    </Grid>
+</Window>

@@ -1,0 +1,30 @@
+<Window
+    Icon="/Assets/avalonia-logo.ico"
+    Title="Avalonia.Basic.Mvvm.CommandSample"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
+    x:Class="Avalonia.Basic.Mvvm.CommandSample.Views.MainWindow"
+    x:DataType="vm:MainWindowViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:controls="clr-namespace:Avalonia.Basic.Mvvm.CommandSample.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Avalonia.Basic.Mvvm.CommandSample.ViewModels"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Design.DataContext>
+        <!--
+            This only sets the DataContext for the previewer in an IDE,
+            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
+        -->
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <TabControl>
+        <TabItem Header="CommunityToolkit.Mvvm">
+            <controls:CommandsSampleView DataContext="{Binding CommandsViewModel}" />
+        </TabItem>
+    </TabControl>
+
+</Window>

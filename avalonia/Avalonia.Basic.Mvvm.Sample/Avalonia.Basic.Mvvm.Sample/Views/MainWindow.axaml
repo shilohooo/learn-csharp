@@ -1,0 +1,34 @@
+<Window
+    Icon="/Assets/avalonia-logo.ico"
+    Padding="12"
+    Title="Avalonia.Basic.Mvvm.Sample"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
+    x:Class="Avalonia.Basic.Mvvm.Sample.Views.MainWindow"
+    x:DataType="vm:MainWindowViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Avalonia.Basic.Mvvm.Sample.ViewModels"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Design.DataContext>
+        <!--
+            This only sets the DataContext for the previewer in an IDE,
+            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
+        -->
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <StackPanel DataContext="{Binding SimpleViewModel}" Spacing="10">
+        <TextBlock Text="Enter your name..." />
+        <TextBox Text="{Binding Name}" Watermark="Enter you name..." />
+        <TextBox
+            FontWeight="Bold"
+            IsReadOnly="True"
+            Text="{Binding Greeting, Mode=OneWay}"
+            Watermark="Greeting..." />
+    </StackPanel>
+
+</Window>

@@ -1,0 +1,123 @@
+<Window
+    Icon="/Assets/avalonia-logo.ico"
+    Padding="12"
+    Title="Avalonia.Basic.Mvvm.ValueConverterSample"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
+    x:Class="Avalonia.Basic.Mvvm.ValueConverterSample.Views.MainWindow"
+    x:DataType="vm:MainWindowViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:converters="clr-namespace:Avalonia.Basic.Mvvm.ValueConverterSample.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Avalonia.Basic.Mvvm.ValueConverterSample.ViewModels"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Design.DataContext>
+        <!--
+            This only sets the DataContext for the previewer in an IDE,
+            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
+        -->
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <Window.Resources>
+        <converters:MathAddConverter x:Key="MathAddConverter" />
+        <converters:MathMultiConverter x:Key="MathMultiConverter" />
+        <x:Decimal x:Key="MyConverterParameter">2</x:Decimal>
+    </Window.Resources>
+
+    <TabControl>
+        <TabItem Header="IValueConverter">
+            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto">
+                <TextBlock
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    Text="Number 1" />
+                <NumericUpDown
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    Value="{Binding Number1}" />
+
+                <TextBlock
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    Text="Sum" />
+                <NumericUpDown
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    Value="{Binding Number1, Converter={StaticResource MathAddConverter}, ConverterParameter={StaticResource MyConverterParameter}}" />
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="IMultiValueConverter">
+            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto Auto Auto Auto">
+                <TextBlock Text="Operator" />
+                <!--  下拉选择组件  -->
+                <ComboBox
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    ItemsSource="{Binding Operators}"
+                    SelectedItem="{Binding Operator}" />
+
+                <TextBlock
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    Text="Number 1" />
+                <NumericUpDown
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    Value="{Binding Number1}" />
+
+                <TextBlock
+                    Grid.Column="0"
+                    Grid.Row="2"
+                    Text="Number 2" />
+                <NumericUpDown
+                    Grid.Column="1"
+                    Grid.Row="2"
+                    Value="{Binding Number2}" />
+
+                <TextBlock
+                    Grid.Column="0"
+                    Grid.Row="3"
+                    Text="Result" />
+
+                <NumericUpDown
+                    Grid.Column="1"
+                    Grid.Row="3"
+                    IsReadOnly="True">
+                    <NumericUpDown.Value>
+                        <!--  绑定多个参数给 converter  -->
+                        <MultiBinding Converter="{StaticResource MathMultiConverter}" Mode="OneWay">
+                            <Binding Path="Operator" />
+                            <Binding Path="Number1" />
+                            <Binding Path="Number2" />
+                        </MultiBinding>
+                    </NumericUpDown.Value>
+                </NumericUpDown>
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="FuncValueConverter">
+            <TextBox Height="40" Watermark="请输入颜色名称或十六进制编码，观察左侧椭圆的颜色变化">
+                <TextBox.InnerLeftContent>
+                    <!--
+                        Fill = "{Binding $parent[TextBox].Text}"
+                        绑定父级对象的某个属性，这里绑定的是父级 TextBox 的 Text 属性
+                        语法类似 CSS，灰常灵活
+                    -->
+                    <Ellipse
+                        Fill="{Binding $parent[TextBox].Text, Converter={x:Static converters:FuncValueConverter.StringToBrushConverter}}"
+                        Height="20"
+                        Margin="2"
+                        Stroke="Gray"
+                        StrokeThickness="1"
+                        Width="20" />
+                </TextBox.InnerLeftContent>
+            </TextBox>
+        </TabItem>
+    </TabControl>
+
+</Window>

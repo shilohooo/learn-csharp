@@ -8,3 +8,4 @@
 - SqlSugar: https://www.donet5.com/Home/Doc
 - WinForms: https://learn.microsoft.com/en-us/dotnet/desktop/winforms/?view=netdesktop-8.0
 - AspNetCore: https://dotnet.microsoft.com/en-us/apps/aspnet
+- Avalonia: https://docs.avaloniaui.net/docs/welcome

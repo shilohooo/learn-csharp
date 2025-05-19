@@ -1,0 +1,91 @@
+<Window
+    x:Class="Avalonia.DataTemplates.BasicDataTemplateSample.Views.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:Avalonia.DataTemplates.BasicDataTemplateSample.Models"
+    xmlns:views="clr-namespace:Avalonia.DataTemplates.BasicDataTemplateSample.Views"
+    xmlns:vm="using:Avalonia.DataTemplates.BasicDataTemplateSample.ViewModels"
+    Title="Avalonia.DataTemplates.BasicDataTemplateSample"
+    Padding="12"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vm:MainWindowViewModel"
+    Icon="/Assets/avalonia-logo.ico"
+    mc:Ignorable="d">
+
+    <Design.DataContext>
+        <!--
+            This only sets the DataContext for the previewer in an IDE,
+            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
+        -->
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <Window.Resources>
+        <DataTemplate x:Key="My.DataTemplates.Person" DataType="models:Person">
+            <Grid ColumnDefinitions="Auto *" RowDefinitions="Auto Auto Auto Auto">
+                <TextBlock Text="First Name: " />
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Text="{Binding FirstName}" />
+
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Text="Last Name: " />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Text="{Binding LastName}" />
+
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Text="Age: " />
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Text="{Binding Age, StringFormat={}{0} years}" />
+
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Text="Sex: " />
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Text="{Binding Sex}" />
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Window.DataTemplates>
+        <!--  学生信息展示数据模板  -->
+        <DataTemplate DataType="models:Student">
+            <StackPanel>
+                <TextBlock FontWeight="Bold" Text="{Binding Grade, StringFormat='I am a student in {0}. grade'}" />
+                <!--  复用人员信息展示数据模板  -->
+                <!-- <ContentControl Content="{Binding}" ContentTemplate="{DynamicResource My.DataTemplates.Person}" /> -->
+                <!--  复用人员信息展示用户控件  -->
+                <views:PersonView />
+            </StackPanel>
+        </DataTemplate>
+
+        <!--  教师信息展示数据模板  -->
+        <DataTemplate DataType="models:Teacher">
+            <StackPanel>
+                <TextBlock FontWeight="Bold" Text="{Binding Subject, StringFormat='I am a teacher for: &quot;{0}&quot;'}" />
+                <!--  复用人员信息展示数据模板  -->
+                <!-- <ContentControl Content="{Binding}" ContentTemplate="{DynamicResource My.DataTemplates.Person}" /> -->
+                <!--  复用人员信息展示用户控件  -->
+                <views:PersonView />
+            </StackPanel>
+        </DataTemplate>
+    </Window.DataTemplates>
+
+    <ListBox ItemsSource="{Binding People}" />
+
+</Window>

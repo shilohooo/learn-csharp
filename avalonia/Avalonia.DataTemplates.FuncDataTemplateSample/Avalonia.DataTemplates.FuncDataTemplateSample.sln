@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia.DataTemplates.FuncDataTemplateSample", "Avalonia.DataTemplates.FuncDataTemplateSample\Avalonia.DataTemplates.FuncDataTemplateSample.csproj", "{5307B278-46E6-466E-9927-86292167F882}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5307B278-46E6-466E-9927-86292167F882}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5307B278-46E6-466E-9927-86292167F882}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5307B278-46E6-466E-9927-86292167F882}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5307B278-46E6-466E-9927-86292167F882}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,75 @@
+<Window
+    Icon="/Assets/avalonia-logo.ico"
+    Padding="12"
+    Title="Avalonia.DataTemplates.IDataTemplateSample"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
+    x:Class="Avalonia.DataTemplates.IDataTemplateSample.Views.MainWindow"
+    x:DataType="vm:MainWindowViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dataTemplates="clr-namespace:Avalonia.DataTemplates.IDataTemplateSample.DataTemplates"
+    xmlns:enums="clr-namespace:Avalonia.DataTemplates.IDataTemplateSample.Enums"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Avalonia.DataTemplates.IDataTemplateSample.ViewModels"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Design.DataContext>
+        <!--
+            This only sets the DataContext for the previewer in an IDE,
+            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
+        -->
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <Window.DataTemplates>
+        <dataTemplates:ShapeTemplateSelector>
+            <!--  Key 必须和枚举 ShapeType 中的成员名称一致  -->
+            <DataTemplate DataType="enums:ShapeType" x:Key="RedCircle">
+                <Ellipse
+                    Fill="Red"
+                    Height="50"
+                    Stroke="DarkRed"
+                    StrokeThickness="2"
+                    Width="50" />
+            </DataTemplate>
+
+            <DataTemplate DataType="enums:ShapeType" x:Key="BlueCircle">
+                <Ellipse
+                    Fill="Blue"
+                    Height="50"
+                    Stroke="DarkBlue"
+                    StrokeThickness="2"
+                    Width="50" />
+            </DataTemplate>
+
+            <DataTemplate DataType="enums:ShapeType" x:Key="RedSquare">
+                <Rectangle
+                    Fill="Red"
+                    Height="50"
+                    Stroke="DarkRed"
+                    StrokeThickness="2"
+                    Width="50" />
+            </DataTemplate>
+
+            <DataTemplate DataType="enums:ShapeType" x:Key="BlueSquare">
+                <Rectangle
+                    Fill="Blue"
+                    Height="50"
+                    Stroke="DarkBlue"
+                    StrokeThickness="2"
+                    Width="50" />
+            </DataTemplate>
+        </dataTemplates:ShapeTemplateSelector>
+    </Window.DataTemplates>
+
+    <StackPanel Spacing="12">
+        <TextBlock Text="Select a Shape" />
+        <ComboBox
+            ItemsSource="{Binding ShapeTypes}"
+            SelectedIndex="0"
+            SelectedItem="{Binding SelectedShape}" />
+    </StackPanel>
+
+</Window>

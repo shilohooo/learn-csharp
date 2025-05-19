@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia.Routing.BasicViewLocatorSample", "Avalonia.Routing.BasicViewLocatorSample\Avalonia.Routing.BasicViewLocatorSample.csproj", "{D88B5A33-29C7-4ADD-A76F-DD0EF06C8DDB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D88B5A33-29C7-4ADD-A76F-DD0EF06C8DDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D88B5A33-29C7-4ADD-A76F-DD0EF06C8DDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D88B5A33-29C7-4ADD-A76F-DD0EF06C8DDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D88B5A33-29C7-4ADD-A76F-DD0EF06C8DDB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

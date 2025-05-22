@@ -1,0 +1,25 @@
+<Application
+    RequestedThemeVariant="Default"
+    x:Class="Avalonia.CustomControls.RatingControlSample.App"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:Avalonia.CustomControls.RatingControlSample"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--  "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options.  -->
+
+    <Application.DataTemplates>
+        <local:ViewLocator />
+    </Application.DataTemplates>
+
+    <Application.Styles>
+        <FluentTheme />
+    </Application.Styles>
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <!--  引入自定义的控件样式，引入之后才能使用，否则无法显示控件的外观  -->
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="/Themes/RatingStyles.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

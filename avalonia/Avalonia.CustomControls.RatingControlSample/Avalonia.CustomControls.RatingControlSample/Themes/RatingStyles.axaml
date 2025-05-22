@@ -1,0 +1,144 @@
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:controls="clr-namespace:Avalonia.CustomControls.RatingControlSample.Controls"
+    xmlns:converters="clr-namespace:Avalonia.CustomControls.RatingControlSample.Converters"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--  设计时预览  -->
+    <Design.PreviewWith>
+        <TabControl>
+            <TabItem Header="默认主题">
+                <ThemeVariantScope RequestedThemeVariant="Default">
+                    <StackPanel Background="{DynamicResource SystemRegionBrush}" Spacing="10">
+                        <controls:RatingControl NumberOfStars="5" Value="0" />
+                        <controls:RatingControl NumberOfStars="5" Value="2" />
+                        <controls:RatingControl NumberOfStars="6" Value="6" />
+                    </StackPanel>
+                </ThemeVariantScope>
+            </TabItem>
+            <TabItem Header="浅色主题">
+                <ThemeVariantScope RequestedThemeVariant="Light">
+                    <StackPanel Background="{DynamicResource SystemRegionBrush}" Spacing="10">
+                        <controls:RatingControl NumberOfStars="5" Value="0" />
+                        <controls:RatingControl NumberOfStars="5" Value="2" />
+                        <controls:RatingControl NumberOfStars="6" Value="6" />
+                    </StackPanel>
+                </ThemeVariantScope>
+            </TabItem>
+            <TabItem Header="深色主题">
+                <ThemeVariantScope RequestedThemeVariant="Dark">
+                    <StackPanel Background="{DynamicResource SystemRegionBrush}" Spacing="10">
+                        <controls:RatingControl NumberOfStars="5" Value="0" />
+                        <controls:RatingControl NumberOfStars="5" Value="2" />
+                        <controls:RatingControl NumberOfStars="6" Value="6" />
+                    </StackPanel>
+                </ThemeVariantScope>
+            </TabItem>
+        </TabControl>
+    </Design.PreviewWith>
+
+    <!--  主题变体  -->
+    <ResourceDictionary.ThemeDictionaries>
+        <!--  默认主题  -->
+        <ResourceDictionary x:Key="Default">
+            <!--  星星图标选中时的颜色  -->
+            <SolidColorBrush Color="Gold" x:Key="RatingControlSelectedBrush" />
+            <SolidColorBrush Color="Goldenrod" x:Key="RatingControlSelectedStrokeBrush" />
+
+            <!--  星星图标未选中时的颜色  -->
+            <SolidColorBrush Color="White" x:Key="RatingControlUnselectedBrush" />
+            <SolidColorBrush Color="Gray" x:Key="RatingControlUnselectedStrokeBrush" />
+        </ResourceDictionary>
+
+        <!--  浅色主题  -->
+        <ResourceDictionary x:Key="Light">
+            <!--  星星图标选中时的颜色  -->
+            <SolidColorBrush Color="Gold" x:Key="RatingControlSelectedBrush" />
+            <SolidColorBrush Color="Gray" x:Key="RatingControlSelectedStrokeBrush" />
+
+            <!--  星星图标未选中时的颜色  -->
+            <SolidColorBrush Color="White" x:Key="RatingControlUnselectedBrush" />
+            <SolidColorBrush Color="Gray" x:Key="RatingControlUnselectedStrokeBrush" />
+        </ResourceDictionary>
+
+        <!--  深色主题  -->
+        <ResourceDictionary x:Key="Dark">
+            <!--  星星图标选中时的颜色  -->
+            <SolidColorBrush Color="Red" x:Key="RatingControlSelectedBrush" />
+            <SolidColorBrush Color="White" x:Key="RatingControlSelectedStrokeBrush" />
+
+            <!--  星星图标未选中时的颜色  -->
+            <SolidColorBrush Color="Transparent" x:Key="RatingControlUnselectedBrush" />
+            <SolidColorBrush Color="White" x:Key="RatingControlUnselectedStrokeBrush" />
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+
+    <!--  评分控件的样式  -->
+    <ControlTheme TargetType="controls:RatingControl" x:Key="{x:Type controls:RatingControl}">
+        <!--  添加转换器  -->
+        <ControlTheme.Resources>
+            <converters:IsSmallerOrEqualConverter x:Key="IsSmallerOrEqualConverter" />
+        </ControlTheme.Resources>
+
+        <!--  设置控件的外观  -->
+        <Setter Property="Template">
+            <ControlTemplate>
+                <!--  评分控件需要显示数据校验错误信息，把内容放到 DataValidationErrors 中，错误信息就能显示了  -->
+                <DataValidationErrors>
+                    <!--  样式  -->
+                    <DataValidationErrors.Styles>
+                        <Style Selector="Path.star">
+                            <Setter Property="Data" Value="M 3.9687501,0 5.1351364,2.3633569 7.7432556,2.7423389 5.8560028,4.5819556 6.3015226,7.1795363 3.96875,5.953125 1.6359772,7.1795361 2.0814972,4.5819556 0.19424448,2.7423387 2.8023636,2.3633569 Z" />
+                            <Setter Property="Width" Value="32" />
+                            <Setter Property="Height" Value="32" />
+                            <Setter Property="Margin" Value="5" />
+                            <!--  动态绑定主题中定义的样式，切换主题后，颜色也会自动切换  -->
+                            <Setter Property="Fill" Value="{DynamicResource RatingControlUnselectedBrush}" />
+                            <Setter Property="Stroke" Value="{DynamicResource RatingControlUnselectedStrokeBrush}" />
+                            <Setter Property="StrokeThickness" Value="2" />
+                            <Setter Property="Stretch" Value="Uniform" />
+                        </Style>
+
+                        <Style Selector="Path.selected">
+                            <Setter Property="Fill" Value="{DynamicResource RatingControlSelectedBrush}" />
+                            <Setter Property="Stroke" Value="{DynamicResource RatingControlSelectedStrokeBrush}" />
+                        </Style>
+
+                        <!--  鼠标悬浮样式  -->
+                        <Style Selector="Path.star:pointerover">
+                            <Setter Property="Fill" Value="{DynamicResource RatingControlSelectedStrokeBrush}" />
+                            <!--  scale(1.3) = 放大  -->
+                            <Setter Property="RenderTransform" Value="scale(1.3)" />
+                        </Style>
+                    </DataValidationErrors.Styles>
+
+                    <!--  控件名称需要和 RatingControl 类上的 TemplatePart 特性声明的一致  -->
+                    <ItemsControl ItemsSource="{TemplateBinding Stars}" x:Name="PART_StarsPresenter">
+                        <!--  修改 ItemControl 里面的数据展示样式，评分控件要展示为一个星星图标列表  -->
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" Spacing="5" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <!--  给 ItemsControl 里面的每一项设置样式，也就是星星图标  -->
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Path Classes="star">
+                                    <!--  绑定一个动态样式  -->
+                                    <Classes.selected>
+                                        <MultiBinding Converter="{StaticResource IsSmallerOrEqualConverter}">
+                                            <!--  把 data context 传给转换器  -->
+                                            <Binding />
+                                            <!--  把父级控件中 Value 属性的值传给转换器  -->
+                                            <Binding Path="Value" RelativeSource="{RelativeSource AncestorType=controls:RatingControl}" />
+                                        </MultiBinding>
+                                    </Classes.selected>
+                                </Path>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </DataValidationErrors>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>

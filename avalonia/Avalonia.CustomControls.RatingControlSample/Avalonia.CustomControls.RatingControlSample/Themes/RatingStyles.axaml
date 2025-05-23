@@ -53,7 +53,7 @@
         <ResourceDictionary x:Key="Light">
             <!--  星星图标选中时的颜色  -->
             <SolidColorBrush Color="Gold" x:Key="RatingControlSelectedBrush" />
-            <SolidColorBrush Color="Gray" x:Key="RatingControlSelectedStrokeBrush" />
+            <SolidColorBrush Color="Goldenrod" x:Key="RatingControlSelectedStrokeBrush" />
 
             <!--  星星图标未选中时的颜色  -->
             <SolidColorBrush Color="White" x:Key="RatingControlUnselectedBrush" />
@@ -93,7 +93,9 @@
                             <Setter Property="Margin" Value="5" />
                             <!--  动态绑定主题中定义的样式，切换主题后，颜色也会自动切换  -->
                             <Setter Property="Fill" Value="{DynamicResource RatingControlUnselectedBrush}" />
+                            <!--  边框颜色  -->
                             <Setter Property="Stroke" Value="{DynamicResource RatingControlUnselectedStrokeBrush}" />
+                            <!--  边框宽度  -->
                             <Setter Property="StrokeThickness" Value="2" />
                             <Setter Property="Stretch" Value="Uniform" />
                         </Style>
@@ -113,7 +115,7 @@
 
                     <!--  控件名称需要和 RatingControl 类上的 TemplatePart 特性声明的一致  -->
                     <ItemsControl ItemsSource="{TemplateBinding Stars}" x:Name="PART_StarsPresenter">
-                        <!--  修改 ItemControl 里面的数据展示样式，评分控件要展示为一个星星图标列表  -->
+                        <!--  修改 ItemControl 里面的内容展示容器，把内容展示在一个 StackPanel 里面  -->
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Horizontal" Spacing="5" />
@@ -126,6 +128,7 @@
                                 <Path Classes="star">
                                     <!--  绑定一个动态样式  -->
                                     <Classes.selected>
+                                        <!--  支持多个参数的转换器绑定  -->
                                         <MultiBinding Converter="{StaticResource IsSmallerOrEqualConverter}">
                                             <!--  把 data context 传给转换器  -->
                                             <Binding />

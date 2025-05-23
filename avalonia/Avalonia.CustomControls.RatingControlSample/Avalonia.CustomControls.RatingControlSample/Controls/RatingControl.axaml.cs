@@ -59,6 +59,7 @@ public class RatingControl : TemplatedControl
     /// <inheritdoc />
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
+        // 这个方法会在控件显示到界面之前调用
         base.OnApplyTemplate(e);
 
         if (_starsPresenter is not null) _starsPresenter.PointerReleased -= StarsPresenter_PointerReleased;
@@ -75,6 +76,7 @@ public class RatingControl : TemplatedControl
     /// <param name="e"></param>
     private void StarsPresenter_PointerReleased(object? sender, PointerReleasedEventArgs e)
     {
+        // 选了多少个星星，设置到 Value 属性中
         if (e.Source is Path star) Value = star.DataContext as int? ?? 0;
     }
 
@@ -118,7 +120,7 @@ public class RatingControl : TemplatedControl
     );
 
     /// <summary>
-    ///     星星的数量，可以由开发者设置，可以通过样式进行修改（Style）
+    ///     星星的数量，可以由开发者设置，可以通过样式进行修改（Style + Setter）
     /// </summary>
     public int NumberOfStars
     {
@@ -154,7 +156,7 @@ public class RatingControl : TemplatedControl
 
 
     /// <summary>
-    ///     评分值，用户与控件交互时设置
+    ///     评分值，用户与控件交互时设置，用户点击星星图标，该值就会发送改变
     /// </summary>
     public int Value
     {
@@ -177,7 +179,8 @@ public class RatingControl : TemplatedControl
     private IEnumerable<int> _stars = Enumerable.Range(1, 5);
 
     /// <summary>
-    ///     星星列表
+    ///     星星列表，ItemsControl 控件的数据源
+    ///     <remarks>这里有多少条数据，ItemsControl 里面就会显示多少个星星图标</remarks>
     /// </summary>
     public IEnumerable<int> Stars
     {

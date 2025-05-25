@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using Avalonia.Controls;
 using Avalonia.CustomControls.SnowflakesControlSample.Models;
@@ -13,15 +14,6 @@ namespace Avalonia.CustomControls.SnowflakesControlSample.Controls;
 /// </summary>
 public class SnowflakeControl : Control, ICustomHitTest
 {
-    #region Private Fields
-
-    /// <summary>
-    ///     计算两次渲染帧之间消耗的时间，每次渲染之后都会重置
-    /// </summary>
-    private readonly Stopwatch _stopwatch = new();
-
-    #endregion
-
     #region Constructors
 
     static SnowflakeControl()
@@ -52,6 +44,20 @@ public class SnowflakeControl : Control, ICustomHitTest
 
     #endregion
 
+    #region Private Fields
+
+    /// <summary>
+    ///     计算两次渲染帧之间消耗的时间，每次渲染之后都会重置
+    /// </summary>
+    private readonly Stopwatch _stopwatch = new();
+
+    /// <summary>
+    ///     存储当前的得分提示
+    /// </summary>
+    private readonly ICollection<ScoreHint> _scoreHints = [];
+
+    #endregion
+
     #region Public Methods
 
     /// <inheritdoc />
@@ -65,6 +71,9 @@ public class SnowflakeControl : Control, ICustomHitTest
         // 点中了某个雪花，从列表中移除，并计算分数
         Snowflakes.Remove(snowflake);
         Score += snowflake.GetHitScore();
+
+        // 添加得分提示,在1秒后自动移除
+        _scoreHints.Add(new ScoreHint(snowflake, _scoreHints));
         return true;
     }
 
@@ -85,6 +94,33 @@ public class SnowflakeControl : Control, ICustomHitTest
                 snowflake.Radius
             );
         }
+
+        // 绘制分数
+        context.Custom(new ScoreRenderer(Bounds, $"Your score: {Score:N0}"));
+
+        // 绘制得分提示，即鼠标点中雪花的时候获得的分数
+        foreach (var scoreHint in _scoreHints.ToArray())
+        {
+            if (IsRunning) scoreHint.Update(elapsedMs);
+
+            // 渲染得分提示
+            var formattedText = new FormattedText(
+                // 文本内容
+                scoreHint.ToString(),
+                CultureInfo.InvariantCulture,
+                // 文本方向
+                FlowDirection.LeftToRight,
+                // 字体
+                Typeface.Default,
+                // 字体大小
+                20,
+                // 字体颜色
+                new SolidColorBrush(Colors.Yellow, scoreHint.Opacity)
+            );
+            context.DrawText(formattedText,
+                scoreHint.GetTopLeftForViewport(Bounds, new Size(formattedText.Width, formattedText.Height)));
+        }
+
 
         base.Render(context);
 

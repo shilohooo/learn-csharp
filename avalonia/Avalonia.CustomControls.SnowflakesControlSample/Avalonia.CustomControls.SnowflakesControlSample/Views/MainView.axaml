@@ -1,51 +1,52 @@
 ﻿<UserControl
-    d:DesignHeight="450"
-    d:DesignWidth="800"
-    mc:Ignorable="d"
     x:Class="Avalonia.CustomControls.SnowflakesControlSample.Views.MainView"
-    x:DataType="vm:SnowflakeGameViewModel"
     xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Avalonia.CustomControls.SnowflakesControlSample.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:Avalonia.CustomControls.SnowflakesControlSample.ViewModels"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vm:SnowflakeGameViewModel"
+    mc:Ignorable="d">
     <Design.DataContext>
         <vm:SnowflakeGameViewModel />
     </Design.DataContext>
 
     <Panel>
+        <!--  添加一个背景色，模拟下雪的天气和场景  -->
         <Panel.Background>
-            <LinearGradientBrush EndPoint="0%,100%" StartPoint="0,0">
-                <GradientStop Color="DarkBlue" Offset="0" />
-                <GradientStop Color="LightSkyBlue" Offset="0.85" />
-                <GradientStop Color="LimeGreen" Offset="0.85" />
-                <GradientStop Color="DarkGreen" Offset="1" />
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0%,100%">
+                <GradientStop Offset="0" Color="DarkBlue" />
+                <GradientStop Offset="0.85" Color="LightSkyBlue" />
+                <GradientStop Offset="0.85" Color="LimeGreen" />
+                <GradientStop Offset="1" Color="DarkGreen" />
             </LinearGradientBrush>
         </Panel.Background>
 
         <controls:SnowflakeControl
             HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
             IsRunning="{Binding IsGameRunning}"
             Score="{Binding Score}"
-            Snowflakes="{Binding Snowflakes}"
-            VerticalAlignment="Stretch" />
+            Snowflakes="{Binding Snowflakes}" />
 
         <ProgressBar
-            Foreground="Goldenrod"
             Height="3"
             Margin="5"
+            VerticalAlignment="Top"
+            Foreground="Goldenrod"
             Maximum="{Binding GameDurationMs}"
-            Value="{Binding RemainingMs}"
-            VerticalAlignment="Top" />
+            Value="{Binding RemainingMs}" />
 
         <Button
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
             Command="{Binding StartGameCommand}"
             Content="►"
             CornerRadius="25"
             FontSize="50"
-            HorizontalAlignment="Center"
-            IsVisible="{Binding !IsGameRunning}"
-            VerticalAlignment="Center" />
+            IsVisible="{Binding !IsGameRunning}" />
     </Panel>
 </UserControl>

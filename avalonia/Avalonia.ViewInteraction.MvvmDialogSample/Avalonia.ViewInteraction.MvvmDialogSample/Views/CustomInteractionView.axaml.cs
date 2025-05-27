@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls;
@@ -43,6 +42,6 @@ public partial class CustomInteractionView : UserControl
             Title = input
         });
 
-        return storageFiles.Select(storageFile => $"{storageFile.Path}/{storageFile.Name}").ToList();
+        return storageFiles.Select(storageFile => storageFile.Path.AbsolutePath).ToList();
     }
 }

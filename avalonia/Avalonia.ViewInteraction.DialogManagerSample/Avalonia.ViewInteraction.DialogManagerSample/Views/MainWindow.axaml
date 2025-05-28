@@ -1,0 +1,101 @@
+<Window
+    Background="Transparent"
+    BorderBrush="Transparent"
+    BorderThickness="0"
+    CanResize="False"
+    DragDrop.AllowDrop="True"
+    ExtendClientAreaChromeHints="NoChrome"
+    ExtendClientAreaTitleBarHeightHint="1"
+    ExtendClientAreaToDecorationsHint="True"
+    Icon="/Assets/avalonia-logo.ico"
+    SystemDecorations="None"
+    Title="Avalonia.ViewInteraction.DialogManagerSample"
+    WindowStartupLocation="CenterScreen"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
+    services:DialogManager.Register="{Binding}"
+    x:Class="Avalonia.ViewInteraction.DialogManagerSample.Views.MainWindow"
+    x:DataType="vm:MainWindowViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:services="clr-namespace:Avalonia.ViewInteraction.DialogManagerSample.Services"
+    xmlns:vm="using:Avalonia.ViewInteraction.DialogManagerSample.ViewModels"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Design.DataContext>
+        <!--
+            This only sets the DataContext for the previewer in an IDE,
+            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
+        -->
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <DockPanel Background="#f5f5f5" LastChildFill="True">
+        <Border
+            Background="#099fff"
+            DockPanel.Dock="Top"
+            Height="50"
+            Padding="8">
+            <TextBlock
+                FontSize="24"
+                FontWeight="Bold"
+                Foreground="White"
+                Text="System Name"
+                VerticalAlignment="Center" />
+        </Border>
+        <Border
+            Background="White"
+            DockPanel.Dock="Left"
+            Padding="8"
+            Width="200">
+            <TextBlock FontSize="24" Text="Sidebar Menu" />
+        </Border>
+        <Border
+            Background="#099fff"
+            DockPanel.Dock="Bottom"
+            Height="50"
+            Padding="8">
+            <TextBlock
+                FontSize="18"
+                FontWeight="Bold"
+                Foreground="White"
+                Text="Footer"
+                VerticalAlignment="Center" />
+        </Border>
+        <Border Background="#f5f5f5" Padding="12">
+            <Border
+                Background="White"
+                CornerRadius="12"
+                Padding="12">
+                <Grid RowDefinitions="Auto * Auto">
+                    <TextBlock Text="当前选择的文件列表：" />
+                    <ListBox
+                        Background="#099fff"
+                        CornerRadius="12"
+                        Grid.Row="1"
+                        ItemsSource="{Binding SelectedFiles}"
+                        Margin="20"
+                        Padding="12">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    FontSize="24"
+                                    FontWeight="Bold"
+                                    Foreground="White"
+                                    Text="{Binding}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Button
+                        Command="{Binding SelectFilesCommand}"
+                        Content="选择文件"
+                        Grid.Row="2"
+                        HorizontalAlignment="Center" />
+                </Grid>
+            </Border>
+        </Border>
+    </DockPanel>
+
+</Window>

@@ -1,0 +1,46 @@
+﻿<UserControl
+    x:Class="Avalonia.MusicStore.Views.MusicStoreView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Avalonia.MusicStore.ViewModels"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vm:MusicStoreViewModel"
+    mc:Ignorable="d">
+
+    <Design.DataContext>
+        <vm:MusicStoreViewModel />
+    </Design.DataContext>
+
+
+    <DockPanel LastChildFill="True">
+        <!--  search bar  -->
+        <StackPanel DockPanel.Dock="Top">
+            <TextBox Text="{Binding SearchText}" Watermark="Search for Albums..." />
+            <ProgressBar IsIndeterminate="True" IsVisible="{Binding IsBusy}" />
+        </StackPanel>
+
+        <!--  buy button  -->
+        <Button
+            HorizontalAlignment="Center"
+            Command="{Binding BuyMusicCommand}"
+            Content="Buy Album"
+            DockPanel.Dock="Bottom" />
+
+        <!--  album list  -->
+        <ListBox
+            Margin="0,20"
+            Background="Transparent"
+            ItemsSource="{Binding SearchResults}"
+            SelectedItem="{Binding SelectedAlbum}">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <!--  以水平方向排列  -->
+                    <WrapPanel />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
+    </DockPanel>
+</UserControl>

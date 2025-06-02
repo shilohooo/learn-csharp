@@ -1,0 +1,38 @@
+<Window
+    x:Class="Avalonia.ThemeVariantsSample.Views.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Avalonia.ThemeVariantsSample.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Avalonia.ThemeVariantsSample.ViewModels"
+    Title="Avalonia.ThemeVariantsSample"
+    Padding="12"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vm:MainWindowViewModel"
+    Icon="/Assets/avalonia-logo.ico"
+    mc:Ignorable="d">
+
+    <Design.DataContext>
+        <!--
+            This only sets the DataContext for the previewer in an IDE,
+            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
+        -->
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <StackPanel Spacing="10">
+        <ToggleSwitch
+            HorizontalAlignment="Right"
+            Content="Theme"
+            IsChecked="{Binding IsDarkMode}"
+            OffContent="Light"
+            OnContent="Dark" />
+        <Button Background="{DynamicResource PrimaryColorBrush}">
+            <TextBlock Foreground="White" Text="Theme Variants Test Button" />
+        </Button>
+        <controls:MyTemplatedControl />
+    </StackPanel>
+
+</Window>

@@ -1,0 +1,13 @@
+﻿<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Avalonia.ThemeVariantsSample.Controls">
+    <!--  Add Resources Here  -->
+    <ControlTheme x:Key="{x:Type controls:MyTemplatedControl}" TargetType="controls:MyTemplatedControl">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <TextBlock Foreground="{DynamicResource PrimaryColorBrush}" Text="MyTemplatedControl" />
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>

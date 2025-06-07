@@ -1,0 +1,59 @@
+<Window
+    Icon="/Assets/avalonia-logo.ico"
+    Title="Avalonia 页面导航示例"
+    WindowStartupLocation="CenterScreen"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
+    x:Class="Avalonia.PageNavigationSample.Views.MainWindow"
+    x:DataType="vm:MainWindowViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Avalonia.PageNavigationSample.ViewModels"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Design.DataContext>
+        <!--
+            This only sets the DataContext for the previewer in an IDE,
+            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
+        -->
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <!--  region 布局容器  -->
+    <DockPanel LastChildFill="True">
+        <!--  region 侧边二级导航  -->
+        <Border
+            Background="#222226"
+            BorderBrush="#343434"
+            BorderThickness="0,0,1,1"
+            DockPanel.Dock="Left"
+            Padding="12"
+            Width="240">
+            <ListBox
+                Background="Transparent"
+                ItemsSource="{Binding Menus}"
+                SelectedItem="{Binding CurrentMenu}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Button Content="{Binding Title}" HorizontalAlignment="Stretch" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Border>
+        <!--  endregion  -->
+
+        <!--  region 内容区域  -->
+        <Border
+            Background="#111113"
+            DockPanel.Dock="Right"
+            Padding="12">
+            <TransitioningContentControl Content="{Binding CurrentViewModel}" />
+        </Border>
+        <!--  endregion  -->
+    </DockPanel>
+    <!--  endregion  -->
+
+
+</Window>

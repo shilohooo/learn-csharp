@@ -16,6 +16,8 @@ public class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        RegisterAllViews();
+
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
@@ -30,6 +32,16 @@ public class App : Application
         }
 
         base.OnFrameworkInitializationCompleted();
+    }
+
+    /// <summary>
+    ///     注册所有页面视图
+    /// </summary>
+    private static void RegisterAllViews()
+    {
+        ViewLocator.Register<MainWindowViewModel, MainWindow>();
+        ViewLocator.Register<HomeViewModel, HomeView>();
+        ViewLocator.Register<AboutViewModel, AboutView>();
     }
 
     private void DisableAvaloniaDataAnnotationValidation()

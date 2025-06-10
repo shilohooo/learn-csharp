@@ -1,4 +1,5 @@
 ﻿using System;
+using Avalonia.PageNavigationSample.Constants;
 
 namespace Avalonia.PageNavigationSample.Models;
 
@@ -15,7 +16,7 @@ public class MenuItem
     /// <summary>
     ///     菜单图标
     /// </summary>
-    public string? Icon { get; set; }
+    public IconName? Icon { get; set; }
 
     /// <summary>
     ///     菜单对应的页面类型

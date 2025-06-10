@@ -21,18 +21,18 @@ public partial class MainWindowViewModel : ViewModelBase
     /// <summary>
     ///     侧边栏导航区域展开状态
     /// </summary>
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(SidebarToggleButtonText))]
-    private bool _isSidebarOpened = true;
+    [ObservableProperty] private bool _isSidebarOpened = true;
 
-    public string SidebarToggleButtonText => IsSidebarOpened ? "收起" : "展开";
+    public static IconName SidebarToggleButtonIcon => IconName.MenuRounded;
+    public static IconName AppIcon => IconName.ComputerRounded;
 
     /// <summary>
     ///     菜单列表
     /// </summary>
     public ObservableCollection<MenuItem> Menus { get; } =
     [
-        new() { Title = "主页", Icon = MenuIconData.Home, ViewType = typeof(HomeViewModel) },
-        new() { Title = "关于", Icon = MenuIconData.About, ViewType = typeof(AboutViewModel) }
+        new() { Title = "主页", Icon = IconName.Home, ViewType = typeof(HomeViewModel) },
+        new() { Title = "关于", Icon = IconName.InfoRounded, ViewType = typeof(AboutViewModel) }
     ];
 
     partial void OnCurrentMenuChanged(MenuItem? value)

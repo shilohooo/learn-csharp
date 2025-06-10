@@ -1,17 +1,17 @@
 <Window
+    Icon="/Assets/avalonia-logo.ico"
+    Title="Avalonia 页面导航示例"
+    WindowStartupLocation="CenterScreen"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
     x:Class="Avalonia.PageNavigationSample.Views.MainWindow"
+    x:DataType="vm:MainWindowViewModel"
     xmlns="https://github.com/avaloniaui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Avalonia.PageNavigationSample.ViewModels"
-    Title="Avalonia 页面导航示例"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
-    x:DataType="vm:MainWindowViewModel"
-    Icon="/Assets/avalonia-logo.ico"
-    WindowStartupLocation="CenterScreen"
-    mc:Ignorable="d">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Design.DataContext>
         <!--
@@ -23,30 +23,64 @@
 
     <!--  region 布局容器  -->
     <SplitView
-        x:Name="LayoutSplitView"
         CompactPaneLength="60"
         DisplayMode="CompactInline"
         IsPaneOpen="{Binding IsSidebarOpened}"
-        OpenPaneLength="240">
+        OpenPaneLength="240"
+        x:Name="LayoutSplitView">
         <!--  region 侧边导航  -->
         <SplitView.Pane>
             <Border
-                Padding="8"
                 Background="#222226"
                 BorderBrush="#343434"
-                BorderThickness="0,0,1,1">
+                BorderThickness="0,0,1,1"
+                Padding="8">
                 <DockPanel LastChildFill="True">
-                    <Button
-                        HorizontalAlignment="Right"
-                        Command="{Binding ToggleSidebarCommand}"
-                        DockPanel.Dock="Bottom">
-                        <PathIcon Data="{StaticResource TextCollapseRegular}" />
-                    </Button>
+                    <!--  Banner  -->
+                    <Border
+                        BorderBrush="#4E4E51"
+                        BorderThickness="0,0,0,1"
+                        DockPanel.Dock="Top"
+                        Padding="0,0,0,10">
+                        <DockPanel LastChildFill="True" VerticalAlignment="Center">
+                            <!--  菜单折叠按钮  -->
+                            <Button
+                                Command="{Binding ToggleSidebarCommand}"
+                                DockPanel.Dock="Right"
+                                HorizontalAlignment="Right">
+                                <Svg
+                                    Css="path { fill: #ffffff }"
+                                    Height="24"
+                                    Path="{Binding SidebarToggleButtonIcon, Converter={StaticResource SvgIconPathConverters}}"
+                                    Width="24" />
+                            </Button>
 
+                            <!--  应用 LOGO 和名称  -->
+                            <StackPanel
+                                IsVisible="{Binding IsPaneOpen, ElementName=LayoutSplitView}"
+                                Orientation="Horizontal"
+                                Spacing="10">
+                                <Svg
+                                    Css="path { fill: #ffffff }"
+                                    Height="24"
+                                    Path="{Binding AppIcon, Converter={StaticResource SvgIconPathConverters}}"
+                                    Width="24" />
+                                <TextBlock
+                                    DockPanel.Dock="Left"
+                                    FontWeight="Black"
+                                    Text="Your App Name:)"
+                                    VerticalAlignment="Center" />
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+
+
+                    <!--  菜单列表  -->
                     <ListBox
                         Background="Transparent"
                         DockPanel.Dock="Top"
                         ItemsSource="{Binding Menus}"
+                        Margin="0,10,0,0"
                         SelectedItem="{Binding CurrentMenu}">
                         <ListBox.Styles>
                             <Style Selector="ListBoxItem">
@@ -60,27 +94,26 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Spacing="10">
-                                    <PathIcon
-                                        Width="16"
-                                        Height="16"
-                                        Data="{Binding Icon}"
-                                        Foreground="White" />
+                                    <Svg
+                                        Css="path { fill: #ffffff }"
+                                        Height="24"
+                                        Path="{Binding Icon, Converter={StaticResource SvgIconPathConverters}}"
+                                        Width="24" />
                                     <TextBlock
-                                        VerticalAlignment="Center"
                                         IsVisible="{Binding IsPaneOpen, ElementName=LayoutSplitView}"
-                                        Text="{Binding Title}" />
+                                        Text="{Binding Title}"
+                                        VerticalAlignment="Center" />
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-
                 </DockPanel>
             </Border>
         </SplitView.Pane>
         <!--  endregion  -->
 
         <!--  region 内容区域  -->
-        <Border Padding="12" Background="#111113">
+        <Border Background="#111113" Padding="12">
             <TransitioningContentControl Content="{Binding CurrentViewModel}" />
         </Border>
         <!--  endregion  -->

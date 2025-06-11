@@ -7,7 +7,9 @@
     mc:Ignorable="d"
     x:Class="Avalonia.PageNavigationSample.Views.MainWindow"
     x:DataType="vm:MainWindowViewModel"
+    x:Name="Window"
     xmlns="https://github.com/avaloniaui"
+    xmlns:converters="clr-namespace:Avalonia.PageNavigationSample.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Avalonia.PageNavigationSample.ViewModels"
@@ -18,8 +20,13 @@
             This only sets the DataContext for the previewer in an IDE,
             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
         -->
-        <vm:MainWindowViewModel />
+        <vm:DesignMainWindowViewModel />
     </Design.DataContext>
+
+    <Window.Resources>
+        <converters:SvgIconPathConverters x:Key="SvgIconPathConverters" />
+        <converters:SvgColorConverter x:Key="SvgColorConverter" />
+    </Window.Resources>
 
     <!--  region 布局容器  -->
     <SplitView
@@ -31,8 +38,8 @@
         <!--  region 侧边导航  -->
         <SplitView.Pane>
             <Border
-                Background="#222226"
-                BorderBrush="#343434"
+                Background="{DynamicResource SidebarBgColor}"
+                BorderBrush="{DynamicResource SidebarBorderColor}"
                 BorderThickness="0,0,1,1"
                 Padding="8">
                 <DockPanel LastChildFill="True">
@@ -49,7 +56,7 @@
                                 DockPanel.Dock="Right"
                                 HorizontalAlignment="Right">
                                 <Svg
-                                    Css="path { fill: #ffffff }"
+                                    Css="{Binding IsDarkMode, Converter={StaticResource SvgColorConverter}}"
                                     Height="24"
                                     Path="{Binding SidebarToggleButtonIcon, Converter={StaticResource SvgIconPathConverters}}"
                                     Width="24" />
@@ -61,7 +68,7 @@
                                 Orientation="Horizontal"
                                 Spacing="10">
                                 <Svg
-                                    Css="path { fill: #ffffff }"
+                                    Css="{Binding IsDarkMode, Converter={StaticResource SvgColorConverter}}"
                                     Height="24"
                                     Path="{Binding AppIcon, Converter={StaticResource SvgIconPathConverters}}"
                                     Width="24" />
@@ -74,6 +81,20 @@
                         </DockPanel>
                     </Border>
 
+                    <!--  主题切换  -->
+                    <Border DockPanel.Dock="Bottom" Height="40">
+                        <ToggleButton
+                            HorizontalAlignment="Right"
+                            IsChecked="{Binding IsDarkMode}"
+                            VerticalAlignment="Center">
+                            <ToggleButton.Styles>
+                                <Style Selector="ToggleButton:checked /template/ ContentPresenter">
+                                    <Setter Property="Background" Value="#38383b" />
+                                </Style>
+                            </ToggleButton.Styles>
+                            <Svg Css="{Binding IsDarkMode, Converter={StaticResource SvgColorConverter}}" Path="{Binding ThemeToggleButtonIcon, Converter={StaticResource SvgIconPathConverters}}" />
+                        </ToggleButton>
+                    </Border>
 
                     <!--  菜单列表  -->
                     <ListBox
@@ -86,24 +107,36 @@
                             <Style Selector="ListBoxItem">
                                 <Setter Property="CornerRadius" Value="4" />
                                 <Setter Property="Margin" Value="0 0 0 8" />
+                                <Setter Property="Padding" Value="10" />
                             </Style>
                             <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
-                                <Setter Property="Background" Value="#38383b" />
+                                <Setter Property="Background" Value="{DynamicResource SelectedMenuItemBgColor}" />
                             </Style>
                         </ListBox.Styles>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <!--  菜单图标  -->
                                     <Svg
-                                        Css="path { fill: #ffffff }"
+                                        Css="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).IsDarkMode, Converter={StaticResource SvgColorConverter}}"
                                         Height="24"
                                         Path="{Binding Icon, Converter={StaticResource SvgIconPathConverters}}"
-                                        Width="24" />
+                                        ToolTip.HorizontalOffset="20"
+                                        ToolTip.Placement="Right"
+                                        ToolTip.VerticalOffset="0"
+                                        Width="24">
+
+                                        <ToolTip.Tip>
+                                            <ToolTip Content="{Binding Title}" IsVisible="{Binding !IsPaneOpen, ElementName=LayoutSplitView}" />
+                                        </ToolTip.Tip>
+                                    </Svg>
+                                    <!--  菜单标题  -->
                                     <TextBlock
                                         IsVisible="{Binding IsPaneOpen, ElementName=LayoutSplitView}"
                                         Text="{Binding Title}"
                                         VerticalAlignment="Center" />
                                 </StackPanel>
+
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
@@ -113,7 +146,7 @@
         <!--  endregion  -->
 
         <!--  region 内容区域  -->
-        <Border Background="#111113" Padding="12">
+        <Border Background="{DynamicResource ContentBgColor}" Padding="12">
             <TransitioningContentControl Content="{Binding CurrentViewModel}" />
         </Border>
         <!--  endregion  -->

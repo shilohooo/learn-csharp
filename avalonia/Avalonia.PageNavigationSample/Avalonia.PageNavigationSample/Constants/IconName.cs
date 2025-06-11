@@ -8,5 +8,7 @@ public enum IconName
     Home,
     InfoRounded,
     MenuRounded,
-    ComputerRounded
+    ComputerRounded,
+    DarkModeRounded,
+    LightModeRounded
 }

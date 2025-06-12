@@ -118,7 +118,7 @@
                                 <StackPanel Orientation="Horizontal" Spacing="10">
                                     <!--  菜单图标  -->
                                     <Svg
-                                        Css="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).IsDarkMode, Converter={StaticResource SvgColorConverter}}"
+                                        Css="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).IsDarkMode, Converter={StaticResource SvgColorConverter}, FallbackValue=path { fill: #FFFFFF }}"
                                         Height="24"
                                         Path="{Binding Icon, Converter={StaticResource SvgIconPathConverters}}"
                                         ToolTip.HorizontalOffset="20"

@@ -9,7 +9,6 @@
     x:DataType="vm:MainWindowViewModel"
     x:Name="Window"
     xmlns="https://github.com/avaloniaui"
-    xmlns:converters="clr-namespace:Avalonia.PageNavigationSample.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Avalonia.PageNavigationSample.ViewModels"
@@ -22,11 +21,6 @@
         -->
         <vm:DesignMainWindowViewModel />
     </Design.DataContext>
-
-    <Window.Resources>
-        <converters:SvgIconPathConverters x:Key="SvgIconPathConverters" />
-        <converters:SvgColorConverter x:Key="SvgColorConverter" />
-    </Window.Resources>
 
     <!--  region 布局容器  -->
     <SplitView
@@ -87,6 +81,10 @@
                         <ToggleButton
                             HorizontalAlignment="Right"
                             IsChecked="{Binding IsDarkMode}"
+                            ToolTip.HorizontalOffset="14"
+                            ToolTip.Placement="Right"
+                            ToolTip.Tip="切换主题"
+                            ToolTip.VerticalOffset="0"
                             VerticalAlignment="Center">
                             <ToggleButton.Styles>
                                 <Style Selector="ToggleButton:checked /template/ ContentPresenter">
@@ -94,6 +92,9 @@
                                 </Style>
                                 <Style Selector="ToggleButton:unchecked /template/ ContentPresenter">
                                     <Setter Property="Background" Value="Transparent" />
+                                </Style>
+                                <Style Selector="ToggleButton:pointerover /template/ ContentPresenter">
+                                    <Setter Property="Background" Value="{DynamicResource ThemeSwitchButtonHoverBgColor}" />
                                 </Style>
                             </ToggleButton.Styles>
                             <Svg Css="{Binding IsDarkMode, Converter={StaticResource SvgColorConverter}}" Path="{Binding ThemeToggleButtonIcon, Converter={StaticResource SvgIconPathConverters}}" />
@@ -125,7 +126,7 @@
                                         Css="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).IsDarkMode, Converter={StaticResource SvgColorConverter}, FallbackValue=path { fill: #FFFFFF }}"
                                         Height="24"
                                         Path="{Binding Icon, Converter={StaticResource SvgIconPathConverters}}"
-                                        ToolTip.HorizontalOffset="20"
+                                        ToolTip.HorizontalOffset="24"
                                         ToolTip.Placement="Right"
                                         ToolTip.VerticalOffset="0"
                                         Width="24">

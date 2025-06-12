@@ -10,6 +10,8 @@
             <SolidColorBrush Color="#111113" x:Key="ContentBgColor" />
             <!--  当前菜单项的背景色  -->
             <SolidColorBrush Color="#38383b" x:Key="SelectedMenuItemBgColor" />
+            <!--  主题切换按钮鼠标悬浮背景色  -->
+            <SolidColorBrush Color="#38383B" x:Key="ThemeSwitchButtonHoverBgColor" />
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

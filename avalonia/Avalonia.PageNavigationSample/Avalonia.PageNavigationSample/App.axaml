@@ -2,6 +2,7 @@
     RequestedThemeVariant="Dark"
     x:Class="Avalonia.PageNavigationSample.App"
     xmlns="https://github.com/avaloniaui"
+    xmlns:converters="clr-namespace:Avalonia.PageNavigationSample.Converters"
     xmlns:local="using:Avalonia.PageNavigationSample"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!--  "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options.  -->
@@ -17,6 +18,11 @@
     <!--  Icons  -->
     <Application.Resources>
         <ResourceDictionary>
+            <!--  region converters  -->
+            <converters:SvgColorConverter x:Key="SvgColorConverter" />
+            <converters:SvgIconPathConverters x:Key="SvgIconPathConverters" />
+            <!--  endregion  -->
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceInclude Source="Themes/Light.axaml" />
                 <ResourceInclude Source="Themes/Dark.axaml" />

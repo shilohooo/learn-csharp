@@ -152,7 +152,9 @@
 
         <!--  region 内容区域  -->
         <Border Background="{DynamicResource ContentBgColor}" Padding="12">
-            <TransitioningContentControl Content="{Binding CurrentViewModel}" />
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <TransitioningContentControl Content="{Binding CurrentViewModel}" />
+            </ScrollViewer>
         </Border>
         <!--  endregion  -->
     </SplitView>

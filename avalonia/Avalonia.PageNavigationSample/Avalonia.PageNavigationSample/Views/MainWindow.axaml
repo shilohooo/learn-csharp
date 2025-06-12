@@ -52,6 +52,7 @@
                         <DockPanel LastChildFill="True" VerticalAlignment="Center">
                             <!--  菜单折叠按钮  -->
                             <Button
+                                Background="Transparent"
                                 Command="{Binding ToggleSidebarCommand}"
                                 DockPanel.Dock="Right"
                                 HorizontalAlignment="Right">
@@ -89,7 +90,10 @@
                             VerticalAlignment="Center">
                             <ToggleButton.Styles>
                                 <Style Selector="ToggleButton:checked /template/ ContentPresenter">
-                                    <Setter Property="Background" Value="#38383b" />
+                                    <Setter Property="Background" Value="Transparent" />
+                                </Style>
+                                <Style Selector="ToggleButton:unchecked /template/ ContentPresenter">
+                                    <Setter Property="Background" Value="Transparent" />
                                 </Style>
                             </ToggleButton.Styles>
                             <Svg Css="{Binding IsDarkMode, Converter={StaticResource SvgColorConverter}}" Path="{Binding ThemeToggleButtonIcon, Converter={StaticResource SvgIconPathConverters}}" />

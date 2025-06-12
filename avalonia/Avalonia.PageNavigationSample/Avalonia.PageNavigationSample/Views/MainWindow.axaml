@@ -108,6 +108,19 @@
                             </ToggleButton.Styles>
                             <Svg Css="{Binding IsDarkMode, Converter={StaticResource SvgColorConverter}}" Path="{Binding ThemeToggleButtonIcon, Converter={StaticResource SvgIconPathConverters}}" />
                         </ToggleButton>
+                        <!--  TODO - 使用 Flyout 切换主题和退出应用  -->
+                        <!-- <Button Content="Setting" HorizontalAlignment="Center"> -->
+                        <!--     <Button.Flyout> -->
+                        <!--         <MenuFlyout HorizontalOffset="10" Placement="RightEdgeAlignedBottom"> -->
+                        <!--             <MenuItem Header="主题"> -->
+                        <!--                 <MenuItem Header="亮色主题" /> -->
+                        <!--                 <MenuItem Header="深色主题" /> -->
+                        <!--             </MenuItem> -->
+                        <!--             <MenuItem Header="-" /> -->
+                        <!--             <MenuItem Header="退出" /> -->
+                        <!--         </MenuFlyout> -->
+                        <!--     </Button.Flyout> -->
+                        <!-- </Button> -->
                     </Border>
 
                     <!--  菜单列表  -->

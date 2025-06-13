@@ -10,5 +10,9 @@ public enum IconName
     MenuRounded,
     ComputerRounded,
     DarkModeRounded,
-    LightModeRounded
+    LightModeRounded,
+    HorizontalRuleRounded,
+    FullscreenRounded,
+    FullscreenExitRounded,
+    CloseRounded
 }

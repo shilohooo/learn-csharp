@@ -5,7 +5,7 @@
 /// </summary>
 public class DesignMainWindowViewModel : MainWindowViewModel
 {
-    public DesignMainWindowViewModel()
+    public DesignMainWindowViewModel() : base(null)
     {
         CurrentMenu = Menus[0];
     }

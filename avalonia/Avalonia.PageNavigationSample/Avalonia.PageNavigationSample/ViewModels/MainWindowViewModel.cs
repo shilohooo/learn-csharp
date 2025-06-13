@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using Avalonia.Controls;
 using Avalonia.PageNavigationSample.Constants;
 using Avalonia.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -7,8 +8,13 @@ using MenuItem = Avalonia.PageNavigationSample.Models.MenuItem;
 
 namespace Avalonia.PageNavigationSample.ViewModels;
 
+/// <summary>
+///     主窗口 vm
+/// </summary>
 public partial class MainWindowViewModel : ViewModelBase
 {
+    private readonly Window? _window;
+
     /// <summary>
     ///     当前选中的菜单项
     /// </summary>
@@ -26,9 +32,33 @@ public partial class MainWindowViewModel : ViewModelBase
     private bool _isDarkMode = true;
 
     /// <summary>
+    ///     当前是否全屏
+    /// </summary>
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(MaximizeToggleButtonIcon))]
+    private bool _isMaximized;
+
+    /// <summary>
     ///     侧边栏导航区域展开状态
     /// </summary>
     [ObservableProperty] private bool _isSidebarOpened = true;
+
+    #region Constructors
+
+    public MainWindowViewModel(Window? window)
+    {
+        _window = window;
+        if (_window is null) return;
+
+        IsMaximized = _window.WindowState == WindowState.Maximized;
+        _window.PropertyChanged += (_, e) =>
+        {
+            if (e.Property.Name != nameof(Window.WindowState)) return;
+
+            IsMaximized = _window.WindowState == WindowState.Maximized;
+        };
+    }
+
+    #endregion
 
     /// <summary>
     ///     主题切换图标名称
@@ -44,6 +74,22 @@ public partial class MainWindowViewModel : ViewModelBase
     ///     应用图标名称
     /// </summary>
     public static IconName AppIcon => IconName.ComputerRounded;
+
+    /// <summary>
+    ///     窗口最小化按钮图标名称
+    /// </summary>
+    public static IconName MinimizeButtonIcon => IconName.HorizontalRuleRounded;
+
+    /// <summary>
+    ///     窗口最大化切换图标名称
+    /// </summary>
+    public IconName MaximizeToggleButtonIcon =>
+        IsMaximized ? IconName.FullscreenExitRounded : IconName.FullscreenRounded;
+
+    /// <summary>
+    ///     退出按钮图标名称
+    /// </summary>
+    public static IconName ExitButtonIcon => IconName.CloseRounded;
 
     /// <summary>
     ///     菜单列表
@@ -90,6 +136,33 @@ public partial class MainWindowViewModel : ViewModelBase
     private void Navigate(MenuItem? menu)
     {
         CurrentMenu = menu;
+    }
+
+    [RelayCommand]
+    private void Minimize()
+    {
+        if (_window is null) return;
+
+        _window.WindowState = WindowState.Minimized;
+    }
+
+    [RelayCommand]
+    private void Maximize()
+    {
+        if (_window is null) return;
+
+        _window.WindowState = _window.WindowState switch
+        {
+            WindowState.Normal => WindowState.Maximized,
+            WindowState.Maximized => WindowState.Normal,
+            _ => _window.WindowState
+        };
+    }
+
+    [RelayCommand]
+    private void Exit()
+    {
+        _window?.Close();
     }
 
     #endregion

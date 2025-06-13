@@ -5,7 +5,7 @@
     CanResize="False"
     DragDrop.AllowDrop="True"
     ExtendClientAreaChromeHints="NoChrome"
-    ExtendClientAreaTitleBarHeightHint="1"
+    ExtendClientAreaTitleBarHeightHint="-1"
     ExtendClientAreaToDecorationsHint="True"
     Icon="/Assets/avalonia-logo.ico"
     SystemDecorations="None"
@@ -32,155 +32,191 @@
     </Design.DataContext>
 
     <!--  region 布局容器  -->
-    <SplitView
-        CompactPaneLength="60"
-        DisplayMode="CompactInline"
-        IsPaneOpen="{Binding IsSidebarOpened}"
-        OpenPaneLength="240"
-        x:Name="LayoutSplitView">
-        <!--  region 侧边导航  -->
-        <SplitView.Pane>
-            <Border
-                Background="{DynamicResource SidebarBgColor}"
-                BorderBrush="{DynamicResource SidebarBorderColor}"
-                BorderThickness="0,0,1,1"
-                Padding="8">
-                <DockPanel LastChildFill="True">
-                    <!--  Banner  -->
-                    <Border
-                        BorderBrush="#4E4E51"
-                        BorderThickness="0,0,0,1"
-                        DockPanel.Dock="Top"
-                        Padding="0,0,0,10">
-                        <DockPanel LastChildFill="True" VerticalAlignment="Center">
-                            <!--  菜单折叠按钮  -->
-                            <Button
-                                Background="Transparent"
-                                Command="{Binding ToggleSidebarCommand}"
-                                DockPanel.Dock="Right"
-                                HorizontalAlignment="Right">
-                                <Svg
-                                    Css="{Binding IsDarkMode, Converter={StaticResource SvgColorConverter}}"
-                                    Height="24"
-                                    Path="{Binding SidebarToggleButtonIcon, Converter={StaticResource SvgIconPathConverters}}"
-                                    Width="24" />
-                            </Button>
-
-                            <!--  应用 LOGO 和名称  -->
-                            <StackPanel
-                                IsVisible="{Binding IsPaneOpen, ElementName=LayoutSplitView}"
-                                Orientation="Horizontal"
-                                Spacing="10">
-                                <Svg
-                                    Css="{Binding IsDarkMode, Converter={StaticResource SvgColorConverter}}"
-                                    Height="24"
-                                    Path="{Binding AppIcon, Converter={StaticResource SvgIconPathConverters}}"
-                                    Width="24" />
-                                <TextBlock
-                                    DockPanel.Dock="Left"
-                                    FontWeight="Black"
-                                    Text="Your App Name:)"
-                                    VerticalAlignment="Center" />
-                            </StackPanel>
-                        </DockPanel>
-                    </Border>
-
-                    <!--  主题切换  -->
-                    <Border DockPanel.Dock="Bottom" Height="40">
-                        <ToggleButton
-                            HorizontalAlignment="Right"
-                            IsChecked="{Binding IsDarkMode}"
-                            ToolTip.HorizontalOffset="14"
-                            ToolTip.Placement="Right"
-                            ToolTip.Tip="切换主题"
-                            ToolTip.VerticalOffset="0"
-                            VerticalAlignment="Center">
-                            <ToggleButton.Styles>
-                                <Style Selector="ToggleButton:checked /template/ ContentPresenter">
-                                    <Setter Property="Background" Value="Transparent" />
-                                </Style>
-                                <Style Selector="ToggleButton:unchecked /template/ ContentPresenter">
-                                    <Setter Property="Background" Value="Transparent" />
-                                </Style>
-                                <Style Selector="ToggleButton:pointerover /template/ ContentPresenter">
-                                    <Setter Property="Background" Value="{DynamicResource ThemeSwitchButtonHoverBgColor}" />
-                                </Style>
-                            </ToggleButton.Styles>
-                            <Svg Css="{Binding IsDarkMode, Converter={StaticResource SvgColorConverter}}" Path="{Binding ThemeToggleButtonIcon, Converter={StaticResource SvgIconPathConverters}}" />
-                        </ToggleButton>
-                        <!--  TODO - 使用 Flyout 切换主题和退出应用  -->
-                        <!-- <Button Content="Setting" HorizontalAlignment="Center"> -->
-                        <!--     <Button.Flyout> -->
-                        <!--         <MenuFlyout HorizontalOffset="10" Placement="RightEdgeAlignedBottom"> -->
-                        <!--             <MenuItem Header="主题"> -->
-                        <!--                 <MenuItem Header="亮色主题" /> -->
-                        <!--                 <MenuItem Header="深色主题" /> -->
-                        <!--             </MenuItem> -->
-                        <!--             <MenuItem Header="-" /> -->
-                        <!--             <MenuItem Header="退出" /> -->
-                        <!--         </MenuFlyout> -->
-                        <!--     </Button.Flyout> -->
-                        <!-- </Button> -->
-                    </Border>
-
-                    <!--  菜单列表  -->
-                    <ListBox
-                        Background="Transparent"
-                        DockPanel.Dock="Top"
-                        ItemsSource="{Binding Menus}"
-                        Margin="0,10,0,0"
-                        SelectedItem="{Binding CurrentMenu}">
-                        <ListBox.Styles>
-                            <Style Selector="ListBoxItem">
-                                <Setter Property="CornerRadius" Value="4" />
-                                <Setter Property="Margin" Value="0 0 0 8" />
-                                <Setter Property="Padding" Value="10" />
-                            </Style>
-                            <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
-                                <Setter Property="Background" Value="{DynamicResource SelectedMenuItemBgColor}" />
-                            </Style>
-                        </ListBox.Styles>
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Spacing="10">
-                                    <!--  菜单图标  -->
-                                    <Svg
-                                        Css="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).IsDarkMode, Converter={StaticResource SvgColorConverter}, FallbackValue=path { fill: #FFFFFF }}"
-                                        Height="24"
-                                        Path="{Binding Icon, Converter={StaticResource SvgIconPathConverters}}"
-                                        ToolTip.HorizontalOffset="24"
-                                        ToolTip.Placement="Right"
-                                        ToolTip.VerticalOffset="0"
-                                        Width="24">
-
-                                        <ToolTip.Tip>
-                                            <ToolTip Content="{Binding Title}" IsVisible="{Binding !IsPaneOpen, ElementName=LayoutSplitView}" />
-                                        </ToolTip.Tip>
-                                    </Svg>
-                                    <!--  菜单标题  -->
-                                    <TextBlock
-                                        IsVisible="{Binding IsPaneOpen, ElementName=LayoutSplitView}"
-                                        Text="{Binding Title}"
-                                        VerticalAlignment="Center" />
-                                </StackPanel>
-
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </DockPanel>
-            </Border>
-        </SplitView.Pane>
-        <!--  endregion  -->
-
-        <!--  region 内容区域  -->
-        <Border Background="{DynamicResource ContentBgColor}" Padding="12">
-            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                <TransitioningContentControl Content="{Binding CurrentViewModel}" />
-            </ScrollViewer>
+    <Grid RowDefinitions="Auto, *">
+        <!--  Header  -->
+        <Border
+            Background="{DynamicResource HeaderBgColor}"
+            BorderBrush="{DynamicResource SidebarBorderColor}"
+            BorderThickness="0,0,0,1"
+            DockPanel.Dock="Top"
+            Grid.Row="0"
+            Padding="8">
+            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                <!--  应用 LOGO  -->
+                <StackPanel
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    VerticalAlignment="Center">
+                    <Svg
+                        Css="{Binding IsDarkMode, Converter={StaticResource SvgColorConverter}}"
+                        Height="24"
+                        Path="{Binding AppIcon, Converter={StaticResource SvgIconPathConverters}}"
+                        ToolTip.Tip="应用 LOGO"
+                        Width="24" />
+                </StackPanel>
+                <!--  应用名称  -->
+                <TextBlock
+                    DockPanel.Dock="Left"
+                    FontWeight="Black"
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    HorizontalAlignment="Center"
+                    Text="Avalonia Page Navigation Sample"
+                    VerticalAlignment="Center" />
+                <!--  缩小、最大化、退出按钮  -->
+                <StackPanel
+                    Grid.Column="2"
+                    Grid.Row="0"
+                    Orientation="Horizontal"
+                    Spacing="4"
+                    VerticalAlignment="Center">
+                    <Button Background="Transparent" Command="{Binding MinimizeCommand}">
+                        <Svg
+                            Css="{Binding IsDarkMode, Converter={StaticResource SvgColorConverter}}"
+                            Height="16"
+                            Path="{Binding MinimizeButtonIcon, Converter={StaticResource SvgIconPathConverters}}"
+                            Width="16" />
+                    </Button>
+                    <Button Background="Transparent" Command="{Binding MaximizeCommand}">
+                        <Svg
+                            Css="{Binding IsDarkMode, Converter={StaticResource SvgColorConverter}}"
+                            Height="16"
+                            Path="{Binding MaximizeToggleButtonIcon, Converter={StaticResource SvgIconPathConverters}}"
+                            Width="16" />
+                    </Button>
+                    <Button Background="Transparent" Command="{Binding ExitCommand}">
+                        <Svg
+                            Css="{Binding IsDarkMode, Converter={StaticResource SvgColorConverter}}"
+                            Height="16"
+                            Path="{Binding ExitButtonIcon, Converter={StaticResource SvgIconPathConverters}}"
+                            Width="16" />
+                    </Button>
+                </StackPanel>
+            </Grid>
         </Border>
-        <!--  endregion  -->
-    </SplitView>
+
+        <SplitView
+            CompactPaneLength="60"
+            DisplayMode="CompactInline"
+            Grid.Row="1"
+            IsPaneOpen="{Binding IsSidebarOpened}"
+            OpenPaneLength="240"
+            x:Name="LayoutSplitView">
+            <!--  region 侧边导航  -->
+            <SplitView.Pane>
+                <Border
+                    Background="{DynamicResource SidebarBgColor}"
+                    BorderBrush="{DynamicResource SidebarBorderColor}"
+                    BorderThickness="0,0,1,1"
+                    Padding="8">
+                    <DockPanel LastChildFill="True">
+                        <!--  菜单折叠按钮  -->
+                        <Button
+                            Background="Transparent"
+                            Command="{Binding ToggleSidebarCommand}"
+                            DockPanel.Dock="Top"
+                            HorizontalAlignment="Right">
+                            <Svg
+                                Css="{Binding IsDarkMode, Converter={StaticResource SvgColorConverter}}"
+                                Height="24"
+                                Path="{Binding SidebarToggleButtonIcon, Converter={StaticResource SvgIconPathConverters}}"
+                                Width="24" />
+                        </Button>
+                        <!--  主题切换  -->
+                        <Border DockPanel.Dock="Bottom" Height="40">
+                            <ToggleButton
+                                HorizontalAlignment="Right"
+                                IsChecked="{Binding IsDarkMode}"
+                                ToolTip.HorizontalOffset="14"
+                                ToolTip.Placement="Right"
+                                ToolTip.Tip="切换主题"
+                                ToolTip.VerticalOffset="0"
+                                VerticalAlignment="Center">
+                                <ToggleButton.Styles>
+                                    <Style Selector="ToggleButton:checked /template/ ContentPresenter">
+                                        <Setter Property="Background" Value="Transparent" />
+                                    </Style>
+                                    <Style Selector="ToggleButton:unchecked /template/ ContentPresenter">
+                                        <Setter Property="Background" Value="Transparent" />
+                                    </Style>
+                                    <Style Selector="ToggleButton:pointerover /template/ ContentPresenter">
+                                        <Setter Property="Background" Value="{DynamicResource ThemeSwitchButtonHoverBgColor}" />
+                                    </Style>
+                                </ToggleButton.Styles>
+                                <Svg Css="{Binding IsDarkMode, Converter={StaticResource SvgColorConverter}}" Path="{Binding ThemeToggleButtonIcon, Converter={StaticResource SvgIconPathConverters}}" />
+                            </ToggleButton>
+                            <!--  TODO - 使用 Flyout 切换主题和退出应用  -->
+                            <!-- <Button Content="Setting" HorizontalAlignment="Center"> -->
+                            <!--     <Button.Flyout> -->
+                            <!--         <MenuFlyout HorizontalOffset="10" Placement="RightEdgeAlignedBottom"> -->
+                            <!--             <MenuItem Header="主题"> -->
+                            <!--                 <MenuItem Header="亮色主题" /> -->
+                            <!--                 <MenuItem Header="深色主题" /> -->
+                            <!--             </MenuItem> -->
+                            <!--             <MenuItem Header="-" /> -->
+                            <!--             <MenuItem Header="退出" /> -->
+                            <!--         </MenuFlyout> -->
+                            <!--     </Button.Flyout> -->
+                            <!-- </Button> -->
+                        </Border>
+
+                        <!--  菜单列表  -->
+                        <ListBox
+                            Background="Transparent"
+                            DockPanel.Dock="Top"
+                            ItemsSource="{Binding Menus}"
+                            Margin="0,10,0,0"
+                            SelectedItem="{Binding CurrentMenu}">
+                            <ListBox.Styles>
+                                <Style Selector="ListBoxItem">
+                                    <Setter Property="CornerRadius" Value="4" />
+                                    <Setter Property="Margin" Value="0 0 0 8" />
+                                    <Setter Property="Padding" Value="10" />
+                                </Style>
+                                <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+                                    <Setter Property="Background" Value="{DynamicResource SelectedMenuItemBgColor}" />
+                                </Style>
+                            </ListBox.Styles>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Spacing="10">
+                                        <!--  菜单图标  -->
+                                        <Svg
+                                            Css="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).IsDarkMode, Converter={StaticResource SvgColorConverter}, FallbackValue=path { fill: #FFFFFF }}"
+                                            Height="24"
+                                            Path="{Binding Icon, Converter={StaticResource SvgIconPathConverters}}"
+                                            ToolTip.HorizontalOffset="24"
+                                            ToolTip.Placement="Right"
+                                            ToolTip.VerticalOffset="0"
+                                            Width="24">
+
+                                            <ToolTip.Tip>
+                                                <ToolTip Content="{Binding Title}" IsVisible="{Binding !IsPaneOpen, ElementName=LayoutSplitView}" />
+                                            </ToolTip.Tip>
+                                        </Svg>
+                                        <!--  菜单标题  -->
+                                        <TextBlock
+                                            IsVisible="{Binding IsPaneOpen, ElementName=LayoutSplitView}"
+                                            Text="{Binding Title}"
+                                            VerticalAlignment="Center" />
+                                    </StackPanel>
+
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </DockPanel>
+                </Border>
+            </SplitView.Pane>
+            <!--  endregion  -->
+
+            <!--  region 内容区域  -->
+            <Border Background="{DynamicResource ContentBgColor}" Padding="12">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <TransitioningContentControl Content="{Binding CurrentViewModel}" />
+                </ScrollViewer>
+            </Border>
+            <!--  endregion  -->
+        </SplitView>
+    </Grid>
     <!--  endregion  -->
-
-
 </Window>

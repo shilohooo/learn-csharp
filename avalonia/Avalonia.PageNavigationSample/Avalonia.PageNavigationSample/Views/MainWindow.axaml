@@ -2,13 +2,14 @@
     Background="Transparent"
     BorderBrush="Transparent"
     BorderThickness="0"
-    CanResize="False"
+    CanResize="True"
     DragDrop.AllowDrop="True"
     ExtendClientAreaChromeHints="NoChrome"
     ExtendClientAreaTitleBarHeightHint="-1"
     ExtendClientAreaToDecorationsHint="True"
     Icon="/Assets/avalonia-logo.ico"
-    SystemDecorations="None"
+    Padding="{Binding MainWindowPadding}"
+    SystemDecorations="Full"
     Title="Avalonia 页面导航示例"
     WindowStartupLocation="CenterScreen"
     d:DesignHeight="450"
@@ -157,13 +158,24 @@
                     <ItemsControl
                         Background="Transparent"
                         ItemsSource="{Binding Menus}"
-                        Margin="0,10,0,10">
+                        Margin="0,10,0,10"
+                        Padding="4">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Button
-                                    Background="Transparent"
+                                    Classes.active="{Binding IsActive}"
+                                    Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).NavigateCommand, FallbackValue=null}"
+                                    CommandParameter="{Binding}"
                                     Margin="0,0,0,8"
                                     Padding="16,4">
+                                    <Button.Styles>
+                                        <Style Selector="Button">
+                                            <Setter Property="Background" Value="Transparent" />
+                                        </Style>
+                                        <Style Selector="Button.active">
+                                            <Setter Property="Background" Value="{DynamicResource SelectedMenuItemBgColor}" />
+                                        </Style>
+                                    </Button.Styles>
                                     <StackPanel>
                                         <Svg
                                             Css="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).IsDarkMode, Converter={StaticResource SvgColorConverter}, FallbackValue=path { fill: #FFFFFF }}"
@@ -207,7 +219,7 @@
                 <!--  region 内容区域  -->
                 <Border Background="{DynamicResource ContentBgColor}" Padding="12">
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                        <TransitioningContentControl Content="{Binding CurrentViewModel}" />
+                        <TransitioningContentControl Content="{Binding CurrentPage}" />
                     </ScrollViewer>
                 </Border>
                 <!--  endregion  -->

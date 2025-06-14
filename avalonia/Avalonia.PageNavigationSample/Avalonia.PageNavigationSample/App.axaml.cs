@@ -25,7 +25,6 @@ public class App : Application
             DisableAvaloniaDataAnnotationValidation();
             var mainWindow = new MainWindow();
             var vm = new MainWindowViewModel(mainWindow);
-            vm.CurrentMenu = vm.Menus[0];
             mainWindow.DataContext = vm;
             desktop.MainWindow = mainWindow;
         }

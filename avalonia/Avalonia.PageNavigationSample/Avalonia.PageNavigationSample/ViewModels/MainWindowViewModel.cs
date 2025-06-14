@@ -1,10 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using Avalonia.Controls;
 using Avalonia.PageNavigationSample.Constants;
+using Avalonia.PageNavigationSample.Models;
+using Avalonia.PageNavigationSample.Services;
 using Avalonia.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using MenuItem = Avalonia.PageNavigationSample.Models.MenuItem;
 
 namespace Avalonia.PageNavigationSample.ViewModels;
 
@@ -13,17 +14,13 @@ namespace Avalonia.PageNavigationSample.ViewModels;
 /// </summary>
 public partial class MainWindowViewModel : ViewModelBase
 {
+    private readonly INavigationService _navigationService = new DefaultNavigationService();
     private readonly Window? _window;
 
     /// <summary>
     ///     当前选中的菜单项
     /// </summary>
-    [ObservableProperty] private MenuItem? _currentMenu;
-
-    /// <summary>
-    ///     当前页面对应的视图模型
-    /// </summary>
-    [ObservableProperty] private ViewModelBase? _currentViewModel;
+    [ObservableProperty] private MenuItemViewModel? _currentMenu;
 
     /// <summary>
     ///     当前主题是否为暗色主题
@@ -34,7 +31,9 @@ public partial class MainWindowViewModel : ViewModelBase
     /// <summary>
     ///     当前是否全屏
     /// </summary>
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(MaximizeToggleButtonIcon))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(MaximizeToggleButtonIcon))]
+    [NotifyPropertyChangedFor(nameof(MainWindowPadding))]
     private bool _isMaximized;
 
     /// <summary>
@@ -56,9 +55,21 @@ public partial class MainWindowViewModel : ViewModelBase
 
             IsMaximized = _window.WindowState == WindowState.Maximized;
         };
+        _navigationService.CurrentPageChanged += (_, _) => { OnPropertyChanged(nameof(CurrentPage)); };
+        _navigationService.NavigateTo(typeof(HomeViewModel));
     }
 
     #endregion
+
+    /// <summary>
+    ///     主窗口内边距
+    /// </summary>
+    public Thickness MainWindowPadding => IsMaximized ? new Thickness(8) : new Thickness(0);
+
+    /// <summary>
+    ///     当前页面对应的视图模型
+    /// </summary>
+    public ViewModelBase? CurrentPage => _navigationService.CurrentPage;
 
     /// <summary>
     ///     主题切换图标名称
@@ -94,23 +105,13 @@ public partial class MainWindowViewModel : ViewModelBase
     /// <summary>
     ///     菜单列表
     /// </summary>
-    public ObservableCollection<MenuItem> Menus { get; } =
+    public ObservableCollection<MenuItemViewModel> Menus { get; } =
     [
-        new() { Title = "主页", Icon = IconName.Home, ViewType = typeof(HomeViewModel) },
-        new() { Title = "关于", Icon = IconName.InfoRounded, ViewType = typeof(AboutViewModel) }
+        new(new MenuItemModel { Title = "主页", Icon = IconName.Home, ViewType = typeof(HomeViewModel) })
+            { IsActive = true },
+        new(new MenuItemModel { Title = "关于", Icon = IconName.InfoRounded, ViewType = typeof(AboutViewModel) })
     ];
 
-    partial void OnCurrentMenuChanged(MenuItem? value)
-    {
-        if (value?.ViewType is null) return;
-
-        CurrentViewModel = value.Title switch
-        {
-            "主页" => new HomeViewModel(),
-            "关于" => new AboutViewModel(),
-            _ => new HomeViewModel()
-        };
-    }
 
     /// <summary>
     ///     动态切换主题
@@ -133,9 +134,22 @@ public partial class MainWindowViewModel : ViewModelBase
 
 
     [RelayCommand]
-    private void Navigate(MenuItem? menu)
+    private void Navigate(MenuItemViewModel? clickMenu)
     {
-        CurrentMenu = menu;
+        if (clickMenu is null || clickMenu.IsActive) return;
+
+        clickMenu.IsActive = true;
+        CurrentMenu = clickMenu;
+
+        foreach (var menuItemViewModel in Menus)
+        {
+            if (menuItemViewModel == clickMenu) continue;
+
+            menuItemViewModel.IsActive = false;
+        }
+
+
+        _navigationService.NavigateTo(clickMenu.ViewType);
     }
 
     [RelayCommand]

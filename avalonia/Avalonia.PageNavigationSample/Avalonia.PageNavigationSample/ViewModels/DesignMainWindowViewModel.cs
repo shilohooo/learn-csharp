@@ -3,10 +3,4 @@
 /// <summary>
 ///     主窗口 view model - 设计时
 /// </summary>
-public class DesignMainWindowViewModel : MainWindowViewModel
-{
-    public DesignMainWindowViewModel() : base(null)
-    {
-        CurrentMenu = Menus[0];
-    }
-}
+public class DesignMainWindowViewModel() : MainWindowViewModel(null);

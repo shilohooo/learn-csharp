@@ -4,9 +4,9 @@ using Avalonia.PageNavigationSample.Constants;
 namespace Avalonia.PageNavigationSample.Models;
 
 /// <summary>
-///     菜单项
+///     菜单项 model
 /// </summary>
-public class MenuItem
+public class MenuItemModel
 {
     /// <summary>
     ///     菜单标题
@@ -21,5 +21,5 @@ public class MenuItem
     /// <summary>
     ///     菜单对应的页面类型
     /// </summary>
-    public Type? ViewType { get; set; }
+    public required Type ViewType { get; set; }
 }

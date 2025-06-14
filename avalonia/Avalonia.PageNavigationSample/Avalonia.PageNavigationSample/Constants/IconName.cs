@@ -14,5 +14,6 @@ public enum IconName
     HorizontalRuleRounded,
     FullscreenRounded,
     FullscreenExitRounded,
-    CloseRounded
+    CloseRounded,
+    SettingsRounded
 }

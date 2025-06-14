@@ -119,40 +119,40 @@
                     </Button>
 
                     <!--  底部工具栏  -->
-                    <ToggleButton
+                    <Button
+                        Background="Transparent"
                         DockPanel.Dock="Bottom"
-                        HorizontalAlignment="Center"
-                        IsChecked="{Binding IsDarkMode}">
-                        <ToggleButton.Styles>
-                            <Style Selector="ToggleButton:checked /template/ ContentPresenter">
-                                <Setter Property="Background" Value="Transparent" />
-                            </Style>
-                            <Style Selector="ToggleButton:unchecked /template/ ContentPresenter">
-                                <Setter Property="Background" Value="Transparent" />
-                            </Style>
-                            <Style Selector="ToggleButton:pointerover /template/ ContentPresenter">
-                                <Setter Property="Background" Value="{DynamicResource ThemeSwitchButtonHoverBgColor}" />
-                            </Style>
-                        </ToggleButton.Styles>
+                        HorizontalAlignment="Center">
+                        <Button.Flyout>
+                            <MenuFlyout
+                                HorizontalOffset="0"
+                                ItemsSource=""
+                                Placement="Top">
+                                <MenuItem Header="系统主题">
+                                    <MenuItem
+                                        Command="{Binding ToggleThemeCommand}"
+                                        CommandParameter="{x:Static x:Boolean.FalseString}"
+                                        Header="亮色主题" />
+                                    <MenuItem
+                                        Command="{Binding ToggleThemeCommand}"
+                                        CommandParameter="{x:Static x:Boolean.TrueString}"
+                                        Header="深色主题" />
+                                </MenuItem>
+                                <MenuItem Header="语言">
+                                    <MenuItem Header="简体中文" />
+                                    <MenuItem Header="English" />
+                                </MenuItem>
+                                <MenuItem Header="-" />
+                                <MenuItem Command="{Binding ExitCommand}" Header="退出" />
+                            </MenuFlyout>
+                        </Button.Flyout>
+
                         <Svg
                             Css="{Binding IsDarkMode, Converter={StaticResource SvgColorConverter}}"
                             Height="24"
-                            Path="{Binding ThemeToggleButtonIcon, Converter={StaticResource SvgIconPathConverters}}"
+                            Path="{Binding SettingsButtonIcon, Converter={StaticResource SvgIconPathConverters}}"
                             Width="24" />
-                    </ToggleButton>
-                    <!--  TODO - 使用 Flyout 切换主题和退出应用  -->
-                    <!-- <Button Content="Setting" HorizontalAlignment="Center"> -->
-                    <!--     <Button.Flyout> -->
-                    <!--         <MenuFlyout HorizontalOffset="10" Placement="RightEdgeAlignedBottom"> -->
-                    <!--             <MenuItem Header="主题"> -->
-                    <!--                 <MenuItem Header="亮色主题" /> -->
-                    <!--                 <MenuItem Header="深色主题" /> -->
-                    <!--             </MenuItem> -->
-                    <!--             <MenuItem Header="-" /> -->
-                    <!--             <MenuItem Header="退出" /> -->
-                    <!--         </MenuFlyout> -->
-                    <!--     </Button.Flyout> -->
-                    <!-- </Button> -->
+                    </Button>
 
                     <!--  侧边一级导航  -->
                     <ItemsControl

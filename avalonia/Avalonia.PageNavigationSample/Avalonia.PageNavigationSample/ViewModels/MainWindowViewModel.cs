@@ -25,7 +25,7 @@ public partial class MainWindowViewModel : ViewModelBase
     /// <summary>
     ///     当前主题是否为暗色主题
     /// </summary>
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(ThemeToggleButtonIcon))]
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(SettingsButtonIcon))]
     private bool _isDarkMode = true;
 
     /// <summary>
@@ -72,9 +72,9 @@ public partial class MainWindowViewModel : ViewModelBase
     public ViewModelBase? CurrentPage => _navigationService.CurrentPage;
 
     /// <summary>
-    ///     主题切换图标名称
+    ///     系统设置图标名称
     /// </summary>
-    public IconName ThemeToggleButtonIcon => IsDarkMode ? IconName.DarkModeRounded : IconName.LightModeRounded;
+    public static IconName SettingsButtonIcon => IconName.SettingsRounded;
 
     /// <summary>
     ///     菜单折叠图标名称
@@ -125,6 +125,12 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     #region Commands
+
+    [RelayCommand]
+    private void ToggleTheme(string value)
+    {
+        IsDarkMode = bool.Parse(value);
+    }
 
     [RelayCommand]
     private void ToggleSidebar()

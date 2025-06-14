@@ -21,7 +21,7 @@ public class DefaultNavigationService : INavigationService
     public ViewModelBase? CurrentPage
     {
         get => _currentPage;
-        set
+        private set
         {
             if (_currentPage == value) return;
 

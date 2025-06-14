@@ -1,14 +1,19 @@
+using System;
 using System.Linq;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using Avalonia.PageNavigationSample.Extensions;
 using Avalonia.PageNavigationSample.ViewModels;
 using Avalonia.PageNavigationSample.Views;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Avalonia.PageNavigationSample;
 
 public class App : Application
 {
+    public static IServiceProvider RootService { get; private set; }
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -27,6 +32,10 @@ public class App : Application
             var vm = new MainWindowViewModel(mainWindow);
             mainWindow.DataContext = vm;
             desktop.MainWindow = mainWindow;
+
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddSingleton(mainWindow);
+            serviceCollection.AddServices();
         }
 
         base.OnFrameworkInitializationCompleted();

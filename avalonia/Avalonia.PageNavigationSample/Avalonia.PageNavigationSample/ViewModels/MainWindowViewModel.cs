@@ -2,7 +2,6 @@
 using Avalonia.Controls;
 using Avalonia.PageNavigationSample.Constants;
 using Avalonia.PageNavigationSample.Models;
-using Avalonia.PageNavigationSample.Services;
 using Avalonia.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -14,7 +13,6 @@ namespace Avalonia.PageNavigationSample.ViewModels;
 /// </summary>
 public partial class MainWindowViewModel : ViewModelBase
 {
-    private readonly INavigationService _navigationService = new DefaultNavigationService();
     private readonly Window? _window;
 
     /// <summary>
@@ -55,8 +53,8 @@ public partial class MainWindowViewModel : ViewModelBase
 
             IsMaximized = _window.WindowState == WindowState.Maximized;
         };
-        _navigationService.CurrentPageChanged += (_, _) => { OnPropertyChanged(nameof(CurrentPage)); };
-        _navigationService.NavigateTo(typeof(HomeViewModel));
+        App.NavigationService.CurrentPageChanged += (_, _) => { OnPropertyChanged(nameof(CurrentPage)); };
+        App.NavigationService.NavigateTo(typeof(HomeViewModel));
     }
 
     #endregion
@@ -69,7 +67,7 @@ public partial class MainWindowViewModel : ViewModelBase
     /// <summary>
     ///     当前页面对应的视图模型
     /// </summary>
-    public ViewModelBase? CurrentPage => _navigationService.CurrentPage;
+    public ViewModelBase? CurrentPage => App.NavigationService.CurrentPage;
 
     /// <summary>
     ///     系统设置图标名称
@@ -154,8 +152,7 @@ public partial class MainWindowViewModel : ViewModelBase
             menuItemViewModel.IsActive = false;
         }
 
-
-        _navigationService.NavigateTo(clickMenu.ViewType);
+        (Application.Current as App)?.NavigationService.NavigateTo(clickMenu.ViewType);
     }
 
     [RelayCommand]

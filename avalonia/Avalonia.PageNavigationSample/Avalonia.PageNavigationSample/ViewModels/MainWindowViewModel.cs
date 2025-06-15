@@ -1,19 +1,24 @@
-﻿using System.Collections.ObjectModel;
-using Avalonia.Controls;
+﻿using System;
+using System.Collections.ObjectModel;
 using Avalonia.PageNavigationSample.Constants;
+using Avalonia.PageNavigationSample.Messages;
 using Avalonia.PageNavigationSample.Models;
-using Avalonia.Styling;
+using Avalonia.PageNavigationSample.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace Avalonia.PageNavigationSample.ViewModels;
 
 /// <summary>
 ///     主窗口 vm
 /// </summary>
-public partial class MainWindowViewModel : ViewModelBase
+public partial class MainWindowViewModel : ViewModelBase, IRecipient<ThemeChangedMessage>,
+    IRecipient<MainWindowStateChangedMessage>, IRecipient<CurrentPageChangedMessage>
 {
-    private readonly Window? _window;
+    private readonly Lazy<IMainWindowService> _mainWindowService;
+    private readonly Lazy<INavigationService> _navigationService;
+    private readonly Lazy<IThemeService> _themeService;
 
     /// <summary>
     ///     当前选中的菜单项
@@ -21,17 +26,19 @@ public partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty] private MenuItemViewModel? _currentMenu;
 
     /// <summary>
+    ///     当前页面对应的视图模型
+    /// </summary>
+    [ObservableProperty] private ViewModelBase? _currentPage;
+
+    /// <summary>
     ///     当前主题是否为暗色主题
     /// </summary>
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(SettingsButtonIcon))]
-    private bool _isDarkMode = true;
+    [ObservableProperty] private bool _isDarkMode;
 
     /// <summary>
     ///     当前是否全屏
     /// </summary>
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(MaximizeToggleButtonIcon))]
-    [NotifyPropertyChangedFor(nameof(MainWindowPadding))]
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(MainWindowPadding))]
     private bool _isMaximized;
 
     /// <summary>
@@ -41,20 +48,19 @@ public partial class MainWindowViewModel : ViewModelBase
 
     #region Constructors
 
-    public MainWindowViewModel(Window? window)
+    public MainWindowViewModel(Lazy<IMainWindowService> mainWindowService, Lazy<INavigationService> navigationService,
+        Lazy<IThemeService> themeService)
     {
-        _window = window;
-        if (_window is null) return;
+        _mainWindowService = mainWindowService;
+        _navigationService = navigationService;
+        _themeService = themeService;
 
-        IsMaximized = _window.WindowState == WindowState.Maximized;
-        _window.PropertyChanged += (_, e) =>
-        {
-            if (e.Property.Name != nameof(Window.WindowState)) return;
-
-            IsMaximized = _window.WindowState == WindowState.Maximized;
-        };
-        App.NavigationService.CurrentPageChanged += (_, _) => { OnPropertyChanged(nameof(CurrentPage)); };
-        App.NavigationService.NavigateTo(typeof(HomeViewModel));
+        IsMaximized = _mainWindowService.Value.IsMaximized;
+        IsDarkMode = themeService.Value.IsDarkMode;
+        WeakReferenceMessenger.Default.Register<ThemeChangedMessage>(this);
+        WeakReferenceMessenger.Default.Register<MainWindowStateChangedMessage>(this);
+        WeakReferenceMessenger.Default.Register<CurrentPageChangedMessage>(this);
+        _navigationService.Value.NavigateTo(typeof(HomeViewModel));
     }
 
     #endregion
@@ -63,11 +69,6 @@ public partial class MainWindowViewModel : ViewModelBase
     ///     主窗口内边距
     /// </summary>
     public Thickness MainWindowPadding => IsMaximized ? new Thickness(8) : new Thickness(0);
-
-    /// <summary>
-    ///     当前页面对应的视图模型
-    /// </summary>
-    public ViewModelBase? CurrentPage => App.NavigationService.CurrentPage;
 
     /// <summary>
     ///     系统设置图标名称
@@ -80,27 +81,6 @@ public partial class MainWindowViewModel : ViewModelBase
     public static IconName SidebarToggleButtonIcon => IconName.MenuRounded;
 
     /// <summary>
-    ///     应用图标名称
-    /// </summary>
-    public static IconName AppIcon => IconName.ComputerRounded;
-
-    /// <summary>
-    ///     窗口最小化按钮图标名称
-    /// </summary>
-    public static IconName MinimizeButtonIcon => IconName.HorizontalRuleRounded;
-
-    /// <summary>
-    ///     窗口最大化切换图标名称
-    /// </summary>
-    public IconName MaximizeToggleButtonIcon =>
-        IsMaximized ? IconName.FullscreenExitRounded : IconName.FullscreenRounded;
-
-    /// <summary>
-    ///     退出按钮图标名称
-    /// </summary>
-    public static IconName ExitButtonIcon => IconName.CloseRounded;
-
-    /// <summary>
     ///     菜单列表
     /// </summary>
     public ObservableCollection<MenuItemViewModel> Menus { get; } =
@@ -110,16 +90,22 @@ public partial class MainWindowViewModel : ViewModelBase
         new(new MenuItemModel { Title = "关于", Icon = IconName.InfoRounded, ViewType = typeof(AboutViewModel) })
     ];
 
-
-    /// <summary>
-    ///     动态切换主题
-    /// </summary>
-    /// <param name="value">当时是否为暗色主题</param>
-    partial void OnIsDarkModeChanged(bool value)
+    /// <inheritdoc />
+    public void Receive(CurrentPageChangedMessage message)
     {
-        if (Application.Current is null) return;
+        CurrentPage = message.Value;
+    }
 
-        Application.Current.RequestedThemeVariant = value ? ThemeVariant.Dark : ThemeVariant.Light;
+    /// <inheritdoc />
+    public void Receive(MainWindowStateChangedMessage message)
+    {
+        IsMaximized = message.Value;
+    }
+
+    /// <inheritdoc />
+    public void Receive(ThemeChangedMessage message)
+    {
+        IsDarkMode = message.Value;
     }
 
     #region Commands
@@ -127,7 +113,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private void ToggleTheme(string value)
     {
-        IsDarkMode = bool.Parse(value);
+        _themeService.Value.ToggleTheme(bool.Parse(value));
     }
 
     [RelayCommand]
@@ -152,34 +138,13 @@ public partial class MainWindowViewModel : ViewModelBase
             menuItemViewModel.IsActive = false;
         }
 
-        (Application.Current as App)?.NavigationService.NavigateTo(clickMenu.ViewType);
-    }
-
-    [RelayCommand]
-    private void Minimize()
-    {
-        if (_window is null) return;
-
-        _window.WindowState = WindowState.Minimized;
-    }
-
-    [RelayCommand]
-    private void Maximize()
-    {
-        if (_window is null) return;
-
-        _window.WindowState = _window.WindowState switch
-        {
-            WindowState.Normal => WindowState.Maximized,
-            WindowState.Maximized => WindowState.Normal,
-            _ => _window.WindowState
-        };
+        _navigationService.Value.NavigateTo(clickMenu.ViewType);
     }
 
     [RelayCommand]
     private void Exit()
     {
-        _window?.Close();
+        _mainWindowService.Value.Close();
     }
 
     #endregion

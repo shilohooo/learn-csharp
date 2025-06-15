@@ -2,29 +2,23 @@
 using Avalonia.PageNavigationSample.Messages;
 using CommunityToolkit.Mvvm.Messaging;
 
-namespace Avalonia.PageNavigationSample.Services;
+namespace Avalonia.PageNavigationSample.Services.Impl;
 
 /// <summary>
 ///     主窗口管理服务
 /// </summary>
-public class MainWindowService(Window window)
+public class MainWindowService(Window window) : IMainWindowService
 {
-    /// <summary>
-    ///     主窗口是否最大化
-    /// </summary>
-    public bool IsMaximized { get; set; } = window.WindowState == WindowState.Maximized;
+    /// <inheritdoc />
+    public bool IsMaximized { get; private set; } = window.WindowState == WindowState.Maximized;
 
-    /// <summary>
-    ///     最小化主窗口
-    /// </summary>
+    /// <inheritdoc />
     public void Minimize()
     {
         window.WindowState = WindowState.Minimized;
     }
 
-    /// <summary>
-    ///     主窗口放大/缩小
-    /// </summary>
+    /// <inheritdoc />
     public void Maximize()
     {
         window.WindowState = window.WindowState switch
@@ -36,12 +30,11 @@ public class MainWindowService(Window window)
 
         IsMaximized = window.WindowState == WindowState.Maximized;
 
+        // 发布窗口最大化状态改变消息
         WeakReferenceMessenger.Default.Send(new MainWindowStateChangedMessage(IsMaximized));
     }
 
-    /// <summary>
-    ///     关闭主窗口
-    /// </summary>
+    /// <inheritdoc />
     public void Close()
     {
         window.Close();

@@ -1,19 +1,13 @@
-using System;
 using System.Linq;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
-using Avalonia.PageNavigationSample.Extensions;
-using Avalonia.PageNavigationSample.ViewModels;
 using Avalonia.PageNavigationSample.Views;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Avalonia.PageNavigationSample;
 
 public class App : Application
 {
-    public static IServiceProvider RootService { get; private set; }
-
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -21,37 +15,19 @@ public class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        RegisterAllViews();
-
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
             // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
             DisableAvaloniaDataAnnotationValidation();
-            var mainWindow = new MainWindow();
-            var vm = new MainWindowViewModel(mainWindow);
-            mainWindow.DataContext = vm;
+            var mainWindow = ServiceLocator.GetRequiredService<MainWindow>();
             desktop.MainWindow = mainWindow;
-
-            var serviceCollection = new ServiceCollection();
-            serviceCollection.AddSingleton(mainWindow);
-            serviceCollection.AddServices();
         }
 
         base.OnFrameworkInitializationCompleted();
     }
 
-    /// <summary>
-    ///     注册所有页面视图
-    /// </summary>
-    private static void RegisterAllViews()
-    {
-        ViewLocator.Register<MainWindowViewModel, MainWindow>();
-        ViewLocator.Register<HomeViewModel, HomeView>();
-        ViewLocator.Register<AboutViewModel, AboutView>();
-    }
-
-    private void DisableAvaloniaDataAnnotationValidation()
+    private static void DisableAvaloniaDataAnnotationValidation()
     {
         // Get an array of plugins to remove
         var dataValidationPluginsToRemove =

@@ -1,4 +1,17 @@
 <Window
+    x:Class="Avalonia.PageNavigationSample.Views.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Avalonia.PageNavigationSample.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Avalonia.PageNavigationSample.ViewModels"
+    x:Name="Window"
+    Title="Avalonia 页面导航示例"
+    Padding="{Binding MainWindowPadding}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vm:MainWindowViewModel"
     Background="Transparent"
     BorderBrush="Transparent"
     BorderThickness="0"
@@ -8,121 +21,50 @@
     ExtendClientAreaTitleBarHeightHint="-1"
     ExtendClientAreaToDecorationsHint="True"
     Icon="/Assets/avalonia-logo.ico"
-    Padding="{Binding MainWindowPadding}"
     SystemDecorations="Full"
-    Title="Avalonia 页面导航示例"
     WindowStartupLocation="CenterScreen"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
-    mc:Ignorable="d"
-    x:Class="Avalonia.PageNavigationSample.Views.MainWindow"
-    x:DataType="vm:MainWindowViewModel"
-    x:Name="Window"
-    xmlns="https://github.com/avaloniaui"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:vm="using:Avalonia.PageNavigationSample.ViewModels"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    mc:Ignorable="d">
 
     <Design.DataContext>
         <!--
             This only sets the DataContext for the previewer in an IDE,
             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
         -->
-        <vm:DesignMainWindowViewModel />
+        <vm:MainWindowViewModel />
     </Design.DataContext>
 
     <!--  region 布局容器  -->
     <Grid RowDefinitions="Auto, *">
         <!--  顶部  -->
-        <Border
-            Background="{DynamicResource HeaderBgColor}"
-            BorderBrush="{DynamicResource SidebarBorderColor}"
-            BorderThickness="0,0,0,1"
-            DockPanel.Dock="Top"
-            Grid.Row="0"
-            Padding="8">
-            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
-                <!--  应用 LOGO  -->
-                <StackPanel
-                    Grid.Column="0"
-                    Grid.Row="0"
-                    VerticalAlignment="Center">
-                    <Svg
-                        Css="{Binding IsDarkMode, Converter={StaticResource SvgColorConverter}}"
-                        Height="24"
-                        Path="{Binding AppIcon, Converter={StaticResource SvgIconPathConverters}}"
-                        ToolTip.Tip="应用 LOGO"
-                        Width="24" />
-                </StackPanel>
-                <!--  应用名称  -->
-                <TextBlock
-                    DockPanel.Dock="Left"
-                    FontWeight="Black"
-                    Grid.Column="1"
-                    Grid.Row="0"
-                    HorizontalAlignment="Center"
-                    Text="Avalonia Page Navigation Sample"
-                    VerticalAlignment="Center" />
-                <!--  缩小、最大化、退出按钮  -->
-                <StackPanel
-                    Grid.Column="2"
-                    Grid.Row="0"
-                    Orientation="Horizontal"
-                    Spacing="4"
-                    VerticalAlignment="Center">
-                    <Button Background="Transparent" Command="{Binding MinimizeCommand}">
-                        <Svg
-                            Css="{Binding IsDarkMode, Converter={StaticResource SvgColorConverter}}"
-                            Height="16"
-                            Path="{Binding MinimizeButtonIcon, Converter={StaticResource SvgIconPathConverters}}"
-                            Width="16" />
-                    </Button>
-                    <Button Background="Transparent" Command="{Binding MaximizeCommand}">
-                        <Svg
-                            Css="{Binding IsDarkMode, Converter={StaticResource SvgColorConverter}}"
-                            Height="16"
-                            Path="{Binding MaximizeToggleButtonIcon, Converter={StaticResource SvgIconPathConverters}}"
-                            Width="16" />
-                    </Button>
-                    <Button Background="Transparent" Command="{Binding ExitCommand}">
-                        <Svg
-                            Css="{Binding IsDarkMode, Converter={StaticResource SvgColorConverter}}"
-                            Height="16"
-                            Path="{Binding ExitButtonIcon, Converter={StaticResource SvgIconPathConverters}}"
-                            Width="16" />
-                    </Button>
-                </StackPanel>
-            </Grid>
-        </Border>
+        <controls:AppHeader Grid.Row="0" />
 
         <!--  主布局  -->
-        <Grid ColumnDefinitions="Auto, *" Grid.Row="1">
+        <Grid Grid.Row="1" ColumnDefinitions="Auto, *">
             <Border
+                Grid.Column="0"
+                Padding="4"
                 Background="{DynamicResource SidebarBgColor}"
                 BorderBrush="{DynamicResource SidebarBorderColor}"
-                BorderThickness="0,0,1,0"
-                Grid.Column="0"
-                Padding="4">
+                BorderThickness="0,0,1,0">
                 <DockPanel LastChildFill="True">
                     <!--  二级导航折叠按钮  -->
                     <Button
+                        HorizontalAlignment="Center"
                         Background="Transparent"
                         Command="{Binding ToggleSidebarCommand}"
-                        DockPanel.Dock="Top"
-                        HorizontalAlignment="Center">
+                        DockPanel.Dock="Top">
                         <Svg
-                            Css="{Binding IsDarkMode, Converter={StaticResource SvgColorConverter}}"
+                            Width="24"
                             Height="24"
-                            Path="{Binding SidebarToggleButtonIcon, Converter={StaticResource SvgIconPathConverters}}"
-                            Width="24" />
+                            Css="{Binding IsDarkMode, Converter={StaticResource SvgColorConverter}}"
+                            Path="{Binding SidebarToggleButtonIcon, Converter={StaticResource SvgIconPathConverters}}" />
                     </Button>
 
                     <!--  底部工具栏  -->
                     <Button
+                        HorizontalAlignment="Center"
                         Background="Transparent"
-                        DockPanel.Dock="Bottom"
-                        HorizontalAlignment="Center">
+                        DockPanel.Dock="Bottom">
                         <Button.Flyout>
                             <MenuFlyout
                                 HorizontalOffset="0"
@@ -148,26 +90,26 @@
                         </Button.Flyout>
 
                         <Svg
-                            Css="{Binding IsDarkMode, Converter={StaticResource SvgColorConverter}}"
+                            Width="24"
                             Height="24"
-                            Path="{Binding SettingsButtonIcon, Converter={StaticResource SvgIconPathConverters}}"
-                            Width="24" />
+                            Css="{Binding IsDarkMode, Converter={StaticResource SvgColorConverter}}"
+                            Path="{Binding SettingsButtonIcon, Converter={StaticResource SvgIconPathConverters}}" />
                     </Button>
 
                     <!--  侧边一级导航  -->
                     <ItemsControl
-                        Background="Transparent"
-                        ItemsSource="{Binding Menus}"
                         Margin="0,10,0,10"
-                        Padding="4">
+                        Padding="4"
+                        Background="Transparent"
+                        ItemsSource="{Binding Menus}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Button
+                                    Margin="0,0,0,8"
+                                    Padding="16,4"
                                     Classes.active="{Binding IsActive}"
                                     Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).NavigateCommand, FallbackValue=null}"
-                                    CommandParameter="{Binding}"
-                                    Margin="0,0,0,8"
-                                    Padding="16,4">
+                                    CommandParameter="{Binding}">
                                     <Button.Styles>
                                         <Style Selector="Button">
                                             <Setter Property="Background" Value="Transparent" />
@@ -178,13 +120,13 @@
                                     </Button.Styles>
                                     <StackPanel>
                                         <Svg
-                                            Css="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).IsDarkMode, Converter={StaticResource SvgColorConverter}, FallbackValue=path { fill: #FFFFFF }}"
+                                            Width="24"
                                             Height="24"
-                                            Path="{Binding Icon, Converter={StaticResource SvgIconPathConverters}}"
-                                            Width="24" />
+                                            Css="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).IsDarkMode, Converter={StaticResource SvgColorConverter}, FallbackValue=path { fill: #FFFFFF }}"
+                                            Path="{Binding Icon, Converter={StaticResource SvgIconPathConverters}}" />
                                         <TextBlock
-                                            HorizontalAlignment="Center"
                                             Margin="0,4,0,0"
+                                            HorizontalAlignment="Center"
                                             Text="{Binding Title}" />
                                     </StackPanel>
                                 </Button>
@@ -195,19 +137,19 @@
             </Border>
 
             <SplitView
+                x:Name="LayoutSplitView"
+                Grid.Column="1"
                 CompactPaneLength="0"
                 DisplayMode="CompactInline"
-                Grid.Column="1"
                 IsPaneOpen="{Binding IsSidebarOpened}"
-                OpenPaneLength="200"
-                x:Name="LayoutSplitView">
+                OpenPaneLength="200">
                 <!--  region 侧边二级导航  -->
                 <SplitView.Pane>
                     <Border
+                        Padding="8"
                         Background="{DynamicResource SidebarBgColor}"
                         BorderBrush="{DynamicResource SidebarBorderColor}"
-                        BorderThickness="0,0,1,0"
-                        Padding="8">
+                        BorderThickness="0,0,1,0">
                         <StackPanel Spacing="10">
                             <TextBox Watermark="搜索菜单..." />
                             <TextBlock Text="二级导航区域" />
@@ -217,7 +159,7 @@
                 <!--  endregion  -->
 
                 <!--  region 内容区域  -->
-                <Border Background="{DynamicResource ContentBgColor}" Padding="12">
+                <Border Padding="12" Background="{DynamicResource ContentBgColor}">
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                         <TransitioningContentControl Content="{Binding CurrentPage}" />
                     </ScrollViewer>

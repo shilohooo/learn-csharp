@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Avalonia.PageNavigationSample.ViewModels;
@@ -8,34 +7,22 @@ namespace Avalonia.PageNavigationSample;
 
 public class ViewLocator : IDataTemplate
 {
-    /// <summary>
-    ///     视图字典
-    /// </summary>
-    private static readonly Dictionary<Type, Func<Control>> ViewFactories = new();
-
-    public Control? Build(object? param)
+    public Control Build(object? param)
     {
         if (param is null)
-            return null;
+            return new TextBlock { Text = "Null view-model:(" };
 
-        var vmType = param.GetType();
-        var notFound = new TextBlock { Text = "View not found for " + vmType.FullName };
+        var viewTypeName = param.GetType().FullName!.Replace("ViewModel", "View");
+        var viewType = Type.GetType(viewTypeName);
+        var notFound = new TextBlock { Text = "View not found for " + viewTypeName };
+        if (viewType is null || ServiceLocator.GetRequiredService(viewType) is not Control view) return notFound;
 
-        return ViewFactories.TryGetValue(vmType, out var factoryFn) ? factoryFn.Invoke() : notFound;
+        view.DataContext = param;
+        return view;
     }
 
     public bool Match(object? data)
     {
         return data is ViewModelBase;
-    }
-
-    /// <summary>
-    ///     注册视图
-    /// </summary>
-    /// <typeparam name="TViewModel">视图模型类型，必须是 <see cref="ViewModelBase" />的子类</typeparam>
-    /// <typeparam name="TView">视图类型，必须是 <see cref="Control" />的子类</typeparam>
-    public static void Register<TViewModel, TView>() where TViewModel : ViewModelBase where TView : Control, new()
-    {
-        ViewFactories[typeof(TViewModel)] = () => new TView();
     }
 }

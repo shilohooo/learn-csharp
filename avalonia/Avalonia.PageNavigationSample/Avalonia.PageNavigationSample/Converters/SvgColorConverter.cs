@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using Avalonia.Data.Converters;
 
@@ -9,12 +10,16 @@ namespace Avalonia.PageNavigationSample.Converters;
 /// </summary>
 public class SvgColorConverter : IValueConverter
 {
+    private const string Black = "path { fill: #000000 }";
+    private const string White = "path { fill: #ffffff }";
+
     /// <inheritdoc />
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value is not bool isDarkMode) return "path { fill: #000000 }";
+        Debug.WriteLine($"SvgColorConverter.value - {value}");
+        if (value is not bool isDarkMode) return Black;
 
-        return isDarkMode ? "path { fill: #ffffff }" : "path { fill: #000000 }";
+        return isDarkMode ? White : Black;
     }
 
     /// <inheritdoc />

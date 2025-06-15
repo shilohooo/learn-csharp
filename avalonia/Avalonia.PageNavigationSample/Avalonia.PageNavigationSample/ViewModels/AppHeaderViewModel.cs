@@ -1,5 +1,4 @@
-﻿using System;
-using Avalonia.PageNavigationSample.Constants;
+﻿using Avalonia.PageNavigationSample.Constants;
 using Avalonia.PageNavigationSample.Messages;
 using Avalonia.PageNavigationSample.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -14,17 +13,16 @@ namespace Avalonia.PageNavigationSample.ViewModels;
 public partial class AppHeaderViewModel : ViewModelBase, IRecipient<ThemeChangedMessage>,
     IRecipient<MainWindowStateChangedMessage>
 {
-    private readonly Lazy<IMainWindowService> _mainWindowService;
+    private readonly IMainWindowService _mainWindowService;
 
     [ObservableProperty] private bool _isDarkMode = true;
 
     [ObservableProperty] [NotifyPropertyChangedFor(nameof(MaximizeToggleButtonIcon))]
     private bool _isMaximized;
 
-    public AppHeaderViewModel(Lazy<IMainWindowService> mainWindowService)
+    public AppHeaderViewModel(IMainWindowService mainWindowService)
     {
         _mainWindowService = mainWindowService;
-        IsMaximized = _mainWindowService.Value.IsMaximized;
         WeakReferenceMessenger.Default.Register<ThemeChangedMessage>(this);
         WeakReferenceMessenger.Default.Register<MainWindowStateChangedMessage>(this);
     }
@@ -65,19 +63,19 @@ public partial class AppHeaderViewModel : ViewModelBase, IRecipient<ThemeChanged
     [RelayCommand]
     private void Minimize()
     {
-        _mainWindowService.Value.Minimize();
+        _mainWindowService.Minimize();
     }
 
     [RelayCommand]
     private void Maximize()
     {
-        _mainWindowService.Value.Maximize();
+        _mainWindowService.Maximize();
     }
 
     [RelayCommand]
     private void Exit()
     {
-        _mainWindowService.Value.Close();
+        _mainWindowService.Close();
     }
 
     #endregion

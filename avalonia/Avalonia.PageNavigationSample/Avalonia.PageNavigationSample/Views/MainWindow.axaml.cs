@@ -1,21 +1,15 @@
-using System;
+using System.Diagnostics;
 using Avalonia.Controls;
 using Avalonia.Input;
-using Avalonia.PageNavigationSample.ViewModels;
 
 namespace Avalonia.PageNavigationSample.Views;
 
 public partial class MainWindow : Window
 {
-    /// <inheritdoc />
     public MainWindow()
     {
-    }
-
-    public MainWindow(Lazy<MainWindowViewModel> lazyViewModel)
-    {
+        Debug.WriteLine("主窗口构造");
         InitializeComponent();
-        DataContext = lazyViewModel.Value;
         PointerPressed += OnPointerPressed;
     }
 

@@ -1,34 +1,36 @@
-﻿using Avalonia.Controls;
+﻿using System;
+using Avalonia.Controls;
 using Avalonia.PageNavigationSample.Messages;
+using Avalonia.PageNavigationSample.Views;
 using CommunityToolkit.Mvvm.Messaging;
 
 namespace Avalonia.PageNavigationSample.Services.Impl;
 
 /// <summary>
-///     主窗口管理服务
+///     主窗口管理服务实现
 /// </summary>
-public class MainWindowService(Window window) : IMainWindowService
+public class MainWindowService(Lazy<MainWindow> mainWindow) : IMainWindowService
 {
     /// <inheritdoc />
-    public bool IsMaximized { get; private set; } = window.WindowState == WindowState.Maximized;
+    public bool IsMaximized { get; private set; }
 
     /// <inheritdoc />
     public void Minimize()
     {
-        window.WindowState = WindowState.Minimized;
+        mainWindow.Value.WindowState = WindowState.Minimized;
     }
 
     /// <inheritdoc />
     public void Maximize()
     {
-        window.WindowState = window.WindowState switch
+        mainWindow.Value.WindowState = mainWindow.Value.WindowState switch
         {
             WindowState.Normal => WindowState.Maximized,
             WindowState.Maximized => WindowState.Normal,
-            _ => window.WindowState
+            _ => mainWindow.Value.WindowState
         };
-
-        IsMaximized = window.WindowState == WindowState.Maximized;
+        IsMaximized = mainWindow
+            .Value.WindowState == WindowState.Maximized;
 
         // 发布窗口最大化状态改变消息
         WeakReferenceMessenger.Default.Send(new MainWindowStateChangedMessage(IsMaximized));
@@ -37,6 +39,6 @@ public class MainWindowService(Window window) : IMainWindowService
     /// <inheritdoc />
     public void Close()
     {
-        window.Close();
+        mainWindow.Value.Close();
     }
 }

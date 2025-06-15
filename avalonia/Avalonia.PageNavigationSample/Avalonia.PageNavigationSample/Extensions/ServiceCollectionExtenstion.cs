@@ -1,4 +1,5 @@
-﻿using Avalonia.PageNavigationSample.Services;
+﻿using System;
+using Avalonia.PageNavigationSample.Services;
 using Avalonia.PageNavigationSample.Services.Impl;
 using Avalonia.PageNavigationSample.ViewModels;
 using Avalonia.PageNavigationSample.Views;
@@ -12,23 +13,18 @@ namespace Avalonia.PageNavigationSample.Extensions;
 public static class ServiceCollectionExtenstion
 {
     /// <summary>
-    ///     注入主窗口
-    /// </summary>
-    /// <param name="serviceCollection"></param>
-    public static void AddMainWindow(this IServiceCollection serviceCollection)
-    {
-        serviceCollection.AddSingleton<MainWindow>();
-    }
-
-    /// <summary>
     ///     注入通用服务
     /// </summary>
     /// <param name="serviceCollection"></param>
     public static void AddServices(this IServiceCollection serviceCollection)
     {
+        serviceCollection.AddSingleton<IMainWindowService, MainWindowService>();
+        // 主窗口
+        serviceCollection.AddSingleton<MainWindow>();
+        serviceCollection.AddSingleton<Lazy<MainWindow>>(provider =>
+            new Lazy<MainWindow>(provider.GetRequiredService<MainWindow>));
         serviceCollection.AddSingleton<INavigationService, DefaultNavigationService>();
         serviceCollection.AddSingleton<IThemeService, ThemeService>();
-        serviceCollection.AddSingleton<IMainWindowService, MainWindowService>();
     }
 
     /// <summary>
@@ -39,10 +35,19 @@ public static class ServiceCollectionExtenstion
     {
         serviceCollection.AddTransient<MainWindowViewModel>();
         serviceCollection.AddTransient<AppHeaderViewModel>();
-        serviceCollection.AddTransient<MenuItemViewModel>();
 
         // page view model
         serviceCollection.AddTransient<HomeViewModel>();
         serviceCollection.AddTransient<AboutViewModel>();
+    }
+
+    /// <summary>
+    ///     注入页面（Views）
+    /// </summary>
+    /// <param name="serviceCollection"></param>
+    public static void AddViews(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddTransient<HomeView>();
+        serviceCollection.AddTransient<AboutView>();
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using Avalonia.PageNavigationSample.Constants;
 using Avalonia.PageNavigationSample.Messages;
 using Avalonia.PageNavigationSample.Models;
@@ -16,9 +15,9 @@ namespace Avalonia.PageNavigationSample.ViewModels;
 public partial class MainWindowViewModel : ViewModelBase, IRecipient<ThemeChangedMessage>,
     IRecipient<MainWindowStateChangedMessage>, IRecipient<CurrentPageChangedMessage>
 {
-    private readonly Lazy<IMainWindowService> _mainWindowService;
-    private readonly Lazy<INavigationService> _navigationService;
-    private readonly Lazy<IThemeService> _themeService;
+    private readonly IMainWindowService _mainWindowService;
+    private readonly INavigationService _navigationService;
+    private readonly IThemeService _themeService;
 
     /// <summary>
     ///     当前选中的菜单项
@@ -48,19 +47,18 @@ public partial class MainWindowViewModel : ViewModelBase, IRecipient<ThemeChange
 
     #region Constructors
 
-    public MainWindowViewModel(Lazy<IMainWindowService> mainWindowService, Lazy<INavigationService> navigationService,
-        Lazy<IThemeService> themeService)
+    public MainWindowViewModel(IMainWindowService mainWindowService, INavigationService navigationService,
+        IThemeService themeService)
     {
         _mainWindowService = mainWindowService;
         _navigationService = navigationService;
         _themeService = themeService;
 
-        IsMaximized = _mainWindowService.Value.IsMaximized;
-        IsDarkMode = themeService.Value.IsDarkMode;
+        IsDarkMode = themeService.IsDarkMode;
         WeakReferenceMessenger.Default.Register<ThemeChangedMessage>(this);
         WeakReferenceMessenger.Default.Register<MainWindowStateChangedMessage>(this);
         WeakReferenceMessenger.Default.Register<CurrentPageChangedMessage>(this);
-        _navigationService.Value.NavigateTo(typeof(HomeViewModel));
+        _navigationService.NavigateTo(typeof(HomeViewModel));
     }
 
     #endregion
@@ -113,7 +111,7 @@ public partial class MainWindowViewModel : ViewModelBase, IRecipient<ThemeChange
     [RelayCommand]
     private void ToggleTheme(string value)
     {
-        _themeService.Value.ToggleTheme(bool.Parse(value));
+        _themeService.ToggleTheme(bool.Parse(value));
     }
 
     [RelayCommand]
@@ -138,13 +136,13 @@ public partial class MainWindowViewModel : ViewModelBase, IRecipient<ThemeChange
             menuItemViewModel.IsActive = false;
         }
 
-        _navigationService.Value.NavigateTo(clickMenu.ViewType);
+        _navigationService.NavigateTo(clickMenu.ViewType);
     }
 
     [RelayCommand]
     private void Exit()
     {
-        _mainWindowService.Value.Close();
+        _mainWindowService.Close();
     }
 
     #endregion

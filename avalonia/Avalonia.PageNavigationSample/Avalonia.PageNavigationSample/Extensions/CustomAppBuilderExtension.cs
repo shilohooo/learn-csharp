@@ -12,9 +12,9 @@ public static class CustomAppBuilderExtension
         var host = Host.CreateDefaultBuilder()
             .ConfigureServices(services =>
             {
-                services.AddMainWindow();
-                services.AddServices();
                 services.AddViewModels();
+                services.AddServices();
+                services.AddViews();
             })
             .Build();
         ServiceLocator.Host = host;

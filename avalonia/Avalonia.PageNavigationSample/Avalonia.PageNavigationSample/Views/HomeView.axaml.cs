@@ -5,9 +5,9 @@ namespace Avalonia.PageNavigationSample.Views;
 
 public partial class HomeView : UserControl
 {
-    public HomeView()
+    public HomeView(HomeViewModel viewModel)
     {
         InitializeComponent();
-        DataContext = new HomeViewModel();
+        DataContext = viewModel;
     }
 }

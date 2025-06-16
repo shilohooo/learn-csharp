@@ -5,9 +5,9 @@ namespace Avalonia.PageNavigationSample.Views;
 
 public partial class AboutView : UserControl
 {
-    public AboutView()
+    public AboutView(AboutViewModel viewModel)
     {
         InitializeComponent();
-        DataContext = new AboutViewModel();
+        DataContext = viewModel;
     }
 }

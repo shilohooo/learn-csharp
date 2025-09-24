@@ -1,0 +1,65 @@
+<Window
+    x:Class="Avalonia.NumericUpDown.Example.Views.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Avalonia.NumericUpDown.Example.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Avalonia.NumericUpDown.Example.ViewModels"
+    Title="Avalonia.NumericUpDown.Example"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vm:MainWindowViewModel"
+    Icon="/Assets/avalonia-logo.ico"
+    mc:Ignorable="d">
+
+    <Design.DataContext>
+        <!--
+            This only sets the DataContext for the previewer in an IDE,
+            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
+        -->
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <Window.Resources>
+        <converters:RgbToBrushMultiConverter x:Key="RgbToBrushMultiConverter" />
+    </Window.Resources>
+
+    <StackPanel
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        Spacing="8">
+        <NumericUpDown
+            x:Name="Red"
+            Foreground="Red"
+            Increment="20"
+            Maximum="255"
+            Minimum="0"
+            Value="0" />
+        <NumericUpDown
+            x:Name="Green"
+            Foreground="Green"
+            Increment="20"
+            Maximum="255"
+            Minimum="0"
+            Value="0" />
+        <NumericUpDown
+            x:Name="Blue"
+            Foreground="Blue"
+            Increment="20"
+            Maximum="255"
+            Minimum="0"
+            Value="0" />
+
+        <TextBlock FontSize="24" Text="MultiBinding Text Color!">
+            <TextBlock.Foreground>
+                <MultiBinding Converter="{StaticResource RgbToBrushMultiConverter}">
+                    <Binding ElementName="Red" Path="Value" />
+                    <Binding ElementName="Green" Path="Value" />
+                    <Binding ElementName="Blue" Path="Value" />
+                </MultiBinding>
+            </TextBlock.Foreground>
+        </TextBlock>
+    </StackPanel>
+
+</Window>

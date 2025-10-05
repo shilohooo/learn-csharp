@@ -1,0 +1,106 @@
+GET {{baseUrl}}/RedisTest/SetStringValue?key=email&value=shiloh595@gmail.com
+Accept: application/json
+
+###
+
+GET {{baseUrl}}/RedisTest/GetStringValue?key=email
+
+###
+
+GET {{baseUrl}}/RedisTest/SetBooleanValue?key=Enabled&value=false
+
+###
+
+GET {{baseUrl}}/RedisTest/GetBooleanValue?key=Enabled
+
+###
+
+GET {{baseUrl}}/RedisTest/SetIntValue?key=age&value=22
+
+###
+
+GET {{baseUrl}}/RedisTest/GetIntValue?key=age
+
+###
+
+GET {{baseUrl}}/RedisTest/SetLongValue?key=timestamp&value=1759473678418
+
+###
+
+GET {{baseUrl}}/RedisTest/GetLongValue?key=timestamp
+
+###
+
+GET {{baseUrl}}/RedisTest/SetFloatValue?key=price&value=15.9
+
+###
+
+GET {{baseUrl}}/RedisTest/GetFloatValue?key=price
+
+###
+
+GET {{baseUrl}}/RedisTest/SetDoubleValue?key=PI&value=3.1415926
+
+###
+
+GET {{baseUrl}}/RedisTest/GetDoubleValue?key=PI
+
+###
+
+POST {{baseUrl}}/RedisTest/AddUser
+Content-Type: application/json
+
+{
+  "name": "Shiloh",
+  "email": "shiloh595@gmail.com"
+}
+
+###
+
+GET {{baseUrl}}/RedisTest/GetUser?key=user
+
+###
+
+POST {{baseUrl}}/RedisTest/SetHashValue
+Content-Type: application/json
+
+{
+  "name": "Jackie Chan",
+  "email": "jackiechan@gmail.com"
+}
+
+###
+
+POST {{baseUrl}}/RedisTest/SetHashValues
+Content-Type: application/json
+
+[
+  {
+    "name": "Bruce",
+    "email": "bruce@gmail.com"
+  },
+  {
+    "name": "Jackie Chan",
+    "email": "jackiechan@gmail.com"
+  },
+  {
+    "name": "Shiloh",
+    "email": "shiloh595@gmail.com"
+  }
+]
+
+###
+
+GET {{baseUrl}}/RedisTest/GetHashValue?userId=24f502baf36e4a87afe55af5806d932b
+
+###
+
+GET {{baseUrl}}/RedisTest/GetHashValues
+
+###
+
+GET {{baseUrl}}/RedisTest/Remove?key=UserDict
+
+###
+
+GET {{baseUrl}}/RedisTest/HashRemove?userId=dd236adcf3b243479ad75b20a405a1c5

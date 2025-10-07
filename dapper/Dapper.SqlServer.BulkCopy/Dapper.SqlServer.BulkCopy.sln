@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapper.SqlServer.BulkCopy", "Dapper.SqlServer.BulkCopy\Dapper.SqlServer.BulkCopy.csproj", "{04AA9E10-39DE-4975-B8E5-7BF24F11840B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{04AA9E10-39DE-4975-B8E5-7BF24F11840B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04AA9E10-39DE-4975-B8E5-7BF24F11840B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04AA9E10-39DE-4975-B8E5-7BF24F11840B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04AA9E10-39DE-4975-B8E5-7BF24F11840B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

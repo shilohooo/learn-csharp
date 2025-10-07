@@ -1,0 +1,1 @@
+﻿# Dapper + Npgsql binary import example

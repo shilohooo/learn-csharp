@@ -48,8 +48,8 @@ stopwatch.Restart();
 await connection.OpenAsync();
 using var bulkCopy = new OracleBulkCopy(connection);
 colNames.ForEach(colName => bulkCopy.ColumnMappings.Add(colName, colName));
-bulkCopy.BatchSize = 5000;
-bulkCopy.BulkCopyTimeout = 30;
+bulkCopy.BatchSize = 1000;
+bulkCopy.BulkCopyTimeout = 60;
 bulkCopy.DestinationTableName = "T_USER";
 
 var dataTable = new DataTable();
@@ -62,5 +62,5 @@ users.ForEach(user =>
 });
 bulkCopy.WriteToServer(dataTable);
 stopwatch.Stop();
-// Oracle 23 ai free - 约 20 秒
+// Oracle 23 ai free - 约 9 秒
 Console.WriteLine($"百万数据写入耗时：{stopwatch.ElapsedMilliseconds} ms");

@@ -1,7 +1,9 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.Extensions.Logging.Console;
 using WebApi.Redis.Example.Converters;
 using WebApi.Redis.Example.Extensions;
+using WebApi.Redis.Example.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,11 @@ builder.Configuration.AddJsonFile("appsettings.json");
 
 #region Add services to the container.
 
+builder.Services.AddLogging(loggingBuilder =>
+{
+    loggingBuilder.AddConsole(options => options.FormatterName = CustomConsoleLoggingFormatter.FormatterName)
+        .AddConsoleFormatter<CustomConsoleLoggingFormatter, ConsoleFormatterOptions>();
+});
 builder.Services.AddRedis(builder.Configuration);
 builder.Services.AddRepositories();
 builder.Services.AddServices();

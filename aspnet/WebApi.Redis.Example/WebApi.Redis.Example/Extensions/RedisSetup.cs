@@ -1,4 +1,6 @@
-﻿using StackExchange.Redis;
+﻿using Microsoft.Extensions.Logging.Console;
+using StackExchange.Redis;
+using WebApi.Redis.Example.Extensions.Logging;
 
 namespace WebApi.Redis.Example.Extensions;
 
@@ -15,6 +17,15 @@ public static class RedisSetup
     public static void AddRedis(this IServiceCollection service, IConfiguration configuration)
     {
         service.AddSingleton<IConnectionMultiplexer>(_ =>
-            ConnectionMultiplexer.Connect(configuration["Redis:ConnectionString"]!));
+            ConnectionMultiplexer.Connect(configuration["Redis:ConnectionString"]!,
+                options =>
+                {
+                    options.LoggerFactory = LoggerFactory.Create(builder =>
+                    {
+                        builder.AddConsole(loggerOptions =>
+                                loggerOptions.FormatterName = CustomConsoleLoggingFormatter.FormatterName)
+                            .AddConsoleFormatter<CustomConsoleLoggingFormatter, ConsoleFormatterOptions>();
+                    });
+                }));
     }
 }

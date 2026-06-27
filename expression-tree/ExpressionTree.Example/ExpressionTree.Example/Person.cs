@@ -2,8 +2,8 @@
 
 internal class Person
 {
-    public string Name { get; set; }
-    public int Age { get; set; }
+    public required string Name { get; init; }
+    public int Age { get; init; }
 
     public override string ToString()
     {

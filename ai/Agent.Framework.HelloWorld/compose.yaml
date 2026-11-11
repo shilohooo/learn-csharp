@@ -1,0 +1,7 @@
+﻿services:
+  agent.framework.helloworld:
+    image: agent.framework.helloworld
+    build:
+      context: .
+      dockerfile: Agent.Framework.HelloWorld/Dockerfile
+
